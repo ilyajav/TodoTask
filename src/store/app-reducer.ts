@@ -5,7 +5,7 @@ type ChangeStatusType = ReturnType<typeof changeStatus>
 type AppActionTypes = ChangeStatusType
 
 const initialState = {
-    status: 'succeeded' as StatusType
+    status: 'loading' as StatusType
 }
 
 export const appReducer = (state: InitialStateAppType = initialState, action: AppActionTypes):InitialStateAppType =>{

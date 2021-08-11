@@ -1,22 +1,45 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
-import {AppBar, Checkbox, Grid, LinearProgress, TextField, Toolbar, Typography, Container} from '@material-ui/core';
-import {useSelector} from "react-redux";
+import {
+    AppBar,
+    Checkbox,
+    Grid,
+    LinearProgress,
+    TextField,
+    Toolbar,
+    Typography,
+    Container,
+    Box, Paper,
+} from '@material-ui/core';
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
-import {StatusType} from "./store/app-reducer";
+import {changeStatus, StatusType} from "./store/app-reducer";
 import {AddItemForm} from "./utils/AddItemForm";
 import {Category} from "./Category/Category";
 import {CategoryStateType} from "./store/category-reducer";
 import {TodosDataType} from "./store/todo-reducer";
-import {Todo} from "./Category/todos/Todo";
+import {Todo} from "./Todo/Todo";
+
+
 
 const App = () => {
+    
+    const styles = {
+        Paper: {padding: 20, height: 250, overflowY: 'auto' as 'auto' }
+    }
 
     const status = useSelector<AppRootStateType, StatusType>(state => state.app.status)
     const categories = useSelector<AppRootStateType, CategoryStateType[]>(state => state.categoryData)
     const todosData = useSelector<AppRootStateType, TodosDataType>(state => state.todoData)
 
+    const dispatch = useDispatch()
+
+    useEffect(() =>{
+        dispatch(changeStatus('succeeded'))
+    }, [])
+
     return (
+
         <div className="App">
             <AppBar position="static">
                 <Toolbar>
@@ -56,22 +79,34 @@ const App = () => {
             <AddItemForm formText={'Text input with button'} />
             </Grid>
            </Container>
-            <div>
-                <div>
+            <Box display={'flex'}>
+                <Box padding={'25px'}>
+                    <Paper style={styles.Paper}>
                 {
                     categories.map(ct =>{
-                       return <Category categoryTitle={ct.title} key={ct.id} />
+                       return <Category
+                           categoryTitle={ct.title}
+                           key={ct.id}
+                           id={ct.id}
+                       />
                     })
                 }
-                </div>
-                <div>
+                    </Paper>
+                </Box>
+               <Box margin={'20px 450px'}>
+                   <Paper style={styles.Paper}>
                 {
                     categories.map(ct =>{
                     let todo = todosData[ct.id]
-                    return <Todo todo={todo} key={ct.id} />
+                    return <Todo
+                        todo={todo}
+                        key={ct.id}
+                        categoryId={ct.id}
+                    />
                 })}
-                </div>
-            </div>
+                   </Paper>
+            </Box>
+            </Box>
         </div>
     );
 }

@@ -15,8 +15,10 @@ const initialState: CategoryStateType[] = [
     {id: category3Id, title: 'Category 3'},
 ]
 
+type ChangeCategoryTitleType = ReturnType<typeof changeCategoryTitle>
 export type AddCategoryType = ReturnType<typeof addCategory>
-type ActionCategoryTypes = AddCategoryType
+export type RemoveCategoryType = ReturnType<typeof removeCategory>
+type ActionCategoryTypes = AddCategoryType | RemoveCategoryType | ChangeCategoryTitleType
 
 export const categoryReducer = (state: CategoryStateType[] = initialState, action: ActionCategoryTypes): CategoryStateType[] => {
     switch (action.type){
@@ -26,6 +28,9 @@ export const categoryReducer = (state: CategoryStateType[] = initialState, actio
                 title: action.payload.title,
             }
             return [...state, newCategory]
+        }
+        case "REMOVE-CATEGORY":{
+            return state.filter(ct => ct.id !== action.payload.id)
         }
         default:
             return state
@@ -39,5 +44,24 @@ export const addCategory = (id: string, title: string) =>{
             id,
             title,
         },
+    } as const
+}
+
+export const removeCategory = (id: string) =>{
+    return{
+        type: 'REMOVE-CATEGORY',
+        payload: {
+            id,
+        }
+    } as const
+}
+
+export const changeCategoryTitle = (id: string, title:string) =>{
+    return{
+        type: 'CHANGE-CATEGORY-TITLE',
+        payload:{
+            id,
+            title,
+        }
     }
 }

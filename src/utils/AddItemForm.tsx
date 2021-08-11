@@ -3,6 +3,7 @@ import {Button, IconButton, TextField} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 import {addCategory, CategoryStateType} from "../store/category-reducer";
 import {v1} from "uuid";
+import {changeStatus} from "../store/app-reducer";
 
 type AddItemForm = {
     formText: string
