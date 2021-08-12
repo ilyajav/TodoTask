@@ -5,31 +5,31 @@ import {IconButton} from "@material-ui/core";
 import {ControlPoint} from "@material-ui/icons";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {useDispatch} from "react-redux";
-import {removeCategory} from "../store/category-reducer";
+import {CategoryStateType, removeCategory} from "../store/category-reducer";
 import {EditebleSpan} from "../utils/EditebleSpan";
 import {Route} from "react-router-dom";
 
 type CategoryType = {
-    categoryTitle: string,
-    id: string,
+    category: CategoryStateType[]
 }
 
-export const Category: FC<CategoryType> = ({categoryTitle, id}) => {
+export const Category: FC<CategoryType> = ({category}) => {
 
     const dispatch = useDispatch()
 
-    const onRemoveCategory = () =>{
-        dispatch(removeCategory(id))
-    }
-
     return (
         <div>
-
-
-            <div className={style.item}>
-                <NavLink to={id}>{categoryTitle}</NavLink>
-               <EditebleSpan />
-                <span className={style.buttonElements}>
+            <div>
+                {
+                    category.map(ct =>{
+                        const onRemoveCategory = () =>{
+                            debugger
+                            dispatch(removeCategory(ct.id))
+                        }
+                        return <div className={style.item} key={ct.id}>
+                            {ct.title}
+                            <EditebleSpan />
+                            <span className={style.buttonElements}>
                 <IconButton color={'primary'} onClick={onRemoveCategory}>
                     <DeleteIcon />
                 </IconButton>
@@ -37,6 +37,13 @@ export const Category: FC<CategoryType> = ({categoryTitle, id}) => {
                     <ControlPoint/>
                 </IconButton>
                 </span>
+                            {ct.children && ct.children.length
+                                ?
+                                <Category category={ct.children}/>
+                                : null}
+                        </div>
+                    })
+                }
             </div>
         </div>
     )

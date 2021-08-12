@@ -82,15 +82,7 @@ const App = () => {
             <Box display={'flex'}>
                 <Box padding={'25px'}>
                     <Paper style={styles.Paper}>
-                {
-                    categories.map(ct =>{
-                       return <Category
-                           categoryTitle={ct.title}
-                           key={ct.id}
-                           id={ct.id}
-                       />
-                    })
-                }
+                        <Category category={categories}/>
                     </Paper>
                 </Box>
                <Box margin={'20px 450px'}>
