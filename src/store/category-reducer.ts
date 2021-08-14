@@ -33,18 +33,8 @@ export const categoryReducer = (state: CategoryStateType[] = initialState, actio
             }
             return [...state, newCategory]
         }
-        case "REMOVE-CATEGORY":{
-            debugger
-            const category = state.find(ct => ct.id === action.payload.id)
-            debugger
-            if(category){
-                return state.filter(ct => ct.id !== action.payload.id)
-            }else {
-
-            }
-            debugger
-            return {...state}
-        }
+        case "REMOVE-CATEGORY":
+            return state.filter(ch => ch.id !== action.payload.id)
         default:
             return state
     }

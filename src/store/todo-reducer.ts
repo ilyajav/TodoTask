@@ -17,9 +17,9 @@ type ActionTodoTypes = AddCategoryType | ChangeTodoStatus | RemoveCategoryType
 
 
 const initialState: TodosDataType = {
-    [category1Id] : [{id: v1(), title: 'Todo 1', isDone: false}],
-    [category2Id] : [{id: v1(), title: 'Todo 2', isDone: true}],
-    [category3Id] : [{id: v1(), title: 'Todo 3', isDone: false}],
+    [category1Id] : [{id: v1(), title: 'Todos 1', isDone: false}],
+    [category2Id] : [{id: v1(), title: 'Todos 2', isDone: true}],
+    [category3Id] : [{id: v1(), title: 'Todos 3', isDone: false}],
 }
 
 export const todoReducer = (state: TodosDataType = initialState, action: ActionTodoTypes): TodosDataType =>{

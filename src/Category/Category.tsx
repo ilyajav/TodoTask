@@ -7,7 +7,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {useDispatch} from "react-redux";
 import {CategoryStateType, removeCategory} from "../store/category-reducer";
 import {EditebleSpan} from "../utils/EditebleSpan";
-import {Route} from "react-router-dom";
 
 type CategoryType = {
     category: CategoryStateType[]
@@ -23,11 +22,10 @@ export const Category: FC<CategoryType> = ({category}) => {
                 {
                     category.map(ct =>{
                         const onRemoveCategory = () =>{
-                            debugger
                             dispatch(removeCategory(ct.id))
                         }
                         return <div className={style.item} key={ct.id}>
-                            {ct.title}
+                           <NavLink to={`category/todo-list/${ct.id}?done=false&search=text`}>{ct.title}</NavLink>
                             <EditebleSpan />
                             <span className={style.buttonElements}>
                 <IconButton color={'primary'} onClick={onRemoveCategory}>

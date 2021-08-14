@@ -9,7 +9,7 @@ import {
     Toolbar,
     Typography,
     Container,
-    Box, Paper,
+    Box, Paper
 } from '@material-ui/core';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
@@ -18,12 +18,12 @@ import {AddItemForm} from "./utils/AddItemForm";
 import {Category} from "./Category/Category";
 import {CategoryStateType} from "./store/category-reducer";
 import {TodosDataType} from "./store/todo-reducer";
-import {Todo} from "./Todo/Todo";
-
+import {Todos} from "./Todos/Todos";
+import {Route} from "react-router-dom";
 
 
 const App = () => {
-    
+
     const styles = {
         Paper: {padding: 20, height: 250, overflowY: 'auto' as 'auto' }
     }
@@ -75,29 +75,25 @@ const App = () => {
              <Grid container style={{padding: '20px'}}
                    justifyContent={'space-between'}
              >
-            <AddItemForm formText={'Enter category title'} />
-            <AddItemForm formText={'Text input with button'} />
+                 <AddItemForm formText={'Enter category title'} />
             </Grid>
            </Container>
             <Box display={'flex'}>
                 <Box padding={'25px'}>
                     <Paper style={styles.Paper}>
-                        <Category category={categories}/>
+                        <Route path={'/'} render={() => <Category category={categories}/>}/>
                     </Paper>
                 </Box>
-               <Box margin={'20px 450px'}>
-                   <Paper style={styles.Paper}>
-                {
-                    categories.map(ct =>{
-                    let todo = todosData[ct.id]
-                    return <Todo
-                        todo={todo}
-                        key={ct.id}
-                        categoryId={ct.id}
-                    />
-                })}
-                   </Paper>
-            </Box>
+                        <Route path={'/category/todo-list'} render={() => {
+                           return <Box margin={'-30px 450px'}>
+                               <AddItemForm formText={'Enter category title'} />
+                                <Paper style={styles.Paper}>
+                            <Todos categories={categories} todos={todosData}  />
+                                </Paper>
+                            </Box>
+                        }
+                        }
+                        />
             </Box>
         </div>
     );
