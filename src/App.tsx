@@ -81,14 +81,20 @@ const App = () => {
             <Box display={'flex'}>
                 <Box padding={'25px'}>
                     <Paper style={styles.Paper}>
-                        <Route path={'/'} render={() => <Category category={categories}/>}/>
+                        <Route path={'/'} render={() => <Category
+                            category={categories}
+                        />}/>
                     </Paper>
                 </Box>
-                        <Route path={'/category/todo-list'} render={() => {
+                        <Route path={'/category/todo-list/:id'} render={(props) => {
                            return <Box margin={'-30px 450px'}>
                                <AddItemForm formText={'Enter category title'} />
                                 <Paper style={styles.Paper}>
-                            <Todos categories={categories} todos={todosData}  />
+                            <Todos
+                                categories={categories}
+                                todos={todosData}
+                                categoryId={props.match.params.id}
+                            />
                                 </Paper>
                             </Box>
                         }

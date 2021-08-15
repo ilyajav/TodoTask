@@ -25,7 +25,7 @@ export const Category: FC<CategoryType> = ({category}) => {
                             dispatch(removeCategory(ct.id))
                         }
                         return <div className={style.item} key={ct.id}>
-                           <NavLink to={`category/todo-list/${ct.id}?done=false&search=text`}>{ct.title}</NavLink>
+                           <NavLink to={`category/todo-list/${ct.id}`}>{ct.title}</NavLink>
                             <EditebleSpan />
                             <span className={style.buttonElements}>
                 <IconButton color={'primary'} onClick={onRemoveCategory}>
@@ -37,7 +37,7 @@ export const Category: FC<CategoryType> = ({category}) => {
                 </span>
                             {ct.children && ct.children.length
                                 ?
-                                <Category category={ct.children}/>
+                                <Category category={ct.children} />
                                 : null}
                         </div>
                     })

@@ -3,7 +3,7 @@ import {v1} from "uuid";
 export type CategoryStateType = {
     id: string,
     title: string,
-    children: CategoryStateType[] | []
+    children?: CategoryStateType[] | []
 }
 
 export const category1Id = v1()
@@ -12,10 +12,12 @@ export const category3Id = v1()
 
 const initialState: CategoryStateType[] = [
     {id: category1Id, title: 'Category 1', children: [
-            {id: v1(), title: 'Category 1.2', children: []},
+            {id: v1(), title: 'Category 1.1'},
         ]},
-    {id: category2Id, title: 'Category 2', children: []},
-    {id: category3Id, title: 'Category 3', children: []},
+    {id: category2Id, title: 'Category 2', children: [
+            {id: v1(), title: 'Category 2.1'}
+        ]},
+    {id: category3Id, title: 'Category 3'},
 ]
 
 type ChangeCategoryTitleType = ReturnType<typeof changeCategoryTitle>
@@ -29,7 +31,6 @@ export const categoryReducer = (state: CategoryStateType[] = initialState, actio
             const newCategory: CategoryStateType = {
                 id: action.payload.id,
                 title: action.payload.title,
-                children: [],
             }
             return [...state, newCategory]
         }
