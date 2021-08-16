@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {
     AppBar,
@@ -31,6 +31,8 @@ const App = () => {
     const status = useSelector<AppRootStateType, StatusType>(state => state.app.status)
     const categories = useSelector<AppRootStateType, CategoryStateType[]>(state => state.categoryData)
     const todosData = useSelector<AppRootStateType, TodosDataType>(state => state.todoData)
+
+    const [description, setDescription] = useState<boolean>(false)
 
     const dispatch = useDispatch()
 
@@ -83,6 +85,7 @@ const App = () => {
                     <Paper style={styles.Paper}>
                         <Route path={'/'} render={() => <Category
                             category={categories}
+                            description={description}
                         />}/>
                     </Paper>
                 </Box>
@@ -94,6 +97,8 @@ const App = () => {
                                 categories={categories}
                                 todos={todosData}
                                 categoryId={props.match.params.id}
+                                description={description}
+                                setDescription={setDescription}
                             />
                                 </Paper>
                             </Box>

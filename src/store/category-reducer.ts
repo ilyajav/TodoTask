@@ -8,12 +8,15 @@ export type CategoryStateType = {
 
 export const category1Id = v1()
 export const category1_1Id = v1()
+export const category1_2Id = v1()
 export const category2Id = v1()
 export const category3Id = v1()
 
 const initialState: CategoryStateType[] = [
     {id: category1Id, title: 'Category 1', children: [
-            {id: category1_1Id, title: 'Category 1.1'},
+            {id: category1_1Id, title: 'Category 1.1', children: [
+                    {id: category1_2Id, title: 'Category 1.2'}
+                ]},
         ]},
     {id: category2Id, title: 'Category 2', children: [
             {id: v1(), title: 'Category 2.1'}

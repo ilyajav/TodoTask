@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 import {
     AddCategoryType,
-    category1_1Id,
+    category1_1Id, category1_2Id,
     category1Id,
     category2Id,
     category3Id,
@@ -12,6 +12,7 @@ export type TodosType = {
     id: string,
     title: string,
     isDone: boolean,
+    description: string
 }
 
 export type TodosDataType = {
@@ -19,14 +20,21 @@ export type TodosDataType = {
 }
 
 type ChangeTodoStatus = ReturnType<typeof changeTodoStatus>
-type ActionTodoTypes = AddCategoryType | ChangeTodoStatus | RemoveCategoryType
+type ChangeTodoDescription = ReturnType<typeof changeTodoDescription>
+type ActionTodoTypes =
+    AddCategoryType
+    | ChangeTodoStatus
+    | RemoveCategoryType
+    | ChangeTodoDescription
 
 
 const initialState: TodosDataType = {
-    [category1Id] : [{id: v1(), title: 'Todos 1', isDone: false}],
-    [category1_1Id] : [{id: v1(), title: 'Todos 1.1', isDone: true}],
-    [category2Id] : [{id: v1(), title: 'Todos 2', isDone: true}],
-    [category3Id] : [{id: v1(), title: 'Todos 3', isDone: false}],
+    [category1Id] : [{id: v1(), title: 'Todos 1', isDone: false, description: 'todoTest'}],
+    [category1Id] : [{id: v1(), title: 'Todos 1-2', isDone: true, description: 'todoTest2'}],
+    [category1_1Id] : [{id: v1(), title: 'Todos 1.1', isDone: true, description: 'todo1_1'}],
+    [category1_2Id] : [{id: v1(), title: 'Todos 1.2', isDone: true, description: 'todo1_2'}],
+    [category2Id] : [{id: v1(), title: 'Todos 2', isDone: true, description: 'todo2'}],
+    [category3Id] : [{id: v1(), title: 'Todos 3', isDone: false, description: 'todo3'}],
 }
 
 export const todoReducer = (state: TodosDataType = initialState, action: ActionTodoTypes): TodosDataType =>{
@@ -50,6 +58,15 @@ export const todoReducer = (state: TodosDataType = initialState, action: ActionT
             delete copyState[action.payload.id]
             return copyState
         }
+        case "CHANGE-TODO-DESCRIPTION":{
+            const copyState = {...state}
+            const category = copyState[action.payload.categoryId]
+            const todo = category.find(td => td.id === action.payload.todoId)
+            if(todo){
+                todo.description = action.payload.newDescription
+            }
+            return {...copyState}
+        }
         default:
             return state
     }
@@ -63,5 +80,16 @@ export const changeTodoStatus = (categoryId: string, todoId: string, isDone: boo
             todoId,
             isDone,
         },
+    } as const
+}
+
+export const changeTodoDescription = (categoryId: string, todoId: string, newDescription: string) =>{
+    return{
+        type: 'CHANGE-TODO-DESCRIPTION',
+        payload:{
+            categoryId,
+            todoId,
+            newDescription
+        }
     } as const
 }

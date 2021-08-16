@@ -8,9 +8,12 @@ type TodoTypePropsType = {
     categories: CategoryStateType[]
     todos: TodosDataType
     categoryId: string
+    description: boolean
+    setDescription: (value: boolean) => void;
 }
 
-export const Todos: FC<TodoTypePropsType> = ({categories,todos, categoryId}) =>{
+export const Todos: FC<TodoTypePropsType> = (
+    {categories,todos, categoryId, description,setDescription}) =>{
 
     return(
         <div>
@@ -21,14 +24,32 @@ export const Todos: FC<TodoTypePropsType> = ({categories,todos, categoryId}) =>{
                    debugger
                    if(ct.id === categoryId) {
                        return <div>
-                           <Todo todo={todo} categoryId={ct.id} key={ct.id}/>
+                           <Todo
+                               todo={todo}
+                               categoryId={ct.id}
+                               key={ct.id}
+                               description={description}
+                               setDescription={setDescription}
+                               textDescription={todo.map(td => {
+                                   return td.description
+                               })}
+                           />
                        </div>
                    }else if(ct.children?.length){
-                       debugger
-                       ct.children.map(ch => {
+                      return ct.children.map(ch => {
+                           let todo = todos[ch.id]
                            if(ch.id === categoryId) {
                                return <div>
-                                   <Todo todo={todo} categoryId={ch.id} key={ct.id}/>
+                                   <Todo
+                                       todo={todo}
+                                       categoryId={ch.id}
+                                       key={ct.id}
+                                       description={description}
+                                       setDescription={setDescription}
+                                       textDescription={todo.map(td => {
+                                           return td.description
+                                       })}
+                                   />
                                </div>
                            }
                        })

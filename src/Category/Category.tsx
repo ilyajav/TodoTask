@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {FC, useState} from "react";
 import style from './Category.module.css'
 import {NavLink} from "react-router-dom";
 import {IconButton} from "@material-ui/core";
@@ -10,10 +10,10 @@ import {EditebleSpan} from "../utils/EditebleSpan";
 
 type CategoryType = {
     category: CategoryStateType[]
+    description: boolean
 }
 
-export const Category: FC<CategoryType> = ({category}) => {
-
+export const Category: FC<CategoryType> = ({category, description}) => {
     const dispatch = useDispatch()
 
     return (
@@ -37,7 +37,7 @@ export const Category: FC<CategoryType> = ({category}) => {
                 </span>
                             {ct.children && ct.children.length
                                 ?
-                                <Category category={ct.children} />
+                                <Category category={ct.children} description={description} />
                                 : null}
                         </div>
                     })
