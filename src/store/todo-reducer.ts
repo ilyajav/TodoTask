@@ -1,5 +1,12 @@
 import {v1} from "uuid";
-import {AddCategoryType, category1Id, category2Id, category3Id, RemoveCategoryType} from "./category-reducer";
+import {
+    AddCategoryType,
+    category1_1Id,
+    category1Id,
+    category2Id,
+    category3Id,
+    RemoveCategoryType
+} from "./category-reducer";
 
 export type TodosType = {
     id: string,
@@ -15,9 +22,9 @@ type ChangeTodoStatus = ReturnType<typeof changeTodoStatus>
 type ActionTodoTypes = AddCategoryType | ChangeTodoStatus | RemoveCategoryType
 
 
-
 const initialState: TodosDataType = {
     [category1Id] : [{id: v1(), title: 'Todos 1', isDone: false}],
+    [category1_1Id] : [{id: v1(), title: 'Todos 1.1', isDone: true}],
     [category2Id] : [{id: v1(), title: 'Todos 2', isDone: true}],
     [category3Id] : [{id: v1(), title: 'Todos 3', isDone: false}],
 }

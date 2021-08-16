@@ -25,7 +25,7 @@ export const Category: FC<CategoryType> = ({category}) => {
                             dispatch(removeCategory(ct.id))
                         }
                         return <div className={style.item} key={ct.id}>
-                           <NavLink to={`category/todo-list/${ct.id}`}>{ct.title}</NavLink>
+                           <NavLink to={`/category/todo-list/${ct.id}`}>{ct.title}</NavLink>
                             <EditebleSpan />
                             <span className={style.buttonElements}>
                 <IconButton color={'primary'} onClick={onRemoveCategory}>
