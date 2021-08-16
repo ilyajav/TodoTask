@@ -40,6 +40,13 @@ export const categoryReducer = (state: CategoryStateType[] = initialState, actio
         }
         case "REMOVE-CATEGORY":
             return state.filter(ch => ch.id !== action.payload.id)
+        case "CHANGE-CATEGORY-TITLE":{
+           return state
+               .map(ct => ct.id === action.payload.id
+                   ? {...ct, title: action.payload.title}
+                   : ct
+               )
+        }
         default:
             return state
     }
@@ -72,5 +79,5 @@ export const changeCategoryTitle = (id: string, title:string) =>{
             id,
             title,
         }
-    }
+    } as const
 }

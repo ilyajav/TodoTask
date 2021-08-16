@@ -91,7 +91,8 @@ const App = () => {
                 </Box>
                         <Route path={'/category/todo-list/:id'} render={(props) => {
                            return <Box margin={'-30px 450px'}>
-                               <AddItemForm formText={'Enter category title'} />
+                               {description ? null :
+                               <AddItemForm formText={'Enter category title'} />}
                                 <Paper style={styles.Paper}>
                             <Todos
                                 categories={categories}

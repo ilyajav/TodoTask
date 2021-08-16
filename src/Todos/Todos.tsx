@@ -14,15 +14,16 @@ type TodoTypePropsType = {
 
 export const Todos: FC<TodoTypePropsType> = (
     {categories,todos, categoryId, description,setDescription}) =>{
+    console.log(todos)
 
     return(
         <div>
             {
                categories.map(ct => {
-                   debugger
-                   let todo = todos[ct.id]
-                   debugger
                    if(ct.id === categoryId) {
+                       debugger
+                       let todo = todos[ct.id]
+                       debugger
                        return <div>
                            <Todo
                                todo={todo}

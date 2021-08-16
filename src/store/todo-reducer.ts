@@ -29,8 +29,10 @@ type ActionTodoTypes =
 
 
 const initialState: TodosDataType = {
-    [category1Id] : [{id: v1(), title: 'Todos 1', isDone: false, description: 'todoTest'}],
-    [category1Id] : [{id: v1(), title: 'Todos 1-2', isDone: true, description: 'todoTest2'}],
+    [category1Id] : [
+        {id: v1(), title: 'Todos 1', isDone: false, description: 'todoTest'},
+        {id: v1(), title: 'Todos 1-2', isDone: true, description: 'todoTest2'}
+    ],
     [category1_1Id] : [{id: v1(), title: 'Todos 1.1', isDone: true, description: 'todo1_1'}],
     [category1_2Id] : [{id: v1(), title: 'Todos 1.2', isDone: true, description: 'todo1_2'}],
     [category2Id] : [{id: v1(), title: 'Todos 2', isDone: true, description: 'todo2'}],
