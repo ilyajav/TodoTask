@@ -35,7 +35,11 @@ const initialState: TodosDataType = {
     ],
     [category1_1Id] : [{id: v1(), title: 'Todos 1.1', isDone: true, description: 'todo1_1'}],
     [category1_2Id] : [{id: v1(), title: 'Todos 1.2', isDone: true, description: 'todo1_2'}],
-    [category2Id] : [{id: v1(), title: 'Todos 2', isDone: true, description: 'todo2'}],
+    [category2Id] : [
+        {id: v1(), title: 'Todos 2', isDone: true, description: 'todo2'},
+        {id: v1(), title: 'Todos 2-2', isDone: true, description: 'todoTest2'}
+
+    ],
     [category3Id] : [{id: v1(), title: 'Todos 3', isDone: false, description: 'todo3'}],
 }
 

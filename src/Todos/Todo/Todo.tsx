@@ -32,7 +32,6 @@ export const Todo: FC<TodoPropsType> = (
         <div>
             {
                 todo.map(td => {
-                    debugger
                     const onChangeTodoStatus = (e: React.MouseEvent<HTMLInputElement>) => {
                         const isDone = e.currentTarget.checked
                         dispatch(changeTodoStatus(categoryId, td.id, isDone))

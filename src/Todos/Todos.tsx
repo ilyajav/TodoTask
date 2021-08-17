@@ -21,9 +21,7 @@ export const Todos: FC<TodoTypePropsType> = (
             {
                categories.map(ct => {
                    if(ct.id === categoryId) {
-                       debugger
                        let todo = todos[ct.id]
-                       debugger
                        return <div>
                            <Todo
                                todo={todo}

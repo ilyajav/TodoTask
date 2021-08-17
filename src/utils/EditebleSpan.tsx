@@ -4,20 +4,24 @@ import {useDispatch} from "react-redux";
 import {Button, IconButton, TextField} from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
 import {changeCategoryTitle} from "../store/category-reducer";
+import {NavLink} from "react-router-dom";
 
 type EditablePropsType = {
     itemTitle: string
-    editTitle: boolean,
-    id: string;
-    setEditTitle: (value: boolean) => void;
+    id: string
 }
 
 export const EditableSpan: FC<EditablePropsType> = (
-    {itemTitle, editTitle, id, setEditTitle}) =>{
+    {itemTitle, id, }) =>{
 
     const [title, setTitle] = useState<string>(itemTitle)
+    const [editTitle, setEditTitle] = useState<boolean>(false)
 
     const dispatch = useDispatch()
+
+   const onShowEdit = () =>{
+        setEditTitle(true)
+    }
 
 
    const onChangeTitle = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -49,9 +53,13 @@ export const EditableSpan: FC<EditablePropsType> = (
                          <Button onClick={cancelChangeTitle}>Cancel</Button>
                          </div>
                      </>
-                :    <IconButton color={'primary'} >
+                :
+                    <>
+                        <NavLink to={`/category/todo-list/${id}`}>{itemTitle}</NavLink>
+                    <IconButton color={'primary'} onClick={onShowEdit} >
                         <CreateIcon />
                     </IconButton>
+                </>
             }
         </>
     )

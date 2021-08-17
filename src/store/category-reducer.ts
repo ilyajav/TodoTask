@@ -29,6 +29,18 @@ export type AddCategoryType = ReturnType<typeof addCategory>
 export type RemoveCategoryType = ReturnType<typeof removeCategory>
 type ActionCategoryTypes = AddCategoryType | RemoveCategoryType | ChangeCategoryTitleType
 
+const recursiveDelete = (category: CategoryStateType[], id: string): CategoryStateType[] =>{
+     return category.filter(ct =>{
+         let arr = ct.children
+         if(ct.children){
+             arr = recursiveDelete(ct.children, id)
+         }
+         ct.children = arr
+         return ct.id !== id
+     })
+}
+
+
 export const categoryReducer = (state: CategoryStateType[] = initialState, action: ActionCategoryTypes): CategoryStateType[] => {
     switch (action.type){
         case "ADD-CATEGORY":{
@@ -39,7 +51,7 @@ export const categoryReducer = (state: CategoryStateType[] = initialState, actio
             return [...state, newCategory]
         }
         case "REMOVE-CATEGORY":
-            return state.filter(ch => ch.id !== action.payload.id)
+            return recursiveDelete(state, action.payload.id)
         case "CHANGE-CATEGORY-TITLE":{
            return state
                .map(ct => ct.id === action.payload.id
@@ -53,6 +65,7 @@ export const categoryReducer = (state: CategoryStateType[] = initialState, actio
 }
 
 export const addCategory = (id: string, title: string) =>{
+    debugger
     return{
         type: 'ADD-CATEGORY',
         payload:{
