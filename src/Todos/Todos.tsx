@@ -29,9 +29,7 @@ export const Todos: FC<TodoTypePropsType> = (
                                key={ct.id}
                                description={description}
                                setDescription={setDescription}
-                               textDescription={todo.map(td => {
-                                   return td.description
-                               })}
+
                            />
                        </div>
                    }else if(ct.children?.length){
@@ -45,9 +43,6 @@ export const Todos: FC<TodoTypePropsType> = (
                                        key={ct.id}
                                        description={description}
                                        setDescription={setDescription}
-                                       textDescription={todo.map(td => {
-                                           return td.description
-                                       })}
                                    />
                                </div>
                            }

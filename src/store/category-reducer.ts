@@ -40,6 +40,23 @@ const recursiveDelete = (category: CategoryStateType[], id: string): CategorySta
      })
 }
 
+const recursiveChangeTitle = (category: CategoryStateType[], id: string, newTitle: string): CategoryStateType[] =>{
+    return category
+        .map(ct => {
+            let arr = ct.children
+            if(ct.children) {
+                arr = recursiveChangeTitle(ct.children, id, newTitle)
+            }
+            ct.children = arr
+            if(ct.id === id){
+                ct.title = newTitle
+            }
+            return ct
+        }
+    )
+
+}
+
 
 export const categoryReducer = (state: CategoryStateType[] = initialState, action: ActionCategoryTypes): CategoryStateType[] => {
     switch (action.type){
@@ -53,11 +70,7 @@ export const categoryReducer = (state: CategoryStateType[] = initialState, actio
         case "REMOVE-CATEGORY":
             return recursiveDelete(state, action.payload.id)
         case "CHANGE-CATEGORY-TITLE":{
-           return state
-               .map(ct => ct.id === action.payload.id
-                   ? {...ct, title: action.payload.title}
-                   : ct
-               )
+           return recursiveChangeTitle(state, action.payload.id, action.payload.title)
         }
         default:
             return state

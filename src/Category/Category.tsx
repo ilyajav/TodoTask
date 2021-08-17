@@ -1,13 +1,11 @@
-import React, {FC, useState} from "react";
+import React, {FC} from "react";
 import style from './Category.module.css'
-import {NavLink} from "react-router-dom";
 import {IconButton} from "@material-ui/core";
 import {ControlPoint} from "@material-ui/icons";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {useDispatch} from "react-redux";
 import {CategoryStateType, removeCategory} from "../store/category-reducer";
 import {EditableSpan} from "../utils/EditebleSpan";
-import CreateIcon from "@material-ui/icons/Create";
 
 type CategoryType = {
     category: CategoryStateType[]

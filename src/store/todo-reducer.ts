@@ -19,13 +19,15 @@ export type TodosDataType = {
     [key: string]: TodosType[]
 }
 
-type ChangeTodoStatus = ReturnType<typeof changeTodoStatus>
-type ChangeTodoDescription = ReturnType<typeof changeTodoDescription>
+type ChangeTodoStatusType = ReturnType<typeof changeTodoStatus>
+type ChangeTodoDescriptionType = ReturnType<typeof changeTodoDescription>
+type ChangeTodoTitleType = ReturnType<typeof changeTodoTitle>
 type ActionTodoTypes =
     AddCategoryType
-    | ChangeTodoStatus
+    | ChangeTodoStatusType
     | RemoveCategoryType
-    | ChangeTodoDescription
+    | ChangeTodoDescriptionType
+    | ChangeTodoTitleType
 
 
 const initialState: TodosDataType = {
@@ -73,6 +75,15 @@ export const todoReducer = (state: TodosDataType = initialState, action: ActionT
             }
             return {...copyState}
         }
+        case "CHANGE-TODO-TITLE":{
+            const copyState = {...state}
+            const category = copyState[action.payload.categoryId]
+            const todo = category.find(td => td.id === action.payload.todoId)
+            if(todo){
+                todo.title = action.payload.title
+            }
+            return {...copyState}
+        }
         default:
             return state
     }
@@ -96,6 +107,17 @@ export const changeTodoDescription = (categoryId: string, todoId: string, newDes
             categoryId,
             todoId,
             newDescription
+        }
+    } as const
+}
+
+export const changeTodoTitle = (categoryId: string, todoId: string, title: string) =>{
+    return{
+        type: 'CHANGE-TODO-TITLE',
+        payload:{
+            categoryId,
+            todoId,
+            title,
         }
     } as const
 }
