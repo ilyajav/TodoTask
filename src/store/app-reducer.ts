@@ -1,27 +1,27 @@
-
 export type StatusType = 'loading' | 'succeeded'
+// eslint-disable-next-line no-use-before-define
 export type InitialStateAppType = typeof initialState
+// eslint-disable-next-line no-use-before-define
 type ChangeStatusType = ReturnType<typeof changeStatus>
 type AppActionTypes = ChangeStatusType
 
 const initialState = {
-    status: 'loading' as StatusType
-}
+    status: 'loading' as StatusType,
+    showDone: false,
+};
 
-export const appReducer = (state: InitialStateAppType = initialState, action: AppActionTypes):InitialStateAppType =>{
-    switch (action.type){
-        case "APP/SET-STATUS":
-            return {...state, status: action.payload.status}
+export const appReducer = (state: InitialStateAppType = initialState, action: AppActionTypes): InitialStateAppType => {
+    switch (action.type) {
+        case 'APP/SET-STATUS':
+            return {...state, status: action.payload.status};
         default:
-            return state
+            return state;
     }
-}
+};
 
-export const changeStatus = (status: StatusType) =>{
-     return{
-         type: 'APP/SET-STATUS',
-         payload:{
-             status,
-         },
-     }
-}
+export const changeStatus = (status: StatusType) => ({
+    type: 'APP/SET-STATUS',
+    payload: {
+        status,
+    },
+});

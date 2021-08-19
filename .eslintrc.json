@@ -1,0 +1,70 @@
+{
+  "extends": [
+    "airbnb"
+  ],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    },
+    "useJSXTextNode": false,
+    "sourceType": "module",
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./"
+  },
+  "plugins": ["@typescript-eslint", "import", "react", "react-hooks"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/type-annotation-spacing": ["error"],
+    "arrow-parens": ["error", "as-needed"],
+    "comma-dangle": ["error", "always-multiline"],
+    "import/extensions": "off",
+    "import/no-default-export": [2],
+    // this rule switched off because we use TS and webpack which responsible for module resolution
+    "import/no-extraneous-dependencies": ["off", {
+      "devDependencies": ["**/*.test.tsx", "**/*.test.ts", "**/*.stories.tsx"],
+      "peerDependencies": true
+    }],
+    "import/prefer-default-export": "off",
+    "indent": ["error", 4, {"SwitchCase": 1}],
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/interactive-supports-focus": "off",
+    "jsx-a11y/label-has-for": [ 2, {
+      "required": {
+        "every": [ "id" ]
+      }
+    }],
+    "max-len": ["error", {"code":  120}],
+    "multiline-ternary": ["error", "always-multiline"],
+    "no-shadow": "off",
+    "no-underscore-dangle": ["error", { "allow": ["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] }],
+    "no-unused-vars": "off",
+    "object-curly-spacing": ["error", "never"],
+    "operator-linebreak": ["error", "after", { "overrides": { "?": "before", ":": "before" } }],
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react/button-has-type": "off",
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "react/jsx-indent": ["error", 4],
+    "react/jsx-indent-props": ["error", 4],
+    // Block of things that block dep update
+    "react/jsx-props-no-spreading": 0,
+    "react/jsx-uses-vars": 2,
+    "react/prop-types": "off",
+    "react/sort-comp": 2,
+    "react/state-in-constructor": 0,
+    "react/static-property-placement": ["error", "static public field"]
+  }
+
+}
