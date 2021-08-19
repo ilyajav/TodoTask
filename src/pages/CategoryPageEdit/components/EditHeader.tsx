@@ -1,6 +1,15 @@
 // eslint-disable-next-line no-use-before-define
-import React from 'react';
+import React, {FC} from 'react';
 
-export const EditHeader = () => (
-    <div />
+type EditHeaderPropsType = {
+    todoTitle: string
+}
+
+// eslint-disable-next-line no-debugger
+debugger;
+export const EditHeader: FC<EditHeaderPropsType> = ({todoTitle}) => (
+    <div>
+        Edit
+        {todoTitle}
+    </div>
 );

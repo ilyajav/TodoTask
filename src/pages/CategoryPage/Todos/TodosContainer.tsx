@@ -27,10 +27,11 @@ export const TodosContainer: FC<TodoTypePropsType> = (
                     return (
                         <div key={td.id} className={style.item}>
                             <Todo
-                                todo={todo}
-                                categoryId={categoryId}
                                 onChangeTodoStatus={onChangeTodoStatus}
                                 todoTitle={td.title}
+                                isDone={td.isDone}
+                                todoId={td.id}
+                                key={td.id}
                             />
                         </div>
                     );

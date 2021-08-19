@@ -4,23 +4,28 @@ import {CategoryStateType} from '../store/category-reducer';
 import {Category} from '../pages/CategoryPage/Category';
 
 type RecursiveTreePropsType = {
-    data: CategoryStateType
+    data: CategoryStateType;
 }
 
 export const RecursiveTree: FC<RecursiveTreePropsType> = ({data}) => {
-    const hasChild = !!data.children;
+    let hasChild: {id: string, title: string}[];
+    if (data.children) {
+        hasChild = data.children;
+    } else {
+        return <></>;
+    }
 
     return (
         <div>
             {
-                hasChild && (
+                hasChild && hasChild.map(hc => (
                     <Category
-                        title={data.title}
-                        id={data.id}
-                        category={data.children}
+                        title={hc.title}
+                        id={hc.id}
+                        category={hc}
                     />
-                )
-}
+                ))
+            }
         </div>
     );
 };

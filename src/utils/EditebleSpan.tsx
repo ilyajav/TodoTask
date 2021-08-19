@@ -4,7 +4,8 @@ import {useDispatch} from 'react-redux';
 import {Button, IconButton, TextField} from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import {Link} from 'react-router-dom';
-import {changeCategoryTitle} from '../store/category-reducer';
+import DeleteIcon from '@material-ui/icons/Delete';
+import {changeCategoryTitle, removeCategory} from '../store/category-reducer';
 
 type EditablePropsType = {
     itemTitle: string
@@ -34,6 +35,9 @@ export const EditableSpan: FC<EditablePropsType> = (
         setEditTitle(false);
         setTitle(itemTitle);
     };
+    const RemoveCategory = () => {
+        dispatch(removeCategory(id));
+    };
 
     return (
         <>
@@ -58,6 +62,9 @@ export const EditableSpan: FC<EditablePropsType> = (
                             <Link to={`?categoryId=${id}`}>{itemTitle}</Link>
                             <IconButton color="primary" onClick={onShowEdit}>
                                 <CreateIcon />
+                            </IconButton>
+                            <IconButton color="primary" onClick={RemoveCategory}>
+                                <DeleteIcon />
                             </IconButton>
                         </>
                     )
