@@ -7,13 +7,13 @@ import {EditableSpan} from '../../utils/EditebleSpan';
 import {CategoryStateType} from '../../store/category-reducer';
 import {RecursiveTree} from '../../components/RecursiveTree';
 
-type CategoryType = {
+type CategoryPropsType = {
     title: string
     id: string,
     category: CategoryStateType
 }
 
-export const Category: FC<CategoryType> = (
+export const Category: FC<CategoryPropsType> = (
     {
         title,
         id,

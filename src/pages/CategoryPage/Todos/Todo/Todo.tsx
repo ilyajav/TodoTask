@@ -25,7 +25,7 @@ export const Todo: FC<TodoPropsType> = (
         <input type="checkbox" checked={isDone} onClick={onChangeTodoStatus} />
         <span className={style.item}>{todoTitle}</span>
         <IconButton color="primary">
-            <Link to={`/todosEdit?edit=${todoId}`}><CreateIcon /></Link>
+            <Link to={`/todosEdit?todoId=${todoId}`}><CreateIcon /></Link>
         </IconButton>
     </div>
 
