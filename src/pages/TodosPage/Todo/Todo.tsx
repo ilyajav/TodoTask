@@ -22,7 +22,7 @@ export const Todo: FC<TodoPropsType> = (
     <div>
         <input type="checkbox" checked={isDone} onClick={onChangeTodoStatus} />
         <span className={style.item}>{todoTitle}</span>
-        <IconButton color="primary">
+        <IconButton color="primary" className={style.icon}>
             <CreateIcon />
         </IconButton>
     </div>
