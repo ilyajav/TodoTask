@@ -7,7 +7,7 @@ import {
 import {Todo} from './Todo/Todo';
 import style from './Todos.module.css';
 import {AppRootStateType} from '../../store/store';
-import {changeTodoStatus, todoDone, TodosType} from '../../store/todo-reducer';
+import {changeTodoStatus, TodosType} from '../../store/todo-reducer';
 import {Header} from './compnents/Header/Header';
 import {changeStatus, StatusType} from '../../store/app-reducer';
 import {AddItemForm} from '../../utils/AddItemForm';
@@ -24,9 +24,10 @@ export const TodosContainer = () => {
     const params = new URLSearchParams(search);
     const doneStatus = params.get('showDone');
 
-    const onTodoDone = () => {
-        dispatch(todoDone(Boolean(doneStatus)));
-    };
+    let filteredTodo = todosData;
+    if (doneStatus === 'true') {
+        filteredTodo = todosData.filter(td => td.isDone);
+    }
 
     const styles = {
         Paper: {
@@ -41,7 +42,6 @@ export const TodosContainer = () => {
         <div>
             <Header
                 status={status}
-                changeDone={onTodoDone}
             />
             <Container fixed>
                 <Grid
@@ -54,7 +54,7 @@ export const TodosContainer = () => {
             <Box margin="10px 400px">
                 <Paper style={styles.Paper}>
                     {
-                        todosData.map(td => {
+                        filteredTodo.map(td => {
                             const onChangeTodoStatus = (e: React.MouseEvent<HTMLInputElement>) => {
                                 const isDone = e.currentTarget.checked;
                                 dispatch(changeTodoStatus(td.id, isDone));

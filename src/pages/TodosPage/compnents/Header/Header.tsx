@@ -2,21 +2,19 @@ import {
     AppBar, Grid, LinearProgress, TextField, Toolbar, Typography,
 } from '@material-ui/core';
 // eslint-disable-next-line no-use-before-define
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {useHistory} from 'react-router-dom';
 import {StatusType} from '../../../../store/app-reducer';
 
 type HeaderPropsType = {
     status: StatusType
-    changeDone: () => void;
 }
 
-export const Header: FC<HeaderPropsType> = ({status, changeDone}) => {
+export const Header: FC<HeaderPropsType> = ({status}) => {
     const history = useHistory();
 
     const onChange = (e: React.MouseEvent<HTMLInputElement>) => {
         history.push(`?showDone=${e.currentTarget.checked}`);
-        changeDone();
     };
 
     return (
