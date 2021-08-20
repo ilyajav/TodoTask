@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import {Button, IconButton, TextField} from '@material-ui/core';
 import {useDispatch} from 'react-redux';
+import {addTodo} from '../store/todo-reducer';
 
 type AddItemForm = {
     formText: string
@@ -24,6 +25,11 @@ export const AddItemForm: FC<AddItemForm> = ({formText}) => {
             setTitle('');
         }
     };
+    const onAddTodo = () => {
+        if (title.trim()) {
+            dispatch(addTodo(title.trim()));
+        }
+    };
 
     return (
         <div>
@@ -35,7 +41,7 @@ export const AddItemForm: FC<AddItemForm> = ({formText}) => {
                 onKeyPress={onPressKey}
             />
             <IconButton color="primary">
-                <Button>Add</Button>
+                <Button onClick={onAddTodo}>Add</Button>
             </IconButton>
         </div>
     );

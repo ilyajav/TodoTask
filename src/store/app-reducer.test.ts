@@ -1,16 +1,16 @@
-import {appReducer, changeStatus, InitialStateAppType} from "./app-reducer";
+import {appReducer, changeStatus, InitialStateAppType} from './app-reducer';
 
-let state: InitialStateAppType
+let state: InitialStateAppType;
 
-beforeEach(() =>{
+beforeEach(() => {
     state = {
-        status: 'loading'
-    }
-})
+        status: 'loading',
+    };
+});
 
-test('status should be changed', () =>{
-    const action = changeStatus('succeeded')
-    const endState = appReducer(state, action)
+test('status should be changed', () => {
+    const action = changeStatus('succeeded');
+    const endState = appReducer(state, action);
 
-    expect(endState.status).toBe('succeeded')
-})
+    expect(endState.status).toBe('succeeded');
+});

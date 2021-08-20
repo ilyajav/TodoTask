@@ -9,7 +9,9 @@ export type TodosType = {
 // eslint-disable-next-line no-use-before-define
 type ChangeTodoStatusType = ReturnType<typeof changeTodoStatus>
 // eslint-disable-next-line no-use-before-define
-type ActionTodoTypes = ChangeTodoStatusType
+type AddTodoType = ReturnType<typeof addTodo>
+// eslint-disable-next-line no-use-before-define
+type ActionTodoTypes = ChangeTodoStatusType | AddTodoType
 
 const initialState: TodosType[] = [
     {
@@ -34,6 +36,14 @@ export const todoReducer = (state: TodosType[] = initialState, action: ActionTod
         case 'CHANGE-TODO-STATUS': {
             return state.map(td => (td.id === action.payload.todoId ? {...td, isDone: action.payload.isDone} : td));
         }
+        case 'ADD-TODO': {
+            const newTodo: TodosType = {
+                id: v1(),
+                title: action.payload.title,
+                isDone: false,
+            };
+            return [newTodo, ...state];
+        }
         default:
             return state;
     }
@@ -44,5 +54,12 @@ export const changeTodoStatus = (todoId: string, isDone: boolean) => ({
     payload: {
         todoId,
         isDone,
+    },
+} as const);
+
+export const addTodo = (title: string) => ({
+    type: 'ADD-TODO',
+    payload: {
+        title,
     },
 } as const);
