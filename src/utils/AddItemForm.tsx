@@ -19,15 +19,17 @@ export const AddItemForm: FC<AddItemForm> = ({formText}) => {
     const onChangeTitle = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
     };
+    const onAddTodo = () => {
+        if (title.trim()) {
+            dispatch(addTodo(title.trim()));
+            setTitle('');
+        }
+    };
     const onPressKey = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.charCode === 13) {
             // eslint-disable-next-line no-use-before-define
             setTitle('');
-        }
-    };
-    const onAddTodo = () => {
-        if (title.trim()) {
-            dispatch(addTodo(title.trim()));
+            onAddTodo();
         }
     };
 

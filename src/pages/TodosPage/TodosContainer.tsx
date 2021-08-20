@@ -7,7 +7,7 @@ import {
 import {Todo} from './Todo/Todo';
 import style from './Todos.module.css';
 import {AppRootStateType} from '../../store/store';
-import {changeTodoStatus, TodosType} from '../../store/todo-reducer';
+import {changeTodoStatus, todoDone, TodosType} from '../../store/todo-reducer';
 import {Header} from './compnents/Header/Header';
 import {changeStatus, StatusType} from '../../store/app-reducer';
 import {AddItemForm} from '../../utils/AddItemForm';
@@ -16,10 +16,17 @@ export const TodosContainer = () => {
     const todosData = useSelector<AppRootStateType, TodosType[]>(state => state.todoData);
     const status = useSelector<AppRootStateType, StatusType>(state => state.app.status);
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(changeStatus('succeeded'));
     }, []);
+
+    const {search} = window.location;
+    const params = new URLSearchParams(search);
+    const doneStatus = params.get('showDone');
+
+    const onTodoDone = () => {
+        dispatch(todoDone(Boolean(doneStatus)));
+    };
 
     const styles = {
         Paper: {
@@ -32,7 +39,10 @@ export const TodosContainer = () => {
 
     return (
         <div>
-            <Header status={status} />
+            <Header
+                status={status}
+                changeDone={onTodoDone}
+            />
             <Container fixed>
                 <Grid
                     container
