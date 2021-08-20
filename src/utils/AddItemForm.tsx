@@ -4,8 +4,6 @@ import React, {
 } from 'react';
 import {Button, IconButton, TextField} from '@material-ui/core';
 import {useDispatch} from 'react-redux';
-import {v1} from 'uuid';
-import {addCategory} from '../store/category-reducer';
 
 type AddItemForm = {
     formText: string
@@ -23,14 +21,6 @@ export const AddItemForm: FC<AddItemForm> = ({formText}) => {
     const onPressKey = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.charCode === 13) {
             // eslint-disable-next-line no-use-before-define
-            onAddCategory();
-            setTitle('');
-        }
-    };
-    const onAddCategory = () => {
-        const newId = v1();
-        if (title.trim()) {
-            dispatch(addCategory(newId, title.trim()));
             setTitle('');
         }
     };
@@ -45,7 +35,7 @@ export const AddItemForm: FC<AddItemForm> = ({formText}) => {
                 onKeyPress={onPressKey}
             />
             <IconButton color="primary">
-                <Button onClick={onAddCategory}>Add</Button>
+                <Button>Add</Button>
             </IconButton>
         </div>
     );

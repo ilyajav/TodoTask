@@ -7,7 +7,6 @@ type AppActionTypes = ChangeStatusType
 
 const initialState = {
     status: 'loading' as StatusType,
-    showDone: false,
 };
 
 export const appReducer = (state: InitialStateAppType = initialState, action: AppActionTypes): InitialStateAppType => {

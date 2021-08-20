@@ -6,11 +6,10 @@ import React, {FC} from 'react';
 import {StatusType} from '../../../../store/app-reducer';
 
 type HeaderPropsType = {
-    showDone: boolean,
     status: StatusType
 }
 
-export const Header: FC<HeaderPropsType> = ({showDone, status}) => (
+export const Header: FC<HeaderPropsType> = ({status}) => (
     <div className="App">
         <AppBar position="static">
             <Toolbar>
@@ -24,7 +23,7 @@ export const Header: FC<HeaderPropsType> = ({showDone, status}) => (
                 >
                     <Grid item xs={2}>
                         <div>
-                            <Checkbox color="secondary" checked={showDone} />
+                            <Checkbox color="secondary" />
                             Show done
                         </div>
                     </Grid>

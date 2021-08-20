@@ -2,14 +2,13 @@
 import React, {FC} from 'react';
 import {IconButton} from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
-import {Link} from 'react-router-dom';
 import style from './Todo.module.css';
+import {AddItemForm} from '../../../utils/AddItemForm';
 
 type TodoPropsType = {
     onChangeTodoStatus: (e: React.MouseEvent<HTMLInputElement>) => void;
     todoTitle: string
     isDone: boolean;
-    todoId: string;
 }
 
 export const Todo: FC<TodoPropsType> = (
@@ -17,7 +16,6 @@ export const Todo: FC<TodoPropsType> = (
         onChangeTodoStatus,
         todoTitle,
         isDone,
-        todoId,
     }
 ) => (
 
@@ -25,8 +23,7 @@ export const Todo: FC<TodoPropsType> = (
         <input type="checkbox" checked={isDone} onClick={onChangeTodoStatus} />
         <span className={style.item}>{todoTitle}</span>
         <IconButton color="primary">
-            <Link to={`/todosEdit?todoId=${todoId}`}><CreateIcon /></Link>
+            <CreateIcon />
         </IconButton>
     </div>
-
 );
