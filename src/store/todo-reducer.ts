@@ -15,19 +15,19 @@ type ActionTodoTypes = ChangeTodoStatusType | AddTodoType
 
 const initialState: TodosType[] = [
     {
-        id: v1(), title: 'Todo1', isDone: false,
+        id: v1(), title: 'Cat', isDone: false,
     },
     {
-        id: v1(), title: 'Todo 2', isDone: true,
+        id: v1(), title: 'Dog', isDone: true,
     },
     {
-        id: v1(), title: 'Todo 3', isDone: false,
+        id: v1(), title: 'Elephant', isDone: false,
     },
     {
-        id: v1(), title: 'Todo 4', isDone: true,
+        id: v1(), title: 'Mouse', isDone: true,
     },
     {
-        id: v1(), title: 'Todo 5', isDone: true,
+        id: v1(), title: 'Horse', isDone: true,
     },
 ];
 

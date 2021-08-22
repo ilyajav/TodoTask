@@ -5,7 +5,7 @@ import {
     Box, Container, Grid, Paper,
 } from '@material-ui/core';
 import {Todo} from './Todo/Todo';
-import style from './Todos.module.css';
+import style from './TodosContainer.module.css';
 import {AppRootStateType} from '../../store/store';
 import {changeTodoStatus, TodosType} from '../../store/todo-reducer';
 import {Header} from './compnents/Header/Header';
@@ -23,17 +23,26 @@ export const TodosContainer = () => {
     const {search} = window.location;
     const params = new URLSearchParams(search);
     const doneStatus = params.get('showDone');
+    const searchTodo = params.get('searchText');
 
     let filteredTodo = todosData;
     if (doneStatus === 'true') {
         filteredTodo = todosData.filter(td => td.isDone);
     }
+    if (searchTodo) {
+        // eslint-disable-next-line array-callback-return
+        filteredTodo = todosData.filter(td => {
+            const title = td.title.toLowerCase();
+            const filter = searchTodo.toLowerCase();
+            return title.includes(filter);
+        });
+    }
 
     const styles = {
         Paper: {
             padding: 10,
-            height: 300,
-            width: 500,
+            height: 350,
+            width: 600,
             overflowY: 'auto' as 'auto',
         },
     };

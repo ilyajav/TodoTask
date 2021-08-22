@@ -2,7 +2,9 @@ import {
     AppBar, Grid, LinearProgress, TextField, Toolbar, Typography,
 } from '@material-ui/core';
 // eslint-disable-next-line no-use-before-define
-import React, {FC} from 'react';
+import React, {
+    ChangeEvent, FC, useEffect, useState,
+} from 'react';
 import {useHistory} from 'react-router-dom';
 import {StatusType} from '../../../../store/app-reducer';
 
@@ -12,9 +14,22 @@ type HeaderPropsType = {
 
 export const Header: FC<HeaderPropsType> = ({status}) => {
     const history = useHistory();
+    const [searchText, setSearchText] = useState<string>('');
+
+    useEffect(() => {
+        if (searchText) {
+            history.push(`?searchText=${searchText}`);
+        } else {
+            history.push('/todos');
+        }
+    }, [searchText]);
 
     const onChange = (e: React.MouseEvent<HTMLInputElement>) => {
         history.push(`?showDone=${e.currentTarget.checked}`);
+    };
+    const onSearchChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        const newText = e.currentTarget.value;
+        setSearchText(newText);
     };
 
     return (
@@ -41,7 +56,10 @@ export const Header: FC<HeaderPropsType> = ({status}) => {
                                     <TextField
                                         id="searchForm"
                                         label="search"
+                                        color="secondary"
                                         variant="filled"
+                                        value={searchText}
+                                        onChange={onSearchChange}
                                     />
                                 </form>
                             </Grid>

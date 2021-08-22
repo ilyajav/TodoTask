@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React, {FC} from 'react';
-import {IconButton} from '@material-ui/core';
+import {Grid, IconButton} from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import style from './Todo.module.css';
 
@@ -19,10 +19,16 @@ export const Todo: FC<TodoPropsType> = (
 ) => (
 
     <div>
-        <input type="checkbox" checked={isDone} onClick={onChangeTodoStatus} />
-        <span className={style.item}>{todoTitle}</span>
-        <IconButton color="primary">
-            <CreateIcon className={style.icon} />
-        </IconButton>
+        <Grid container direction="row" justifyContent="space-between">
+            <div>
+                <input type="checkbox" checked={isDone} onClick={onChangeTodoStatus} />
+                <span className={style.item}>{todoTitle}</span>
+            </div>
+            <div>
+                <IconButton color="primary">
+                    <CreateIcon className={style.icon} />
+                </IconButton>
+            </div>
+        </Grid>
     </div>
 );
