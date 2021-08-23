@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {
     Box,
-    Checkbox,
+    Checkbox, Container,
     Grid,
     IconButton, Paper,
 } from '@material-ui/core';
@@ -31,15 +31,13 @@ export const Todo = React.memo((
     const styles = {
         Paper: {
             padding: 10,
-            height: 350,
-            width: 600,
             overflowY: 'auto' as 'auto',
             margin: '10px 350px',
         },
     };
 
     return (
-        <Box>
+        <Box className={style.itemBlock}>
             <Paper style={styles.Paper}>
                 <Grid container direction="row" justifyContent="space-between">
                     <div>

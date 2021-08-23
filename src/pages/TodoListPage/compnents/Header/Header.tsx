@@ -12,6 +12,7 @@ import React, {
     useState,
 } from 'react';
 import {useHistory} from 'react-router-dom';
+import {ROUTING_PATHS} from '../../../../Routes';
 
 export const Header = () => {
     const history = useHistory();
@@ -21,7 +22,7 @@ export const Header = () => {
         if (searchText) {
             history.push(`?searchText=${searchText}`);
         } else {
-            history.push('/todos');
+            history.push(ROUTING_PATHS.TODO_LIST_PAGE_ROUTE);
         }
     }, [searchText, history]);
 

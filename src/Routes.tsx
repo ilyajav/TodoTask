@@ -3,7 +3,7 @@ import React from 'react';
 
 import {TodoListContainer} from './pages/TodoListPage/TodoListContainer';
 
-enum ROUTING_PATHS {
+export enum ROUTING_PATHS {
     TODO_LIST_PAGE_ROUTE = '/todos',
 }
 

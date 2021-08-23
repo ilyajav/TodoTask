@@ -10,8 +10,6 @@ import {
     TodosType,
 } from './index';
 
-import style from './TodosContainer.module.css';
-
 enum PARAMS {
     SHOW_DONE = 'showDone',
     SEARCH_TEXT = 'searchText'
@@ -49,7 +47,7 @@ export const TodoListContainer = () => {
             <AddItemForm formText="Enter new Todo name" />
             {
                 filteredTodo.map(td => (
-                    <div key={td.id} className={style.item}>
+                    <div key={td.id}>
                         <Todo
                             onChangeTodoStatus={onChangeTodoStatus}
                             todoTitle={td.title}

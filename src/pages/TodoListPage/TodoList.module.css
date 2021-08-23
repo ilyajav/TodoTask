@@ -9,3 +9,7 @@
 .icon{
     margin-left: 300px;
 }
+
+.itemBlock{
+    border: 1px solid #000000FF;
+}
