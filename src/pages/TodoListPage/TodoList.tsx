@@ -1,9 +1,10 @@
 import React, {ChangeEvent} from 'react';
 import {
     Box,
-    Checkbox, Container,
+    Checkbox,
     Grid,
-    IconButton, Paper,
+    IconButton,
+    Paper,
 } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 
@@ -29,16 +30,16 @@ export const Todo = React.memo((
     };
 
     const styles = {
-        Paper: {
+        Box: {
             padding: 10,
-            overflowY: 'auto' as 'auto',
-            margin: '10px 350px',
+            margin: '0 350px',
+            border: '1px solid black',
         },
     };
 
     return (
-        <Box className={style.itemBlock}>
-            <Paper style={styles.Paper}>
+        <Box style={styles.Box}>
+            <Paper>
                 <Grid container direction="row" justifyContent="space-between">
                     <div>
                         <Checkbox checked={isDone} color="primary" onChange={changeTodoStatus} />

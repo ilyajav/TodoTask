@@ -20,14 +20,14 @@ export const Header = () => {
 
     useEffect(() => {
         if (searchText) {
-            history.push(`?searchText=${searchText}`);
+            history.push(`${ROUTING_PATHS.TODO_SEARCH}${searchText}`);
         } else {
             history.push(ROUTING_PATHS.TODO_LIST_PAGE_ROUTE);
         }
     }, [searchText, history]);
 
     const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
-        history.push(`?showDone=${e.currentTarget.checked}`);
+        history.push(`${ROUTING_PATHS.TODO_SHOW_DONE}${e.currentTarget.checked}`);
     };
     const onSearchChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const newText = e.currentTarget.value;

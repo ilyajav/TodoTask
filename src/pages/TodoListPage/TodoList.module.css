@@ -11,5 +11,5 @@
 }
 
 .itemBlock{
-    border: 1px solid #000000FF;
+    overflow-y: scroll;
 }

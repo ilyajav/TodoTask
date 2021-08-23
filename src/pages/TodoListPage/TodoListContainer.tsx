@@ -1,13 +1,13 @@
 import React, {ChangeEvent, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AppRootStateType} from '../../store/store';
 import {Header} from './compnents/Header/Header';
-import {AddItemForm} from '../../utils/AddItemForm';
 import {Todo} from './TodoList';
 import {
     changeTodoStatus,
     TodosType,
+    AppRootStateType,
+    AddItemForm,
 } from './index';
 
 enum PARAMS {

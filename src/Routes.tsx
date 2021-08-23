@@ -5,6 +5,8 @@ import {TodoListContainer} from './pages/TodoListPage/TodoListContainer';
 
 export enum ROUTING_PATHS {
     TODO_LIST_PAGE_ROUTE = '/todos',
+    TODO_SEARCH = '?searchText=',
+    TODO_SHOW_DONE = '?showDone=',
 }
 
 export const routers = (
