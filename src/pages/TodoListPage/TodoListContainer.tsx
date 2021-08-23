@@ -1,15 +1,14 @@
-import React, {useCallback} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-    Box,
-    Paper,
-} from '@material-ui/core';
 
 import {AppRootStateType} from '../../store/store';
-import {changeTodoStatus, TodosType} from '../../store/todo-reducer';
 import {Header} from './compnents/Header/Header';
 import {AddItemForm} from '../../utils/AddItemForm';
 import {Todo} from './TodoList';
+import {
+    changeTodoStatus,
+    TodosType,
+} from './index';
 
 import style from './TodosContainer.module.css';
 
@@ -27,7 +26,7 @@ export const TodoListContainer = () => {
     const doneStatus = params.get(PARAMS.SHOW_DONE);
     const searchTodo = params.get(PARAMS.SEARCH_TEXT);
 
-    const onChangeTodoStatus = useCallback((e: React.MouseEvent<HTMLInputElement>, id: string) => {
+    const onChangeTodoStatus = useCallback((e: ChangeEvent<HTMLInputElement>, id: string) => {
         const isDone = e.currentTarget.checked;
         dispatch(changeTodoStatus(id, isDone));
     }, [dispatch]);
@@ -44,37 +43,23 @@ export const TodoListContainer = () => {
         });
     }
 
-    const styles = {
-        Paper: {
-            padding: 10,
-            height: 350,
-            width: 600,
-            overflowY: 'auto' as 'auto',
-            margin: '10px 350px',
-        },
-    };
-
     return (
         <div>
             <Header />
             <AddItemForm formText="Enter new Todo name" />
-            <Box>
-                <Paper style={styles.Paper}>
-                    {
-                        filteredTodo.map(td => (
-                            <div key={td.id} className={style.item}>
-                                <Todo
-                                    onChangeTodoStatus={onChangeTodoStatus}
-                                    todoTitle={td.title}
-                                    isDone={td.isDone}
-                                    key={td.id}
-                                    id={td.id}
-                                />
-                            </div>
-                        ))
-                    }
-                </Paper>
-            </Box>
+            {
+                filteredTodo.map(td => (
+                    <div key={td.id} className={style.item}>
+                        <Todo
+                            onChangeTodoStatus={onChangeTodoStatus}
+                            todoTitle={td.title}
+                            isDone={td.isDone}
+                            key={td.id}
+                            id={td.id}
+                        />
+                    </div>
+                ))
+            }
         </div>
     );
 };

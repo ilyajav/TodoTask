@@ -1,5 +1,6 @@
 import {
     AppBar,
+    Checkbox,
     Grid,
     TextField,
     Toolbar,
@@ -24,7 +25,7 @@ export const Header = () => {
         }
     }, [searchText, history]);
 
-    const onChangeStatus = (e: React.MouseEvent<HTMLInputElement>) => {
+    const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
         history.push(`?showDone=${e.currentTarget.checked}`);
     };
     const onSearchChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -46,7 +47,7 @@ export const Header = () => {
                     >
                         <Grid item xs={2}>
                             <div>
-                                <input type="checkbox" onClick={onChangeStatus} />
+                                <Checkbox onChange={onChangeStatus} />
                                 Show done
                             </div>
                         </Grid>
