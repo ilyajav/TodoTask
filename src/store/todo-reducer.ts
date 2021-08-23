@@ -6,11 +6,13 @@ export type TodosType = {
     isDone: boolean,
 }
 
-// eslint-disable-next-line no-use-before-define
+enum ACTIONS_TYPES {
+    CHANGE_TODO_STATUS = 'CHANGE-TODO-STATUS',
+    ADD_TODO = 'ADD-TODO',
+}
+
 type ChangeTodoStatusType = ReturnType<typeof changeTodoStatus>
-// eslint-disable-next-line no-use-before-define
 type AddTodoType = ReturnType<typeof addTodo>
-// eslint-disable-next-line no-use-before-define
 type ActionTodoTypes = ChangeTodoStatusType | AddTodoType
 
 const initialState: TodosType[] = [
@@ -33,10 +35,10 @@ const initialState: TodosType[] = [
 
 export const todoReducer = (state: TodosType[] = initialState, action: ActionTodoTypes): TodosType[] => {
     switch (action.type) {
-        case 'CHANGE-TODO-STATUS': {
+        case ACTIONS_TYPES.CHANGE_TODO_STATUS: {
             return state.map(td => (td.id === action.payload.todoId ? {...td, isDone: action.payload.isDone} : td));
         }
-        case 'ADD-TODO': {
+        case ACTIONS_TYPES.ADD_TODO: {
             const newTodo: TodosType = {
                 id: v1(),
                 title: action.payload.title,
@@ -50,7 +52,7 @@ export const todoReducer = (state: TodosType[] = initialState, action: ActionTod
 };
 
 export const changeTodoStatus = (todoId: string, isDone: boolean) => ({
-    type: 'CHANGE-TODO-STATUS',
+    type: ACTIONS_TYPES.CHANGE_TODO_STATUS,
     payload: {
         todoId,
         isDone,
@@ -58,7 +60,7 @@ export const changeTodoStatus = (todoId: string, isDone: boolean) => ({
 } as const);
 
 export const addTodo = (title: string) => ({
-    type: 'ADD-TODO',
+    type: ACTIONS_TYPES.ADD_TODO,
     payload: {
         title,
     },

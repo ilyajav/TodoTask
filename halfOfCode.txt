@@ -1,5 +1,0 @@
-<Box margin={'-30px 450px'}>
-                               {description ? null :
-                               <AddItemForm formText={'Enter new todo name'} />}
-                                <Paper style={styles.Paper}>
-                                </Paper>

@@ -1,6 +1,10 @@
 import {v1} from 'uuid';
+
 import {
-    addTodo, todoReducer, TodosType, changeTodoStatus,
+    addTodo,
+    todoReducer,
+    TodosType,
+    changeTodoStatus,
 } from './todo-reducer';
 
 let state: TodosType[];

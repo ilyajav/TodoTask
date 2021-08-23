@@ -1,11 +1,23 @@
-import {createStore, combineReducers} from 'redux';
-import {appReducer} from './app-reducer';
+import {
+    createStore,
+    combineReducers,
+    applyMiddleware,
+    compose,
+} from 'redux';
+
 import {todoReducer} from './todo-reducer';
 
 const rootReducer = combineReducers({
-    app: appReducer,
     todoData: todoReducer,
 });
-export const store = createStore(rootReducer);
+
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware()));
 
 export type AppRootStateType = ReturnType<typeof rootReducer>

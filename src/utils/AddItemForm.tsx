@@ -1,17 +1,26 @@
-// eslint-disable-next-line no-use-before-define
 import React, {
-    ChangeEvent, useState, KeyboardEvent, FC,
+    ChangeEvent,
+    useState,
+    KeyboardEvent,
 } from 'react';
-import {Button, IconButton, TextField} from '@material-ui/core';
+import {
+    Button,
+    Container,
+    Grid,
+    IconButton,
+    TextField,
+} from '@material-ui/core';
 import {useDispatch} from 'react-redux';
+
 import {addTodo} from '../store/todo-reducer';
 
-type AddItemForm = {
+import style from './AddItemForm.module.css';
+
+type AddItemFormProps = {
     formText: string
 }
 
-// eslint-disable-next-line no-redeclare
-export const AddItemForm: FC<AddItemForm> = ({formText}) => {
+export const AddItemForm = React.memo(({formText}: AddItemFormProps) => {
     const dispatch = useDispatch();
 
     const [title, setTitle] = useState<string>('');
@@ -26,25 +35,31 @@ export const AddItemForm: FC<AddItemForm> = ({formText}) => {
         }
     };
     const onPressKey = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.charCode === 13) {
-            // eslint-disable-next-line no-use-before-define
-            setTitle('');
+        if (e.key === 'Enter') {
             onAddTodo();
+            setTitle('');
         }
     };
 
     return (
         <div>
-            <TextField
-                variant="outlined"
-                value={title}
-                label={formText}
-                onChange={onChangeTitle}
-                onKeyPress={onPressKey}
-            />
-            <IconButton color="primary">
-                <Button onClick={onAddTodo}>Add</Button>
-            </IconButton>
+            <Container fixed>
+                <Grid
+                    container
+                    className={style.addForm}
+                >
+                    <TextField
+                        variant="outlined"
+                        value={title}
+                        label={formText}
+                        onChange={onChangeTitle}
+                        onKeyPress={onPressKey}
+                    />
+                    <IconButton color="primary">
+                        <Button onClick={onAddTodo}>Add</Button>
+                    </IconButton>
+                </Grid>
+            </Container>
         </div>
     );
-};
+});

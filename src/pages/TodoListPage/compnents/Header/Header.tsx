@@ -1,18 +1,18 @@
 import {
-    AppBar, Grid, LinearProgress, TextField, Toolbar, Typography,
+    AppBar,
+    Grid,
+    TextField,
+    Toolbar,
+    Typography,
 } from '@material-ui/core';
-// eslint-disable-next-line no-use-before-define
 import React, {
-    ChangeEvent, FC, useEffect, useState,
+    ChangeEvent,
+    useEffect,
+    useState,
 } from 'react';
 import {useHistory} from 'react-router-dom';
-import {StatusType} from '../../../../store/app-reducer';
 
-type HeaderPropsType = {
-    status: StatusType
-}
-
-export const Header: FC<HeaderPropsType> = ({status}) => {
+export const Header = () => {
     const history = useHistory();
     const [searchText, setSearchText] = useState<string>('');
 
@@ -22,9 +22,9 @@ export const Header: FC<HeaderPropsType> = ({status}) => {
         } else {
             history.push('/todos');
         }
-    }, [searchText]);
+    }, [searchText, history]);
 
-    const onChange = (e: React.MouseEvent<HTMLInputElement>) => {
+    const onChangeStatus = (e: React.MouseEvent<HTMLInputElement>) => {
         history.push(`?showDone=${e.currentTarget.checked}`);
     };
     const onSearchChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -46,7 +46,7 @@ export const Header: FC<HeaderPropsType> = ({status}) => {
                     >
                         <Grid item xs={2}>
                             <div>
-                                <input type="checkbox" onClick={onChange} />
+                                <input type="checkbox" onClick={onChangeStatus} />
                                 Show done
                             </div>
                         </Grid>
@@ -67,7 +67,6 @@ export const Header: FC<HeaderPropsType> = ({status}) => {
                     </Grid>
                 </Toolbar>
             </AppBar>
-            {status === 'loading' && <LinearProgress color="secondary" />}
         </div>
     );
 };

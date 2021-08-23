@@ -1,10 +1,11 @@
-// eslint-disable-next-line no-use-before-define
 import React from 'react';
-import './App.css';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {routers} from './app-routes';
+
+import {routers} from './Routes';
 import {store} from './store/store';
+
+import './App.css';
 
 export const App = () => (
     <BrowserRouter>
