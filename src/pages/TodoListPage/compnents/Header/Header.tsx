@@ -12,7 +12,7 @@ import React, {
     useState,
 } from 'react';
 import {useHistory} from 'react-router-dom';
-import {ROUTING_PATHS} from '../../../../Routes';
+import {ROUTING_PATHS} from '../../../../App.constants';
 
 export const Header = () => {
     const history = useHistory();

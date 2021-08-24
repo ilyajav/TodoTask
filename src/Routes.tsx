@@ -2,12 +2,7 @@ import {Redirect, Route} from 'react-router-dom';
 import React from 'react';
 
 import {TodoListContainer} from './pages/TodoListPage/TodoListContainer';
-
-export enum ROUTING_PATHS {
-    TODO_LIST_PAGE_ROUTE = '/todos',
-    TODO_SEARCH = '?searchText=',
-    TODO_SHOW_DONE = '?showDone=',
-}
+import {ROUTING_PATHS} from './App.constants';
 
 export const routers = (
     <>

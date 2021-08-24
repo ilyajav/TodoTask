@@ -2,18 +2,14 @@ import React, {ChangeEvent, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {Header} from './compnents/Header/Header';
-import {Todo} from './TodoList';
+import {TodoList} from './TodoList';
 import {
     changeTodoStatus,
     TodosType,
     AppRootStateType,
     AddItemForm,
 } from './index';
-
-enum PARAMS {
-    SHOW_DONE = 'showDone',
-    SEARCH_TEXT = 'searchText'
-}
+import {ROUTING_PARAMS} from '../../App.constants';
 
 export const TodoListContainer = () => {
     const todosData = useSelector<AppRootStateType, TodosType[]>(state => state.todoData);
@@ -21,8 +17,8 @@ export const TodoListContainer = () => {
 
     const {search} = window.location;
     const params = new URLSearchParams(search);
-    const doneStatus = params.get(PARAMS.SHOW_DONE);
-    const searchTodo = params.get(PARAMS.SEARCH_TEXT);
+    const doneStatus = params.get(ROUTING_PARAMS.SHOW_DONE);
+    const searchTodo = params.get(ROUTING_PARAMS.SEARCH_TEXT);
 
     const onChangeTodoStatus = useCallback((e: ChangeEvent<HTMLInputElement>, id: string) => {
         const isDone = e.currentTarget.checked;
@@ -45,19 +41,10 @@ export const TodoListContainer = () => {
         <div>
             <Header />
             <AddItemForm formText="Enter new Todo name" />
-            {
-                filteredTodo.map(td => (
-                    <div key={td.id}>
-                        <Todo
-                            onChangeTodoStatus={onChangeTodoStatus}
-                            todoTitle={td.title}
-                            isDone={td.isDone}
-                            key={td.id}
-                            id={td.id}
-                        />
-                    </div>
-                ))
-            }
+            <TodoList
+                onChangeTodoStatus={onChangeTodoStatus}
+                todo={filteredTodo}
+            />
         </div>
     );
 };
