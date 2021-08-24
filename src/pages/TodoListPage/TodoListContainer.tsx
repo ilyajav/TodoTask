@@ -1,5 +1,13 @@
-import React, {ChangeEvent, useCallback} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React,
+{
+    ChangeEvent,
+    useCallback,
+} from 'react';
+import {
+    useDispatch,
+    useSelector,
+} from 'react-redux';
+import {useLocation} from 'react-router';
 
 import {Header} from './compnents/Header/Header';
 import {TodoList} from './TodoList';
@@ -9,16 +17,16 @@ import {
     AppRootStateType,
     AddItemForm,
 } from './index';
-import {ROUTING_PARAMS} from '../../App.constants';
+import {ROUTING_DATA} from '../../App.constants';
 
 export const TodoListContainer = () => {
     const todosData = useSelector<AppRootStateType, TodosType[]>(state => state.todoData);
     const dispatch = useDispatch();
+    const location = useLocation();
 
-    const {search} = window.location;
-    const params = new URLSearchParams(search);
-    const doneStatus = params.get(ROUTING_PARAMS.SHOW_DONE);
-    const searchTodo = params.get(ROUTING_PARAMS.SEARCH_TEXT);
+    const params = new URLSearchParams(location.search);
+    const doneStatus = params.get(ROUTING_DATA.SHOW_DONE);
+    const searchTodo = params.get(ROUTING_DATA.SEARCH_TEXT);
 
     const onChangeTodoStatus = useCallback((e: ChangeEvent<HTMLInputElement>, id: string) => {
         const isDone = e.currentTarget.checked;

@@ -12,7 +12,10 @@ import React, {
     useState,
 } from 'react';
 import {useHistory} from 'react-router-dom';
-import {ROUTING_PATHS} from '../../../../App.constants';
+import {
+    ROUTING_PATHS,
+    ROUTING_PARAMS,
+} from '../../../../App.constants';
 
 export const Header = () => {
     const history = useHistory();
@@ -20,14 +23,14 @@ export const Header = () => {
 
     useEffect(() => {
         if (searchText) {
-            history.push(`${ROUTING_PATHS.TODO_SEARCH}${searchText}`);
+            history.push(`${ROUTING_PARAMS.TODO_SEARCH}${searchText}`);
         } else {
             history.push(ROUTING_PATHS.TODO_LIST_PAGE_ROUTE);
         }
     }, [searchText, history]);
 
     const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
-        history.push(`${ROUTING_PATHS.TODO_SHOW_DONE}${e.currentTarget.checked}`);
+        history.push(`${ROUTING_PARAMS.TODO_SHOW_DONE}${e.currentTarget.checked}`);
     };
     const onSearchChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const newText = e.currentTarget.value;

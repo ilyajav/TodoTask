@@ -7,12 +7,17 @@ import {
     Paper,
 } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
+import {Link} from 'react-router-dom';
 
 import {TodosType} from './index';
+import {
+    ROUTING_PATHS,
+    ROUTING_PARAMS,
+} from '../../App.constants';
 
 import style from './TodoList.module.css';
 
-type TodoProps = {
+type TodoListProps = {
     onChangeTodoStatus: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
     todo: TodosType[];
 }
@@ -21,7 +26,7 @@ export const TodoList = React.memo((
     {
         onChangeTodoStatus,
         todo,
-    }: TodoProps
+    }: TodoListProps
 ) => {
     const changeTodoStatus = (e: ChangeEvent<HTMLInputElement>, id: string) => {
         onChangeTodoStatus(e, id);
@@ -36,6 +41,8 @@ export const TodoList = React.memo((
             margin: '10px 350px',
         },
     };
+
+    const editRoute = `${ROUTING_PATHS.TODO_LIST_PAGE_EDIT_ROUTE}${ROUTING_PARAMS.TODO_ID}`;
 
     return (
         <Box>
@@ -54,7 +61,12 @@ export const TodoList = React.memo((
                                 </div>
                                 <div>
                                     <IconButton color="primary">
-                                        <CreateIcon className={style.icon} />
+                                        <Link
+                                            to={`${editRoute}${td.id}`}
+                                            className={style.link}
+                                        >
+                                            <CreateIcon className={style.icon} />
+                                        </Link>
                                     </IconButton>
                                 </div>
                             </Grid>
