@@ -1,25 +1,33 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import {
     Box,
     Button,
-    Checkbox,
+    Checkbox, FormControlLabel,
     FormGroup,
     Paper,
     TextField,
 } from '@material-ui/core';
-import {Link, useHistory} from 'react-router-dom';
+import {
+    Link,
+    useHistory,
+} from 'react-router-dom';
 import {useFormik} from 'formik';
 
 import style from './TodoListEdit.module.css';
 
 type TodoListEditProps = {
-    onChangeTodoStatus: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
+    onChangeTodoStatus: (isDone: boolean, id: string) => void;
     title: string,
     description: string,
     isDone: boolean,
     onChangeTodoTitle: (title: string, id: string) => void;
     onChangeTodoDescription: (description: string, id: string) => void;
     id: string,
+}
+
+type FormikErrorType = {
+    title?: string,
+    description?: string,
 }
 
 export const TodoListEdit = ({
@@ -41,25 +49,29 @@ export const TodoListEdit = ({
         },
     };
 
-    const changeTodoStatus = (e: ChangeEvent<HTMLInputElement>, id: string) => {
-        onChangeTodoStatus(e, id);
-    };
-
     const history = useHistory();
 
     const formik = useFormik({
         initialValues: {
-            titleForm: title,
-            descriptionForm: description,
+            title,
+            description,
+            isDone,
             id,
         },
+        validate: values => {
+            const errors: FormikErrorType = {};
+            if (!values.title) {
+                errors.title = 'Field is required';
+            }
+            return errors;
+        },
         onSubmit: values => {
-            onChangeTodoTitle(values.titleForm, values.id);
-            onChangeTodoDescription(values.descriptionForm, values.id);
+            onChangeTodoTitle(values.title, values.id);
+            onChangeTodoDescription(values.description, values.id);
+            onChangeTodoStatus(values.isDone, values.id);
             // history.push('/todos');
         },
     });
-    const isDoneStatus = {...formik.getFieldProps('isDone')};
     return (
         <Box>
             <Paper style={styles.Paper}>
@@ -74,16 +86,23 @@ export const TodoListEdit = ({
                                 label="Title"
                                 margin="normal"
                                 variant="outlined"
-                                {...formik.getFieldProps('titleForm')}
+                                {...formik.getFieldProps('title')}
                             />
+                            {
+                                formik.errors.title && <div className={style.error}>{formik.errors.title}</div>
+                            }
                         </div>
                         <div>
-                            <Checkbox
-                                color="primary"
-                                checked={isDone}
-                                onChange={e => changeTodoStatus(e, id)}
+                            <FormControlLabel
+                                label="Done"
+                                control={(
+                                    <Checkbox
+                                        checked={formik.values.isDone}
+                                        color="primary"
+                                        {...formik.getFieldProps('isDone')}
+                                    />
+                                )}
                             />
-                            Done
                         </div>
                         <div className={style.item}>
                             <TextField
@@ -91,7 +110,7 @@ export const TodoListEdit = ({
                                 multiline
                                 rows={4}
                                 variant="outlined"
-                                {...formik.getFieldProps('descriptionForm')}
+                                {...formik.getFieldProps('description')}
                             />
                         </div>
                     </FormGroup>

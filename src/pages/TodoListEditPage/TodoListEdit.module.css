@@ -1,3 +1,7 @@
 .item{
     margin-top: 10px;
 }
+
+.error{
+    color: #FF0000FF;
+}

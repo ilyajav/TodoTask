@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useLocation} from 'react-router';
 
@@ -25,13 +25,7 @@ export const TodoListEditContainer = () => {
         filteredTodo = todosData.filter(td => td.id === todoId);
     }
 
-    const title = filteredTodo.map(td => td.title);
-    const isDone = filteredTodo.map(td => td.isDone);
-    const description = filteredTodo.map(td => td.description);
-    const id = filteredTodo.map(td => td.id);
-
-    const onChangeTodoStatus = useCallback((e: ChangeEvent<HTMLInputElement>, id: string) => {
-        const isDone = e.currentTarget.checked;
+    const onChangeTodoStatus = useCallback((isDone: boolean, id: string) => {
         dispatch(changeTodoStatus(id, isDone));
     }, [dispatch]);
     const onChangeTodoTitle = useCallback((title: string, id: string) => {
@@ -42,16 +36,26 @@ export const TodoListEditContainer = () => {
     }, [dispatch]);
     return (
         <div>
-            <HeaderEdit title={title[0]} />
-            <TodoListEdit
-                onChangeTodoStatus={onChangeTodoStatus}
-                isDone={isDone[0]}
-                description={description[0]}
-                title={title[0]}
-                onChangeTodoTitle={onChangeTodoTitle}
-                onChangeTodoDescription={onChangeTodoDescription}
-                id={id[0]}
-            />
+            {
+                filteredTodo.map(td => (
+                    <div>
+                        <HeaderEdit
+                            title={td.title}
+                            key={td.id}
+                        />
+                        <TodoListEdit
+                            onChangeTodoStatus={onChangeTodoStatus}
+                            isDone={td.isDone}
+                            description={td.description}
+                            title={td.title}
+                            onChangeTodoTitle={onChangeTodoTitle}
+                            onChangeTodoDescription={onChangeTodoDescription}
+                            id={td.id}
+                            key={td.id}
+                        />
+                    </div>
+                ))
+            }
         </div>
     );
 };
