@@ -5,9 +5,10 @@ import {useLocation} from 'react-router';
 import {AppRootStateType} from '../../store/store';
 import {
     changeTodoDescription,
-    changeTodoStatus, changeTodoTitle,
+    changeTodoStatus,
+    changeTodoTitle,
     TodosType,
-} from '../../store/todo-reducer';
+} from './index';
 import {ROUTING_DATA} from '../../App.constants';
 import {TodoListEdit} from './TodoListEdit';
 import {HeaderEdit} from './components/HeaderEdit';

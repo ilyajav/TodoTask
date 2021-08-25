@@ -2,16 +2,23 @@ import React from 'react';
 import {
     Box,
     Button,
-    Checkbox, FormControlLabel,
+    Checkbox,
+    FormControlLabel,
     FormGroup,
     Paper,
     TextField,
 } from '@material-ui/core';
-import {
-    Link,
-    useHistory,
-} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {useFormik} from 'formik';
+import {
+    toast,
+    ToastContainer,
+    Zoom,
+    Bounce,
+} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import {ERROR_COLORS} from '../../App.constants';
 
 import style from './TodoListEdit.module.css';
 
@@ -30,7 +37,7 @@ type FormikErrorType = {
     description?: string,
 }
 
-export const TodoListEdit = ({
+export const TodoListEdit = React.memo(({
     onChangeTodoStatus,
     description,
     title,
@@ -49,7 +56,8 @@ export const TodoListEdit = ({
         },
     };
 
-    const history = useHistory();
+    const notifySuccess = () => toast.success('New data saved');
+    const notifyError = () => toast.error('Title is required!');
 
     const formik = useFormik({
         initialValues: {
@@ -57,11 +65,14 @@ export const TodoListEdit = ({
             description,
             isDone,
             id,
+            isValid: true,
         },
         validate: values => {
             const errors: FormikErrorType = {};
             if (!values.title) {
                 errors.title = 'Field is required';
+                formik.isValid = false;
+                notifyError();
             }
             return errors;
         },
@@ -69,16 +80,23 @@ export const TodoListEdit = ({
             onChangeTodoTitle(values.title, values.id);
             onChangeTodoDescription(values.description, values.id);
             onChangeTodoStatus(values.isDone, values.id);
-            // history.push('/todos');
         },
     });
+
     return (
         <Box>
             <Paper style={styles.Paper}>
                 <form onSubmit={formik.handleSubmit}>
                     <FormGroup>
                         <div>
-                            <Button type="submit">Save</Button>
+                            <ToastContainer
+                                draggable={false}
+                                transition={Zoom}
+                                autoClose={3000}
+                                position="bottom-center"
+                                hideProgressBar
+                            />
+                            <Button type="submit" disabled={!formik.isValid} onClick={notifySuccess}>Save</Button>
                             <Link to="/todos"><Button>Cancel</Button></Link>
                         </div>
                         <div className={style.item}>
@@ -86,10 +104,13 @@ export const TodoListEdit = ({
                                 label="Title"
                                 margin="normal"
                                 variant="outlined"
+                                className={style.errorBlock}
+                                color={formik.errors.title ? ERROR_COLORS.ON_ERROR : ERROR_COLORS.OFF_ERROR}
                                 {...formik.getFieldProps('title')}
                             />
                             {
-                                formik.errors.title && <div className={style.error}>{formik.errors.title}</div>
+                                formik.errors.title &&
+                                <div className={style.error}>{formik.errors.title}</div>
                             }
                         </div>
                         <div>
@@ -118,4 +139,4 @@ export const TodoListEdit = ({
             </Paper>
         </Box>
     );
-};
+});

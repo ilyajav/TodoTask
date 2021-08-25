@@ -21,3 +21,8 @@ export enum ACTIONS_TYPES {
     CHANGE_TODO_TITLE = 'CHANGE-TODO-TITLE',
     CHANGE_TODO_DESCRIPTION = 'CHANGE-TODO-DESCRIPTION',
 }
+
+export enum ERROR_COLORS {
+    ON_ERROR = 'secondary',
+    OFF_ERROR = 'primary',
+}
