@@ -14,7 +14,6 @@ import {
     toast,
     ToastContainer,
     Zoom,
-    Bounce,
 } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
