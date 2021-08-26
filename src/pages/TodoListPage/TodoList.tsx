@@ -20,7 +20,7 @@ import style from './TodoList.module.css';
 
 type TodoListProps = {
     onChangeTodoStatus: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
-    todo: TodosType | undefined | boolean;
+    todo: TodosType;
 }
 
 export const TodoList = React.memo((
@@ -49,7 +49,7 @@ export const TodoList = React.memo((
         <Box>
             <Paper style={styles.Paper}>
                 {
-                    todo.map(td => (
+                    todo(td => (
                         <div key={td.id}>
                             <Grid container direction="row" justifyContent="space-between">
                                 <div>

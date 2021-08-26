@@ -16,13 +16,13 @@ import {
     changeTodoStatus,
     TodoType,
     AppRootStateType,
-    AddItemForm,
+    AddItemForm, TodosType,
 } from './index';
 import {ROUTING_DATA} from '../../App.constants';
 
 export const TodoListContainer = () => {
-    const todosData = useSelector<AppRootStateType, TodoType>(state => state.todoData.todos);
     const state = useSelector<AppRootStateType, AppRootStateType>(state => state);
+    const todosData = useSelector<AppRootStateType, TodoType>(state => state.todoData.todos);
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -31,31 +31,34 @@ export const TodoListContainer = () => {
     const doneStatus = params.get(ROUTING_DATA.SHOW_DONE);
     const searchTodo = params.get(ROUTING_DATA.SEARCH_TEXT);
 
+    const onChangeTodoStatus = useCallback((e: ChangeEvent<HTMLInputElement>, id: string) => {
+        const isDone = e.currentTarget.checked;
+        dispatch(changeTodoStatus(id, isDone));
+    }, [dispatch]);
+
     const getTodos = (state: AppRootStateType) => state.todoData.todos;
     const getTodosId = (state: AppRootStateType) => state.todoData.todosId;
+    // eslint-disable-next-line consistent-return
     const getTodosSuper = createSelector(getTodos, getTodosId, (todos: TodoType) => {
         let currentId;
         let filteredTodo;
         for (let i = 0; i < getTodosId.length; i += 1) {
             currentId = getTodosId(state)[i];
             filteredTodo = todosData[currentId];
-            if (doneStatus === 'true') {
-                if (filteredTodo.isDone) {
-                    return filteredTodo;
-                }
-            }
-            if (searchTodo) {
-                const title = filteredTodo.title.toLowerCase();
-                const filter = searchTodo.toLowerCase();
-                return title.includes(filter);
+        }
+        if (doneStatus === 'true' && filteredTodo) {
+            if (filteredTodo.isDone) {
+                return filteredTodo;
             }
         }
-        return filteredTodo;
+        if (searchTodo && filteredTodo) {
+            const title = filteredTodo.title.toLowerCase();
+            const filter = searchTodo.toLowerCase();
+            return title.includes(filter);
+        }
     });
-    const onChangeTodoStatus = useCallback((e: ChangeEvent<HTMLInputElement>, id: string) => {
-        const isDone = e.currentTarget.checked;
-        dispatch(changeTodoStatus(id, isDone));
-    }, [dispatch]);
+
+    const finalTodo = useSelector<TodosType, TodosType>(getTodosSuper);
 
     return (
         <div>
