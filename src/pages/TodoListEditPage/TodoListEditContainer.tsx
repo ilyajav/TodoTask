@@ -39,10 +39,9 @@ export const TodoListEditContainer = () => {
         <div>
             {
                 filteredTodo.map(td => (
-                    <div>
+                    <div key={td.id}>
                         <HeaderEdit
                             title={td.title}
-                            key={td.id}
                         />
                         <TodoListEdit
                             onChangeTodoStatus={onChangeTodoStatus}

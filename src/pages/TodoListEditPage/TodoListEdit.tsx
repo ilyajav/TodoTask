@@ -56,7 +56,6 @@ export const TodoListEdit = React.memo(({
     };
 
     const notifySuccess = () => toast.success('New data saved');
-    const notifyError = () => toast.error('Title is required!');
 
     const formik = useFormik({
         initialValues: {
@@ -71,14 +70,19 @@ export const TodoListEdit = React.memo(({
             if (!values.title) {
                 errors.title = 'Field is required';
                 formik.isValid = false;
-                notifyError();
             }
             return errors;
         },
         onSubmit: values => {
-            onChangeTodoTitle(values.title, values.id);
-            onChangeTodoDescription(values.description, values.id);
-            onChangeTodoStatus(values.isDone, values.id);
+            if (values.title !== title) {
+                onChangeTodoTitle(values.title, values.id);
+            }
+            if (values.description !== description) {
+                onChangeTodoDescription(values.description, values.id);
+            }
+            if (values.isDone !== isDone) {
+                onChangeTodoStatus(values.isDone, values.id);
+            }
         },
     });
 

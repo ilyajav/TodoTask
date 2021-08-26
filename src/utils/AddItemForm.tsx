@@ -7,7 +7,6 @@ import {
     Button,
     Container,
     Grid,
-    IconButton,
     TextField,
 } from '@material-ui/core';
 import {useDispatch} from 'react-redux';
@@ -55,9 +54,7 @@ export const AddItemForm = React.memo(({formText}: AddItemFormProps) => {
                         onChange={onChangeTitle}
                         onKeyPress={onPressKey}
                     />
-                    <IconButton color="primary">
-                        <Button onClick={onAddTodo}>Add</Button>
-                    </IconButton>
+                    <Button onClick={onAddTodo}>Add</Button>
                 </Grid>
             </Container>
         </div>

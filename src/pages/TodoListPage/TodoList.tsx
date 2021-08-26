@@ -1,7 +1,8 @@
 import React, {ChangeEvent} from 'react';
 import {
     Box,
-    Checkbox, Divider,
+    Checkbox,
+    Divider,
     Grid,
     IconButton,
     Paper,
@@ -63,9 +64,8 @@ export const TodoList = React.memo((
                                     <IconButton color="primary">
                                         <Link
                                             to={`${editRoute}${td.id}`}
-                                            className={style.link}
                                         >
-                                            <CreateIcon className={style.icon} />
+                                            <CreateIcon />
                                         </Link>
                                     </IconButton>
                                 </div>

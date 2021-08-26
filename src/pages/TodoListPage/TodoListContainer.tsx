@@ -49,10 +49,13 @@ export const TodoListContainer = () => {
         <div>
             <Header />
             <AddItemForm formText="Enter new Todo name" />
-            <TodoList
-                onChangeTodoStatus={onChangeTodoStatus}
-                todo={filteredTodo}
-            />
+            {filteredTodo.map(td => (
+                <TodoList
+                    onChangeTodoStatus={onChangeTodoStatus}
+                    todo={filteredTodo}
+                    key={td.id}
+                />
+            ))}
         </div>
     );
 };
