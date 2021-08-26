@@ -13,14 +13,14 @@ import {Header} from './compnents/Header/Header';
 import {TodoList} from './TodoList';
 import {
     changeTodoStatus,
-    TodosType,
+    TodoType,
     AppRootStateType,
     AddItemForm,
 } from './index';
 import {ROUTING_DATA} from '../../App.constants';
 
 export const TodoListContainer = () => {
-    const todosData = useSelector<AppRootStateType, TodosType[]>(state => state.todoData);
+    const todosData = useSelector<AppRootStateType, TodoType>(state => state.todoData.todos);
     const dispatch = useDispatch();
     const location = useLocation();
 

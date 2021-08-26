@@ -9,6 +9,15 @@ export type TodosType = {
     description: string,
 }
 
+export type TodoType = {
+    [key: string]: TodosType
+}
+
+type TodosDataType<T = {}> = {
+    todosId: string[]
+    todos: T
+}
+
 type ChangeTodoDescription = ReturnType<typeof changeTodoDescription>
 type ChangeTodoTitleType = ReturnType<typeof changeTodoTitle>
 type ChangeTodoStatusType = ReturnType<typeof changeTodoStatus>
@@ -20,55 +29,83 @@ type ActionTodoTypes =
     | ChangeTodoTitleType
     | ChangeTodoDescription
 
-const initialState: TodosType[] = [
-    {
-        id: v1(), title: 'Cat', isDone: false, description: 'about cat',
-    },
-    {
-        id: v1(), title: 'Dog', isDone: true, description: 'about dog',
-    },
-    {
-        id: v1(), title: 'Elephant', isDone: false, description: 'about elephant',
-    },
-    {
-        id: v1(), title: 'Mouse', isDone: true, description: 'about mouse',
-    },
-    {
-        id: v1(), title: 'Horse', isDone: true, description: 'about horse',
-    },
-];
+const todoId1 = v1();
+const todoId2 = v1();
+const todoId3 = v1();
+const todoId4 = v1();
+const todoId5 = v1();
 
-export const todoReducer = (state: TodosType[] = initialState, action: ActionTodoTypes): TodosType[] => {
+const initialState: TodosDataType = {
+    todosId: [todoId1, todoId2, todoId3, todoId4, todoId5],
+    todos: {
+        todoId1: {
+            id: todoId1,
+            title: 'Cat',
+            isDone: false,
+            description: 'about cat',
+        },
+        todoId2: {
+            id: todoId2,
+            title: 'Dog',
+            isDone: true,
+            description: 'about dog',
+        },
+        todoId3: {
+            id: todoId3,
+            title: 'Elephant',
+            isDone: false,
+            description: 'about elephant',
+        },
+        todoId4: {
+            id: todoId4,
+            title: 'Mouse',
+            isDone: true,
+            description: 'about mouse',
+        },
+        todoId5: {
+            id: todoId5,
+            title: 'Horse',
+            isDone: true,
+            description: 'about horse',
+        },
+    },
+};
+
+export const todoReducer = (state: TodosDataType = initialState, action: ActionTodoTypes): TodosDataType => {
     switch (action.type) {
-        case ACTIONS_TYPES.CHANGE_TODO_STATUS: {
-            return state.map(td => (td.id === action.payload.todoId
-                ? {...td, isDone: action.payload.isDone}
-                : td));
-        }
+        // case ACTIONS_TYPES.CHANGE_TODO_STATUS: {
+        //     return state.map(td => (td.id === action.payload.todoId
+        //         ? {...td, isDone: action.payload.isDone}
+        //         : td));
+        // }
+        // case ACTIONS_TYPES.CHANGE_TODO_DESCRIPTION: {
+        //     return state.map(td => (td.id === action.payload.id
+        //         ? {
+        //             ...td,
+        //             description: action.payload.description,
+        //         }
+        //         : td));
+        // }
+        // case ACTIONS_TYPES.CHANGE_TODO_TITLE: {
+        //     return state.map(td => (td.id === action.payload.id
+        //         ? {
+        //             ...td,
+        //             title: action.payload.title,
+        //         }
+        //         : td));
+        // }
         case ACTIONS_TYPES.ADD_TODO: {
+            const copyState = {...state};
+            const newId = v1();
             const newTodo: TodosType = {
-                id: v1(),
+                id: newId,
                 title: action.payload.title,
                 isDone: false,
                 description: '',
             };
-            return [newTodo, ...state];
-        }
-        case ACTIONS_TYPES.CHANGE_TODO_DESCRIPTION: {
-            return state.map(td => (td.id === action.payload.id
-                ? {
-                    ...td,
-                    description: action.payload.description,
-                }
-                : td));
-        }
-        case ACTIONS_TYPES.CHANGE_TODO_TITLE: {
-            return state.map(td => (td.id === action.payload.id
-                ? {
-                    ...td,
-                    title: action.payload.title,
-                }
-                : td));
+            copyState.todosId = [newId, ...copyState.todosId];
+            copyState.todos = {newId: newTodo, ...copyState.todos};
+            return {...copyState};
         }
         default:
             return state;
