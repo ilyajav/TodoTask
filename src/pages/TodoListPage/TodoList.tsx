@@ -20,7 +20,7 @@ import style from './TodoList.module.css';
 
 type TodoListProps = {
     onChangeTodoStatus: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
-    todo: TodosType[];
+    todo: TodosType | undefined | boolean;
 }
 
 export const TodoList = React.memo((
