@@ -2,20 +2,20 @@ import {v1} from 'uuid';
 
 import {ACTIONS_TYPES} from '../App.constants';
 
-export type TodosType = {
+export type Todos = {
     id: string,
     title: string,
     isDone: boolean,
     description: string,
 }
 
-export type TodoType = {
-    [key: string]: TodosType
+export type Todo = {
+    [key: string]: Todos
 }
 
-type TodosDataType<T = {}> = {
+export type TodosData = {
     todosId: string[]
-    todos: T
+    todos: Todo
 }
 
 type ChangeTodoDescription = ReturnType<typeof changeTodoDescription>
@@ -35,7 +35,7 @@ const todoId3 = v1();
 const todoId4 = v1();
 const todoId5 = v1();
 
-const initialState: TodosDataType = {
+const initialState: TodosData = {
     todosId: [todoId1, todoId2, todoId3, todoId4, todoId5],
     todos: {
         todoId1: {
@@ -71,7 +71,7 @@ const initialState: TodosDataType = {
     },
 };
 
-export const todoReducer = (state: TodosDataType = initialState, action: ActionTodoTypes): TodosDataType => {
+export const todoReducer = (state: TodosData = initialState, action: ActionTodoTypes): TodosData => {
     switch (action.type) {
         // case ACTIONS_TYPES.CHANGE_TODO_STATUS: {
         //     return state.map(td => (td.id === action.payload.todoId
@@ -97,7 +97,7 @@ export const todoReducer = (state: TodosDataType = initialState, action: ActionT
         case ACTIONS_TYPES.ADD_TODO: {
             const copyState = {...state};
             const newId = v1();
-            const newTodo: TodosType = {
+            const newTodo: Todos = {
                 id: newId,
                 title: action.payload.title,
                 isDone: false,
