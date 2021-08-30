@@ -5,6 +5,10 @@ import {TodoListContainer} from './pages/TodoListPage/TodoListContainer';
 import {TodoListEditContainer} from './pages/TodoListEditPage/TodoListEditContainer';
 import {ROUTING_PATHS} from './App.constants';
 
+export type params = {
+    data: string
+}
+
 export const routers = (
     <>
         <Route

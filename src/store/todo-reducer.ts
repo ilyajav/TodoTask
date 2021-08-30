@@ -38,31 +38,31 @@ const todoId5 = v1();
 const initialState: TodosData = {
     todosId: [todoId1, todoId2, todoId3, todoId4, todoId5],
     todos: {
-        todoId1: {
+        [todoId1]: {
             id: todoId1,
             title: 'Cat',
             isDone: false,
             description: 'about cat',
         },
-        todoId2: {
+        [todoId2]: {
             id: todoId2,
             title: 'Dog',
             isDone: true,
             description: 'about dog',
         },
-        todoId3: {
+        [todoId3]: {
             id: todoId3,
             title: 'Elephant',
             isDone: false,
             description: 'about elephant',
         },
-        todoId4: {
+        [todoId4]: {
             id: todoId4,
             title: 'Mouse',
             isDone: true,
             description: 'about mouse',
         },
-        todoId5: {
+        [todoId5]: {
             id: todoId5,
             title: 'Horse',
             isDone: true,
@@ -73,27 +73,25 @@ const initialState: TodosData = {
 
 export const todoReducer = (state: TodosData = initialState, action: ActionTodoTypes): TodosData => {
     switch (action.type) {
-        // case ACTIONS_TYPES.CHANGE_TODO_STATUS: {
-        //     return state.map(td => (td.id === action.payload.todoId
-        //         ? {...td, isDone: action.payload.isDone}
-        //         : td));
-        // }
-        // case ACTIONS_TYPES.CHANGE_TODO_DESCRIPTION: {
-        //     return state.map(td => (td.id === action.payload.id
-        //         ? {
-        //             ...td,
-        //             description: action.payload.description,
-        //         }
-        //         : td));
-        // }
-        // case ACTIONS_TYPES.CHANGE_TODO_TITLE: {
-        //     return state.map(td => (td.id === action.payload.id
-        //         ? {
-        //             ...td,
-        //             title: action.payload.title,
-        //         }
-        //         : td));
-        // }
+        case ACTIONS_TYPES.CHANGE_TODO_STATUS: {
+            const copyState = {...state};
+            const todo = copyState.todos[action.payload.todoId];
+            todo.isDone = action.payload.isDone;
+            copyState.todos = {...copyState.todos};
+            return {...copyState};
+        }
+        case ACTIONS_TYPES.CHANGE_TODO_DESCRIPTION: {
+            const copyState = {...state};
+            const todo = copyState.todos[action.payload.todoId];
+            todo.description = action.payload.description;
+            return {...copyState};
+        }
+        case ACTIONS_TYPES.CHANGE_TODO_TITLE: {
+            const copyState = {...state};
+            const todo = copyState.todos[action.payload.todoId];
+            todo.title = action.payload.title;
+            return {...copyState};
+        }
         case ACTIONS_TYPES.ADD_TODO: {
             const copyState = {...state};
             const newId = v1();
@@ -104,7 +102,7 @@ export const todoReducer = (state: TodosData = initialState, action: ActionTodoT
                 description: '',
             };
             copyState.todosId = [newId, ...copyState.todosId];
-            copyState.todos = {newId: newTodo, ...copyState.todos};
+            copyState.todos = {[newId]: {...newTodo}, ...copyState.todos};
             return {...copyState};
         }
         default:
@@ -127,18 +125,18 @@ export const addTodo = (title: string) => ({
     },
 } as const);
 
-export const changeTodoTitle = (title: string, id: string) => ({
+export const changeTodoTitle = (title: string, todoId: string) => ({
     type: ACTIONS_TYPES.CHANGE_TODO_TITLE,
     payload: {
         title,
-        id,
+        todoId,
     },
 } as const);
 
-export const changeTodoDescription = (description: string, id: string) => ({
+export const changeTodoDescription = (description: string, todoId: string) => ({
     type: ACTIONS_TYPES.CHANGE_TODO_DESCRIPTION,
     payload: {
         description,
-        id,
+        todoId,
     },
 } as const);

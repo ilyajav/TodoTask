@@ -10,7 +10,7 @@ import {
 import CreateIcon from '@material-ui/icons/Create';
 import {Link} from 'react-router-dom';
 
-import {TodosType} from './index';
+import {Todos} from './index';
 import {
     ROUTING_PATHS,
     ROUTING_PARAMS,
@@ -20,7 +20,7 @@ import style from './TodoList.module.css';
 
 type TodoListProps = {
     onChangeTodoStatus: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
-    todo: TodosType;
+    todo: Todos[];
 }
 
 export const TodoList = React.memo((
@@ -49,7 +49,7 @@ export const TodoList = React.memo((
         <Box>
             <Paper style={styles.Paper}>
                 {
-                    todo(td => (
+                    todo.map(td => (
                         <div key={td.id}>
                             <Grid container direction="row" justifyContent="space-between">
                                 <div>
