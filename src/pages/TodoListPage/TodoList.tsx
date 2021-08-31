@@ -17,37 +17,30 @@ import {
 } from '../../App.constants';
 
 import style from './TodoList.module.css';
+import {TodoDataStyle} from './components/TodoStyles';
 
 type TodoListProps = {
     onChangeTodoStatus: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
     todo: Todos[];
+    styleData: TodoDataStyle;
 }
 
 export const TodoList = React.memo((
     {
         onChangeTodoStatus,
         todo,
+        styleData,
     }: TodoListProps
 ) => {
     const changeTodoStatus = (e: ChangeEvent<HTMLInputElement>, id: string) => {
         onChangeTodoStatus(e, id);
     };
 
-    const styles = {
-        Paper: {
-            padding: 10,
-            height: 350,
-            width: 600,
-            overflowY: 'auto' as 'auto',
-            margin: '10px 350px',
-        },
-    };
-
     const editRoute = `${ROUTING_PATHS.TODO_LIST_PAGE_EDIT_ROUTE}${ROUTING_PARAMS.TODO_ID}`;
 
     return (
         <Box>
-            <Paper style={styles.Paper}>
+            <Paper style={styleData.todo} className={style.todoBlock}>
                 {
                     todo.map(td => (
                         <div key={td.id}>

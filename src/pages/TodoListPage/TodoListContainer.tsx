@@ -18,6 +18,8 @@ import {
     todoSelector,
     changeTodoStatus,
 } from '../../store';
+import {CategoryTree} from './CategoryTree';
+import {commonStyle} from './components/TodoStyles';
 
 export const TodoListContainer = () => {
     const finalTodo = useSelector(todoSelector);
@@ -54,7 +56,9 @@ export const TodoListContainer = () => {
             <TodoList
                 onChangeTodoStatus={onChangeTodoStatus}
                 todo={todos}
+                styleData={commonStyle}
             />
+            <CategoryTree />
         </div>
     );
 };

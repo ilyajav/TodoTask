@@ -6,9 +6,11 @@ import {
 } from 'redux';
 
 import {todoReducer} from './todo-reducer';
+import {categoryReducer} from './category-reducer';
 
 const rootReducer = combineReducers({
     todoData: todoReducer,
+    categoryData: categoryReducer,
 });
 
 declare global {

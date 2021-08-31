@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 
-import {ACTIONS_TYPES} from '../App.constants';
+import {ACTIONS_TYPES_TODO} from '../App.constants';
 
 export type Todos = {
     id: string,
@@ -71,7 +71,7 @@ const initialState: TodosData = {
 
 export const todoReducer = (state: TodosData = initialState, action: ActionTodo): TodosData => {
     switch (action.type) {
-        case ACTIONS_TYPES.CHANGE_TODO_STATUS: {
+        case ACTIONS_TYPES_TODO.CHANGE_TODO_STATUS: {
             const {todoId, isDone} = action.payload;
             const copyState = {...state};
             const oldTodo = copyState.todos[todoId];
@@ -82,7 +82,7 @@ export const todoReducer = (state: TodosData = initialState, action: ActionTodo)
 
             return copyState;
         }
-        case ACTIONS_TYPES.CHANGE_TODO: {
+        case ACTIONS_TYPES_TODO.CHANGE_TODO: {
             const {
                 todoId,
                 isDone,
@@ -100,7 +100,7 @@ export const todoReducer = (state: TodosData = initialState, action: ActionTodo)
 
             return copyState;
         }
-        case ACTIONS_TYPES.ADD_TODO: {
+        case ACTIONS_TYPES_TODO.ADD_TODO: {
             const copyState = {...state};
             const newId = v1();
             const newTodo: Todos = {
@@ -120,7 +120,7 @@ export const todoReducer = (state: TodosData = initialState, action: ActionTodo)
 };
 
 export const changeTodoStatus = (todoId: string, isDone: boolean) => ({
-    type: ACTIONS_TYPES.CHANGE_TODO_STATUS,
+    type: ACTIONS_TYPES_TODO.CHANGE_TODO_STATUS,
     payload: {
         todoId,
         isDone,
@@ -128,14 +128,14 @@ export const changeTodoStatus = (todoId: string, isDone: boolean) => ({
 } as const);
 
 export const addTodo = (title: string) => ({
-    type: ACTIONS_TYPES.ADD_TODO,
+    type: ACTIONS_TYPES_TODO.ADD_TODO,
     payload: {
         title,
     },
 } as const);
 
 export const changeTodo = (title: string, todoId: string, description: string, isDone: boolean) => ({
-    type: ACTIONS_TYPES.CHANGE_TODO,
+    type: ACTIONS_TYPES_TODO.CHANGE_TODO,
     payload: {
         title,
         todoId,
