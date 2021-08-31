@@ -13,9 +13,9 @@ import React, {
 } from 'react';
 import {useHistory} from 'react-router-dom';
 import {
-    ROUTING_PATHS,
     ROUTING_PARAMS,
-} from '../../../../App.constants';
+    ROUTING_PATHS,
+} from '../../../App.constants';
 
 export const Header = () => {
     const history = useHistory();

@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import {useDispatch} from 'react-redux';
 
-import {addTodo} from '../store/todo-reducer';
+import {addTodo} from '../../../store';
 
 import style from './AddItemForm.module.css';
 

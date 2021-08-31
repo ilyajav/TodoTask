@@ -22,12 +22,10 @@ import {ERROR_COLORS} from '../../App.constants';
 import style from './TodoListEdit.module.css';
 
 type TodoListEditProps = {
-    onChangeTodoStatus: (isDone: boolean, id: string) => void;
+    onChangeTodo: (title: string, id: string, description: string, isDone: boolean) => void;
     title: string,
     description: string,
     isDone: boolean,
-    onChangeTodoTitle: (title: string, id: string) => void;
-    onChangeTodoDescription: (description: string, id: string) => void;
     id: string,
 }
 
@@ -37,13 +35,11 @@ type FormikErrorType = {
 }
 
 export const TodoListEdit = React.memo(({
-    onChangeTodoStatus,
     description,
     title,
     isDone,
-    onChangeTodoTitle,
-    onChangeTodoDescription,
     id,
+    onChangeTodo,
 }: TodoListEditProps) => {
     const styles = {
         Paper: {
@@ -74,15 +70,7 @@ export const TodoListEdit = React.memo(({
             return errors;
         },
         onSubmit: values => {
-            if (values.title !== title) {
-                onChangeTodoTitle(values.title, values.id);
-            }
-            if (values.description !== description) {
-                onChangeTodoDescription(values.description, values.id);
-            }
-            if (values.isDone !== isDone) {
-                onChangeTodoStatus(values.isDone, values.id);
-            }
+            onChangeTodo(values.title, values.id, values.description, values.isDone);
         },
     });
 

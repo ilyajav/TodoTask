@@ -18,16 +18,14 @@ export type TodosData = {
     todos: Todo
 }
 
-type ChangeTodoDescription = ReturnType<typeof changeTodoDescription>
-type ChangeTodoTitleType = ReturnType<typeof changeTodoTitle>
-type ChangeTodoStatusType = ReturnType<typeof changeTodoStatus>
-type AddTodoType = ReturnType<typeof addTodo>
+type ChangeTodo = ReturnType<typeof changeTodo>
+type ChangeTodoStatus = ReturnType<typeof changeTodoStatus>
+type AddTodo = ReturnType<typeof addTodo>
 
-type ActionTodoTypes =
-    ChangeTodoStatusType
-    | AddTodoType
-    | ChangeTodoTitleType
-    | ChangeTodoDescription
+type ActionTodo =
+    ChangeTodoStatus
+    | AddTodo
+    | ChangeTodo
 
 const todoId1 = v1();
 const todoId2 = v1();
@@ -71,26 +69,36 @@ const initialState: TodosData = {
     },
 };
 
-export const todoReducer = (state: TodosData = initialState, action: ActionTodoTypes): TodosData => {
+export const todoReducer = (state: TodosData = initialState, action: ActionTodo): TodosData => {
     switch (action.type) {
         case ACTIONS_TYPES.CHANGE_TODO_STATUS: {
+            const {todoId, isDone} = action.payload;
             const copyState = {...state};
-            const todo = copyState.todos[action.payload.todoId];
-            todo.isDone = action.payload.isDone;
-            copyState.todos = {...copyState.todos};
-            return {...copyState};
+            const oldTodo = copyState.todos[todoId];
+            const newTodo = {...oldTodo};
+
+            newTodo.isDone = isDone;
+            copyState.todos = {...copyState.todos, [todoId]: newTodo};
+
+            return copyState;
         }
-        case ACTIONS_TYPES.CHANGE_TODO_DESCRIPTION: {
+        case ACTIONS_TYPES.CHANGE_TODO: {
+            const {
+                todoId,
+                isDone,
+                title,
+                description,
+            } = action.payload;
             const copyState = {...state};
-            const todo = copyState.todos[action.payload.todoId];
-            todo.description = action.payload.description;
-            return {...copyState};
-        }
-        case ACTIONS_TYPES.CHANGE_TODO_TITLE: {
-            const copyState = {...state};
-            const todo = copyState.todos[action.payload.todoId];
-            todo.title = action.payload.title;
-            return {...copyState};
+            const oldTodo = copyState.todos[todoId];
+            const newTodo = {...oldTodo};
+
+            newTodo.isDone = isDone;
+            newTodo.title = title;
+            newTodo.description = description;
+            copyState.todos = {...copyState.todos, [todoId]: newTodo};
+
+            return copyState;
         }
         case ACTIONS_TYPES.ADD_TODO: {
             const copyState = {...state};
@@ -102,8 +110,9 @@ export const todoReducer = (state: TodosData = initialState, action: ActionTodoT
                 description: '',
             };
             copyState.todosId = [newId, ...copyState.todosId];
-            copyState.todos = {[newId]: {...newTodo}, ...copyState.todos};
-            return {...copyState};
+            copyState.todos = {[newId]: newTodo, ...copyState.todos};
+
+            return copyState;
         }
         default:
             return state;
@@ -125,18 +134,12 @@ export const addTodo = (title: string) => ({
     },
 } as const);
 
-export const changeTodoTitle = (title: string, todoId: string) => ({
-    type: ACTIONS_TYPES.CHANGE_TODO_TITLE,
+export const changeTodo = (title: string, todoId: string, description: string, isDone: boolean) => ({
+    type: ACTIONS_TYPES.CHANGE_TODO,
     payload: {
         title,
         todoId,
-    },
-} as const);
-
-export const changeTodoDescription = (description: string, todoId: string) => ({
-    type: ACTIONS_TYPES.CHANGE_TODO_DESCRIPTION,
-    payload: {
         description,
-        todoId,
+        isDone,
     },
 } as const);

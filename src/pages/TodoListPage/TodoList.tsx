@@ -10,7 +10,7 @@ import {
 import CreateIcon from '@material-ui/icons/Create';
 import {Link} from 'react-router-dom';
 
-import {Todos} from './index';
+import {Todos} from '../../store';
 import {
     ROUTING_PATHS,
     ROUTING_PARAMS,
