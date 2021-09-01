@@ -8,20 +8,23 @@ import {
 } from 'react-redux';
 import {useLocation} from 'react-router';
 
-import {TodoList} from './TodoList';
 import {ROUTING_DATA} from '../../App.constants';
-import {
-    AddItemForm,
-    Header,
-} from './components';
 import {
     todoSelector,
     changeTodoStatus,
+    removeCategory,
+    AppRootState,
+    CategoryState,
+    addTodo,
+    addCategory,
+    addSubCategory,
+    changeCategoryTitle,
 } from '../../store';
-import {CategoryTree} from './CategoryTree';
+import {TodoListPage} from './TodoListPage';
 import {commonStyle} from './components/TodoStyles';
 
 export const TodoListContainer = () => {
+    const categoryData = useSelector<AppRootState, CategoryState[]>(state => state.categoryData);
     const finalTodo = useSelector(todoSelector);
     const dispatch = useDispatch();
     const location = useLocation();
@@ -29,36 +32,42 @@ export const TodoListContainer = () => {
     const params = new URLSearchParams(location.search);
     const doneStatus = params.get(ROUTING_DATA.SHOW_DONE);
     const searchTodo = params.get(ROUTING_DATA.SEARCH_TEXT);
+    const categoryId = params.get(ROUTING_DATA.CATEGORY_TEXT_ID);
 
     const onChangeTodoStatus = useCallback((e: ChangeEvent<HTMLInputElement>, id: string) => {
         const isDone = e.currentTarget.checked;
         dispatch(changeTodoStatus(id, isDone));
     }, [dispatch]);
-
-    let todos = finalTodo;
-
-    if (doneStatus === 'true') {
-        todos = finalTodo.filter(ft => ft.isDone);
-    }
-
-    if (searchTodo) {
-        todos = finalTodo.filter(ft => {
-            const title = ft.title.toLowerCase();
-            const filter = searchTodo.toLowerCase();
-            return title.includes(filter);
-        });
-    }
+    const onRemoveCategory = (categoryId: string) => {
+        dispatch(removeCategory(categoryId));
+    };
+    const onAddTodo = (title: string) => {
+        dispatch(addTodo(title));
+    };
+    const onAddCategory = (id: string, title: string) => {
+        dispatch(addCategory(id, title));
+    };
+    const onAddSubCategory = (id: string, title: string) => {
+        dispatch(addSubCategory(id, title));
+    };
+    const onChangeCategoryTitle = (id: string, title: string) => {
+        dispatch(changeCategoryTitle(id, title));
+    };
 
     return (
-        <div>
-            <Header />
-            <AddItemForm formText="Enter new Todo name" />
-            <TodoList
-                onChangeTodoStatus={onChangeTodoStatus}
-                todo={todos}
-                styleData={commonStyle}
-            />
-            <CategoryTree />
-        </div>
+        <TodoListPage
+            onChangeTodoStatus={onChangeTodoStatus}
+            todoData={finalTodo}
+            styleData={commonStyle}
+            onRemoveCategory={onRemoveCategory}
+            category={categoryData}
+            doneStatus={doneStatus}
+            searchTodo={searchTodo}
+            categoryId={categoryId}
+            onAddTodo={onAddTodo}
+            onAddCategory={onAddCategory}
+            onAddSubCategory={onAddSubCategory}
+            onChangeCategoryTitle={onChangeCategoryTitle}
+        />
     );
 };

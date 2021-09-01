@@ -1,21 +1,33 @@
-import React, {ChangeEvent, FC, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {Button, IconButton, TextField} from '@material-ui/core';
+import React,
+{
+    ChangeEvent,
+    useState,
+} from 'react';
+import {
+    Button,
+    IconButton,
+    TextField,
+} from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
+import {Link} from 'react-router-dom';
 
-import {changeCategoryTitle} from '../../../store';
+import {ROUTING_PARAMS} from '../../../App.constants';
 
-type EditablePropsType = {
+type EditableProps = {
     itemTitle: string
     id: string
+    onChangeCategoryTitle: (id: string, title: string) => void;
 }
 
-export const EditableSpan: FC<EditablePropsType> = (
-    {itemTitle, id}
+export const EditableSpan = (
+    {
+        itemTitle,
+        id,
+        onChangeCategoryTitle,
+    }: EditableProps
 ) => {
     const [title, setTitle] = useState<string>(itemTitle);
     const [editTitle, setEditTitle] = useState<boolean>(false);
-    const dispatch = useDispatch();
 
     const onShowEdit = () => {
         setEditTitle(true);
@@ -24,7 +36,7 @@ export const EditableSpan: FC<EditablePropsType> = (
         setTitle(e.currentTarget.value);
     };
     const changeDataTitle = () => {
-        dispatch(changeCategoryTitle(id, title));
+        onChangeCategoryTitle(id, title);
         setEditTitle(false);
     };
     const cancelChangeTitle = () => {
@@ -51,7 +63,7 @@ export const EditableSpan: FC<EditablePropsType> = (
                     )
                     : (
                         <>
-                            {itemTitle}
+                            <Link to={`/todos${ROUTING_PARAMS.CATEGORY_ID}${id}`}>{itemTitle}</Link>
                             <IconButton color="primary" onClick={onShowEdit}>
                                 <CreateIcon />
                             </IconButton>

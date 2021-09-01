@@ -6,19 +6,21 @@ import {
     IconButton,
     Paper,
 } from '@material-ui/core';
-import {ControlPoint} from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import {CategoryState} from '../../store';
 import {EditableSpan} from './components';
+import {TodoStyles} from './components/TodoStyles';
+import {AddChildTodo} from './components/AddChildTodo';
 
 import style from './CategoryItem.module.css';
-import {TodoStyles} from './components/TodoStyles';
 
 type CategoryItemProps = {
     category: CategoryState[]
     onRemoveCategory: (categoryId: string) => void;
     styleData: TodoStyles;
+    onAddSubCategory: (id: string, title: string) => void;
+    onChangeCategoryTitle: (id: string, title: string) => void;
 }
 
 export const CategoryItem = (
@@ -26,6 +28,8 @@ export const CategoryItem = (
         category,
         onRemoveCategory,
         styleData,
+        onAddSubCategory,
+        onChangeCategoryTitle,
     }: CategoryItemProps
 ) => {
     const removeCategory = (id: string) => {
@@ -49,15 +53,17 @@ export const CategoryItem = (
                                         <EditableSpan
                                             itemTitle={ct.title}
                                             id={ct.id}
+                                            onChangeCategoryTitle={onChangeCategoryTitle}
                                         />
                                         <IconButton color="primary" onClick={() => removeCategory(ct.id)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </div>
                                     <div>
-                                        <IconButton color="primary">
-                                            <ControlPoint />
-                                        </IconButton>
+                                        <AddChildTodo
+                                            id={ct.id}
+                                            onAddSubCategory={onAddSubCategory}
+                                        />
                                     </div>
                                 </Grid>
                                 <Divider light />
@@ -67,6 +73,8 @@ export const CategoryItem = (
                                             category={ct.children}
                                             onRemoveCategory={onRemoveCategory}
                                             styleData={childrenStyle}
+                                            onAddSubCategory={onAddSubCategory}
+                                            onChangeCategoryTitle={onChangeCategoryTitle}
                                         />
                                     )
                                     : null}

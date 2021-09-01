@@ -23,6 +23,8 @@ type TodoListProps = {
     onChangeTodoStatus: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
     todo: Todos[];
     styleData: TodoDataStyle;
+    doneStatus: string | null,
+    searchTodo: string | null,
 }
 
 export const TodoList = React.memo((
@@ -30,6 +32,8 @@ export const TodoList = React.memo((
         onChangeTodoStatus,
         todo,
         styleData,
+        doneStatus,
+        searchTodo,
     }: TodoListProps
 ) => {
     const changeTodoStatus = (e: ChangeEvent<HTMLInputElement>, id: string) => {
@@ -38,11 +42,25 @@ export const TodoList = React.memo((
 
     const editRoute = `${ROUTING_PATHS.TODO_LIST_PAGE_EDIT_ROUTE}${ROUTING_PARAMS.TODO_ID}`;
 
+    let filteredTod = todo;
+
+    if (doneStatus === 'true') {
+        filteredTod = todo.filter(td => td.isDone);
+    }
+
+    if (searchTodo) {
+        filteredTod = todo.filter(td => {
+            const title = td.title.toLowerCase();
+            const filter = searchTodo.toLowerCase();
+            return title.includes(filter);
+        });
+    }
+
     return (
         <Box>
             <Paper style={styleData.todo} className={style.todoBlock}>
                 {
-                    todo.map(td => (
+                    filteredTod.map(td => (
                         <div key={td.id}>
                             <Grid container direction="row" justifyContent="space-between">
                                 <div>

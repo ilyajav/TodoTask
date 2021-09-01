@@ -17,20 +17,29 @@ import {
     ROUTING_PATHS,
 } from '../../../App.constants';
 
-export const Header = () => {
+import style from './Header.module.css';
+
+type HeaderProps = {
+    categoryId: string | null,
+}
+
+export const Header = ({categoryId}: HeaderProps) => {
     const history = useHistory();
     const [searchText, setSearchText] = useState<string>('');
+    const [checked, setChecked] = useState<boolean>(false);
 
     useEffect(() => {
-        if (searchText) {
-            history.push(`${ROUTING_PARAMS.TODO_SEARCH}${searchText}`);
-        } else {
-            history.push(ROUTING_PATHS.TODO_LIST_PAGE_ROUTE);
-        }
-    }, [searchText, history]);
+        setChecked(false);
+    }, [categoryId]);
 
     const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
-        history.push(`${ROUTING_PARAMS.TODO_SHOW_DONE}${e.currentTarget.checked}`);
+        setChecked(!checked);
+        const category = `${ROUTING_PARAMS.CATEGORY_ID}${categoryId}`;
+        const show = `${ROUTING_PARAMS.TODO_SHOW_DONE}${e.currentTarget.checked}`;
+        history.push({
+            pathname: ROUTING_PATHS.TODO_LIST_PAGE_ROUTE,
+            search: `${category}&${show}`,
+        });
     };
     const onSearchChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const newText = e.currentTarget.value;
@@ -51,8 +60,12 @@ export const Header = () => {
                     >
                         <Grid item xs={2}>
                             <div>
-                                <Checkbox onChange={onChangeStatus} />
-                                Show done
+                                <Checkbox
+                                    checked={checked}
+                                    onChange={onChangeStatus}
+                                    disabled={!categoryId}
+                                />
+                                <span className={categoryId ? '' : style.item}>Show done</span>
                             </div>
                         </Grid>
                         <div>
@@ -65,6 +78,7 @@ export const Header = () => {
                                         variant="filled"
                                         value={searchText}
                                         onChange={onSearchChange}
+                                        disabled={!categoryId}
                                     />
                                 </form>
                             </Grid>

@@ -1,9 +1,19 @@
 import {v1} from 'uuid';
 
-import {ACTIONS_TYPES_TODO} from '../App.constants';
+import {
+    ACTIONS_TYPES_TODO,
+} from '../App.constants';
+import {
+    category1Id,
+    category2Id,
+    category3Id,
+    categoryChildren1,
+    RemoveCategory,
+} from './category-reducer';
 
 export type Todos = {
     id: string,
+    parentID: string,
     title: string,
     isDone: boolean,
     description: string,
@@ -26,6 +36,7 @@ type ActionTodo =
     ChangeTodoStatus
     | AddTodo
     | ChangeTodo
+    | RemoveCategory
 
 const todoId1 = v1();
 const todoId2 = v1();
@@ -38,30 +49,35 @@ const initialState: TodosData = {
     todos: {
         [todoId1]: {
             id: todoId1,
+            parentID: category1Id,
             title: 'Cat',
             isDone: false,
             description: 'about cat',
         },
         [todoId2]: {
             id: todoId2,
+            parentID: category1Id,
             title: 'Dog',
             isDone: true,
             description: 'about dog',
         },
         [todoId3]: {
             id: todoId3,
+            parentID: category2Id,
             title: 'Elephant',
             isDone: false,
             description: 'about elephant',
         },
         [todoId4]: {
             id: todoId4,
+            parentID: category3Id,
             title: 'Mouse',
             isDone: true,
             description: 'about mouse',
         },
         [todoId5]: {
             id: todoId5,
+            parentID: categoryChildren1,
             title: 'Horse',
             isDone: true,
             description: 'about horse',
@@ -105,6 +121,7 @@ export const todoReducer = (state: TodosData = initialState, action: ActionTodo)
             const newId = v1();
             const newTodo: Todos = {
                 id: newId,
+                parentID: v1(),
                 title: action.payload.title,
                 isDone: false,
                 description: '',

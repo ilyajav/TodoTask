@@ -6,13 +6,15 @@ export enum ROUTING_PATHS {
 export enum ROUTING_PARAMS {
     TODO_SEARCH = '?searchText=',
     TODO_SHOW_DONE = '?showDone=',
-    TODO_ID = '?todoId='
+    TODO_ID = '?todoId=',
+    CATEGORY_ID = '?categoryId=',
 }
 
 export enum ROUTING_DATA {
-    SHOW_DONE = 'showDone',
-    SEARCH_TEXT = 'searchText',
+    SHOW_DONE = '?showDone',
+    SEARCH_TEXT = '?searchText',
     TODO_TEXT_ID = 'todoId',
+    CATEGORY_TEXT_ID = 'categoryId',
 }
 
 export enum ACTIONS_TYPES_TODO {
@@ -23,8 +25,9 @@ export enum ACTIONS_TYPES_TODO {
 
 export enum ACTIONS_TYPES_CATEGORY {
     ADD_CATEGORY = 'ADD-CATEGORY',
+    ADD_SUB_CATEGORY = 'ADD-SUB-CATEGORY',
     REMOVE_CATEGORY = 'REMOVE-CATEGORY',
-    CHANGE_CATEGORY_TITLE = 'CHANGE-CATEGORY-TITLE'
+    CHANGE_CATEGORY_TITLE = 'CHANGE-CATEGORY-TITLE',
 }
 
 export enum ERROR_COLORS {

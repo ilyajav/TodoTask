@@ -9,19 +9,22 @@ import {
     Grid,
     TextField,
 } from '@material-ui/core';
-import {useDispatch} from 'react-redux';
-
-import {addTodo} from '../../../store';
 
 import style from './AddItemForm.module.css';
 
 type AddItemFormProps = {
     formText: string
+    onAddItem: (id: string, title: string) => void;
+    categoryId: string,
 }
 
-export const AddItemForm = React.memo(({formText}: AddItemFormProps) => {
-    const dispatch = useDispatch();
-
+export const AddItemForm = React.memo((
+    {
+        formText,
+        onAddItem,
+        categoryId,
+    }: AddItemFormProps
+) => {
     const [title, setTitle] = useState<string>('');
 
     const onChangeTitle = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -29,7 +32,7 @@ export const AddItemForm = React.memo(({formText}: AddItemFormProps) => {
     };
     const onAddTodo = () => {
         if (title.trim()) {
-            dispatch(addTodo(title.trim()));
+            onAddItem(categoryId, title.trim());
             setTitle('');
         }
     };

@@ -9,5 +9,7 @@ export type {CategoryState} from './category-reducer';
 export {
     removeCategory,
     changeCategoryTitle,
+    addCategory,
+    addSubCategory,
 } from './category-reducer';
 export {todoSelector} from './todo-selector';
