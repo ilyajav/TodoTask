@@ -12,6 +12,7 @@ import React, {
     useState,
 } from 'react';
 import {useHistory} from 'react-router-dom';
+
 import {
     ROUTING_PARAMS,
     ROUTING_PATHS,
@@ -32,9 +33,17 @@ export const Header = ({categoryId}: HeaderProps) => {
         setChecked(false);
     }, [categoryId]);
 
+    const category = `${ROUTING_PARAMS.CATEGORY_ID}${categoryId}`;
+    const filter = `${ROUTING_PARAMS.TODO_SEARCH}${searchText}`;
+
+    useEffect(() => {
+        history.push(`${category}&${filter}`);
+        setChecked(false);
+    }, [filter, history, category]);
+
     const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
         setChecked(!checked);
-        const category = `${ROUTING_PARAMS.CATEGORY_ID}${categoryId}`;
+        setSearchText('');
         const show = `${ROUTING_PARAMS.TODO_SHOW_DONE}${e.currentTarget.checked}`;
         history.push({
             pathname: ROUTING_PATHS.TODO_LIST_PAGE_ROUTE,
