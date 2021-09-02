@@ -9,9 +9,11 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import {CategoryState} from '../../store';
-import {EditableSpan} from './components';
+import {
+    EditableSpan,
+    AddChildTodo,
+} from './components';
 import {TodoStyles} from './components/TodoStyles';
-import {AddChildTodo} from './components/AddChildTodo';
 
 import style from './CategoryItem.module.css';
 

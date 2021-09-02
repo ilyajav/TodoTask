@@ -11,7 +11,7 @@ import {
 import CreateIcon from '@material-ui/icons/Create';
 import {Link} from 'react-router-dom';
 
-import {ROUTING_PARAMS} from '../../../App.constants';
+import {ROUTING_PARAMS} from '../../../../App.constants';
 
 import style from './EditableSpan.module.css';
 

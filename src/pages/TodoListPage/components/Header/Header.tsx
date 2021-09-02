@@ -15,7 +15,7 @@ import {useHistory} from 'react-router-dom';
 import {
     ROUTING_PARAMS,
     ROUTING_PATHS,
-} from '../../../App.constants';
+} from '../../../../App.constants';
 
 import style from './Header.module.css';
 

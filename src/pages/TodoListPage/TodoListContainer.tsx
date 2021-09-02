@@ -1,14 +1,15 @@
 import React, {
     ChangeEvent,
-    useCallback, useEffect,
+    useCallback,
+    useEffect,
 } from 'react';
 import {
     useDispatch,
     useSelector,
 } from 'react-redux';
 import {useLocation} from 'react-router';
-
 import {useHistory} from 'react-router-dom';
+
 import {ROUTING_DATA, ROUTING_PATHS} from '../../App.constants';
 import {
     todoSelector,
@@ -43,11 +44,11 @@ export const TodoListContainer = () => {
     const onRemoveCategory = useCallback((categoryId: string) => {
         dispatch(removeCategory(categoryId));
     }, [dispatch]);
-    const onAddTodo = (title: string) => {
-        dispatch(addTodo(title));
+    const onAddTodo = (title: string, categoryId: string) => {
+        dispatch(addTodo(title, categoryId));
     };
-    const onAddCategory = useCallback((id: string, title: string) => {
-        dispatch(addCategory(id, title));
+    const onAddCategory = useCallback((title: string) => {
+        dispatch(addCategory(title));
     }, [dispatch]);
     const onAddSubCategory = useCallback((id: string, title: string) => {
         dispatch(addSubCategory(id, title));

@@ -5,17 +5,15 @@ import React, {
 } from 'react';
 import {
     Button,
-    Container,
     Grid,
     TextField,
 } from '@material-ui/core';
 
-import style from './AddItemForm.module.css';
-import {TodoStyles} from './TodoStyles';
+import {TodoStyles} from '../TodoStyles';
 
 type AddItemFormProps = {
     formText: string
-    onAddItem: (id: string, title: string) => void;
+    addItem: (id: string, title: string) => void;
     categoryId: string,
     addStyle: TodoStyles;
 }
@@ -23,7 +21,7 @@ type AddItemFormProps = {
 export const AddItemForm = React.memo((
     {
         formText,
-        onAddItem,
+        addItem,
         categoryId,
         addStyle,
     }: AddItemFormProps
@@ -33,15 +31,15 @@ export const AddItemForm = React.memo((
     const onChangeTitle = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
     };
-    const onAddTodo = () => {
+    const onAddItem = () => {
         if (title.trim()) {
-            onAddItem(categoryId, title.trim());
+            addItem(title.trim(), categoryId);
             setTitle('');
         }
     };
     const onPressKey = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            onAddTodo();
+            onAddItem();
             setTitle('');
         }
     };
@@ -58,7 +56,7 @@ export const AddItemForm = React.memo((
                     onChange={onChangeTitle}
                     onKeyPress={onPressKey}
                 />
-                <Button onClick={onAddTodo}>Add</Button>
+                <Button onClick={onAddItem}>Add</Button>
             </Grid>
         </>
     );

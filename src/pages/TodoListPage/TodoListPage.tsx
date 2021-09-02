@@ -1,8 +1,14 @@
-import React, {ChangeEvent} from 'react';
+import React,
+{
+    ChangeEvent,
+} from 'react';
 import {v1} from 'uuid';
 import {Box} from '@material-ui/core';
 
-import {AddItemForm, Header} from './components';
+import {
+    AddItemForm,
+    Header,
+} from './components';
 import {TodoList} from './TodoList';
 import {TodoDataStyle} from './components/TodoStyles';
 import {CategoryTree} from './CategoryTree';
@@ -20,7 +26,7 @@ type TodoListPageProps = {
     doneStatus: string | null,
     searchTodo: string | null,
     categoryId: string | null,
-    onAddTodo: (title: string) => void;
+    onAddTodo: (title: string, categoryId: string) => void;
     onAddCategory: (id: string, title: string) => void;
     onAddSubCategory: (id: string, title: string) => void;
     onChangeCategoryTitle: (id: string, title: string) => void;
@@ -54,7 +60,7 @@ export const TodoListPage = React.memo((
                 <div>
                     <AddItemForm
                         formText="Enter new category name"
-                        onAddItem={onAddCategory}
+                        addItem={onAddCategory}
                         categoryId={v1()}
                         addStyle={styleData.addItemCategory}
                     />
@@ -70,7 +76,7 @@ export const TodoListPage = React.memo((
                     <div>
                         <AddItemForm
                             formText="Enter new Todo name"
-                            onAddItem={onAddTodo}
+                            addItem={onAddTodo}
                             categoryId={categoryId}
                             addStyle={styleData.addItemTodo}
                         />

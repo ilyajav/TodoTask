@@ -1,9 +1,6 @@
 import {v1} from 'uuid';
 
-import {
-    ACTIONS_TYPES_CATEGORY,
-    ACTIONS_TYPES_TODO,
-} from '../App.constants';
+import {ACTIONS_TYPES_TODO} from '../App.constants';
 import {
     AddCategory,
     category1Id,
@@ -124,7 +121,7 @@ export const todoReducer = (state: TodosData = initialState, action: ActionTodo)
             const newId = v1();
             const newTodo: Todos = {
                 id: newId,
-                parentID: v1(),
+                parentID: action.payload.categoryId,
                 title: action.payload.title,
                 isDone: false,
                 description: '',
@@ -147,10 +144,11 @@ export const changeTodoStatus = (todoId: string, isDone: boolean) => ({
     },
 } as const);
 
-export const addTodo = (title: string) => ({
+export const addTodo = (title: string, categoryId: string) => ({
     type: ACTIONS_TYPES_TODO.ADD_TODO,
     payload: {
         title,
+        categoryId,
     },
 } as const);
 

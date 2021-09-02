@@ -97,7 +97,7 @@ export const categoryReducer =
         switch (action.type) {
             case ACTIONS_TYPES_CATEGORY.ADD_CATEGORY: {
                 const newCategory: CategoryState = {
-                    id: action.payload.id,
+                    id: v1(),
                     title: action.payload.title,
                     children: [],
                 };
@@ -116,10 +116,9 @@ export const categoryReducer =
                 return state;
         }
     };
-export const addCategory = (id: string, title: string) => ({
+export const addCategory = (title: string) => ({
     type: ACTIONS_TYPES_CATEGORY.ADD_CATEGORY,
     payload: {
-        id,
         title,
     },
 } as const);

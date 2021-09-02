@@ -1,3 +1,4 @@
-export {Header} from './Header';
-export {AddItemForm} from './AddItemForm';
-export {EditableSpan} from './EditableSpan';
+export {Header} from './Header/Header';
+export {AddItemForm} from './AddItemForm/AddItemForm';
+export {EditableSpan} from './EditableSpan/EditableSpan';
+export {AddChildTodo} from './AddChildTodo/AddChildTodo';
