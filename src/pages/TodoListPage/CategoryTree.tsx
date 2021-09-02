@@ -9,6 +9,7 @@ type CategoryTreeProps = {
     category: CategoryState[]
     onAddSubCategory: (id: string, title: string) => void;
     onChangeCategoryTitle: (id: string, title: string) => void;
+    categoryId: string | null,
 }
 
 export const CategoryTree = (
@@ -17,6 +18,7 @@ export const CategoryTree = (
         category,
         onAddSubCategory,
         onChangeCategoryTitle,
+        categoryId,
     }: CategoryTreeProps
 ) => (
     <>
@@ -26,6 +28,7 @@ export const CategoryTree = (
             styleData={commonStyle.category}
             onAddSubCategory={onAddSubCategory}
             onChangeCategoryTitle={onChangeCategoryTitle}
+            categoryId={categoryId}
         />
     </>
 );

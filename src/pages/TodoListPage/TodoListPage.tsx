@@ -1,8 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import {v1} from 'uuid';
-import {
-    Box, Container, Grid, makeStyles,
-} from '@material-ui/core';
+import {Box} from '@material-ui/core';
 
 import {AddItemForm, Header} from './components';
 import {TodoList} from './TodoList';
@@ -12,8 +10,6 @@ import {
     CategoryState,
     Todos,
 } from '../../store';
-
-import style from './TodoListPade.module.css';
 
 type TodoListPageProps = {
     onChangeTodoStatus: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
@@ -67,6 +63,7 @@ export const TodoListPage = React.memo((
                         category={category}
                         onAddSubCategory={onAddSubCategory}
                         onChangeCategoryTitle={onChangeCategoryTitle}
+                        categoryId={categoryId}
                     />
                 </div>
                 {categoryId && (

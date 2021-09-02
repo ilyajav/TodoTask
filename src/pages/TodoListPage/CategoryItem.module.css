@@ -1,3 +1,7 @@
 .item{
     margin-left: 20px;
 }
+
+.selectedCategory{
+    border: 2px solid #008000FF;
+}

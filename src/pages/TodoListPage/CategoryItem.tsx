@@ -21,6 +21,7 @@ type CategoryItemProps = {
     styleData: TodoStyles;
     onAddSubCategory: (id: string, title: string) => void;
     onChangeCategoryTitle: (id: string, title: string) => void;
+    categoryId: string | null,
 }
 
 export const CategoryItem = (
@@ -30,6 +31,7 @@ export const CategoryItem = (
         styleData,
         onAddSubCategory,
         onChangeCategoryTitle,
+        categoryId,
     }: CategoryItemProps
 ) => {
     const removeCategory = (id: string) => {
@@ -48,12 +50,18 @@ export const CategoryItem = (
                     {
                         category.map(ct => (
                             <div key={ct.id}>
-                                <Grid container direction="row" justifyContent="space-between">
+                                <Grid
+                                    container
+                                    direction="row"
+                                    justifyContent="space-between"
+                                    className={categoryId === ct.id ? style.selectedCategory : ''}
+                                >
                                     <div className={style.item}>
                                         <EditableSpan
                                             itemTitle={ct.title}
                                             id={ct.id}
                                             onChangeCategoryTitle={onChangeCategoryTitle}
+                                            categoryId={categoryId}
                                         />
                                         <IconButton color="primary" onClick={() => removeCategory(ct.id)}>
                                             <DeleteIcon />
@@ -75,6 +83,7 @@ export const CategoryItem = (
                                             styleData={childrenStyle}
                                             onAddSubCategory={onAddSubCategory}
                                             onChangeCategoryTitle={onChangeCategoryTitle}
+                                            categoryId={categoryId}
                                         />
                                     )
                                     : null}

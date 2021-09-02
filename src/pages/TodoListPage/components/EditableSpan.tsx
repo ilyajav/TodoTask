@@ -13,10 +13,13 @@ import {Link} from 'react-router-dom';
 
 import {ROUTING_PARAMS} from '../../../App.constants';
 
+import style from './EditableSpan.module.css';
+
 type EditableProps = {
     itemTitle: string
     id: string
     onChangeCategoryTitle: (id: string, title: string) => void;
+    categoryId: string | null,
 }
 
 export const EditableSpan = (
@@ -24,6 +27,7 @@ export const EditableSpan = (
         itemTitle,
         id,
         onChangeCategoryTitle,
+        categoryId,
     }: EditableProps
 ) => {
     const [title, setTitle] = useState<string>(itemTitle);
@@ -63,7 +67,9 @@ export const EditableSpan = (
                     )
                     : (
                         <>
-                            <Link to={`/todos${ROUTING_PARAMS.CATEGORY_ID}${id}`}>{itemTitle}</Link>
+                            <span className={categoryId === id ? style.link : ''}>
+                                <Link to={`/todos${ROUTING_PARAMS.CATEGORY_ID}${id}`}>{itemTitle}</Link>
+                            </span>
                             <IconButton color="primary" onClick={onShowEdit}>
                                 <CreateIcon />
                             </IconButton>

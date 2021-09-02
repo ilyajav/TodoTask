@@ -58,7 +58,7 @@ export const TodoList = React.memo((
 
     return (
         <Box>
-            <Paper style={styleData.todo} className={style.todoBlock}>
+            <Paper style={styleData.todo}>
                 {
                     filteredTod.map(td => (
                         <div key={td.id}>
