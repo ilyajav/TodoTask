@@ -1,6 +1,6 @@
 import React, {
     ChangeEvent,
-    useCallback,
+    useCallback, useEffect,
 } from 'react';
 import {
     useDispatch,
@@ -8,7 +8,8 @@ import {
 } from 'react-redux';
 import {useLocation} from 'react-router';
 
-import {ROUTING_DATA} from '../../App.constants';
+import {useHistory} from 'react-router-dom';
+import {ROUTING_DATA, ROUTING_PATHS} from '../../App.constants';
 import {
     todoSelector,
     changeTodoStatus,
@@ -28,6 +29,7 @@ export const TodoListContainer = () => {
     const finalTodo = useSelector(todoSelector);
     const dispatch = useDispatch();
     const location = useLocation();
+    const history = useHistory();
 
     const params = new URLSearchParams(location.search);
     const doneStatus = params.get(ROUTING_DATA.SHOW_DONE);
@@ -38,21 +40,25 @@ export const TodoListContainer = () => {
         const isDone = e.currentTarget.checked;
         dispatch(changeTodoStatus(id, isDone));
     }, [dispatch]);
-    const onRemoveCategory = (categoryId: string) => {
+    const onRemoveCategory = useCallback((categoryId: string) => {
         dispatch(removeCategory(categoryId));
-    };
+    }, [dispatch]);
     const onAddTodo = (title: string) => {
         dispatch(addTodo(title));
     };
-    const onAddCategory = (id: string, title: string) => {
+    const onAddCategory = useCallback((id: string, title: string) => {
         dispatch(addCategory(id, title));
-    };
-    const onAddSubCategory = (id: string, title: string) => {
+    }, [dispatch]);
+    const onAddSubCategory = useCallback((id: string, title: string) => {
         dispatch(addSubCategory(id, title));
-    };
-    const onChangeCategoryTitle = (id: string, title: string) => {
+    }, [dispatch]);
+    const onChangeCategoryTitle = useCallback((id: string, title: string) => {
         dispatch(changeCategoryTitle(id, title));
-    };
+    }, [dispatch]);
+
+    useEffect(() => {
+        history.push(`${ROUTING_PATHS.TODO_LIST_PAGE_ROUTE}`);
+    }, [history, categoryData]);
 
     return (
         <TodoListPage

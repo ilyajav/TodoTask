@@ -1,9 +1,11 @@
 import {v1} from 'uuid';
 
 import {
+    ACTIONS_TYPES_CATEGORY,
     ACTIONS_TYPES_TODO,
 } from '../App.constants';
 import {
+    AddCategory,
     category1Id,
     category2Id,
     category3Id,
@@ -37,6 +39,7 @@ type ActionTodo =
     | AddTodo
     | ChangeTodo
     | RemoveCategory
+    | AddCategory
 
 const todoId1 = v1();
 const todoId2 = v1();

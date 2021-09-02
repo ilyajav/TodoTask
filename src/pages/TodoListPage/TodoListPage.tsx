@@ -1,11 +1,17 @@
 import React, {ChangeEvent} from 'react';
 import {v1} from 'uuid';
+import {
+    Box, Container, Grid, makeStyles,
+} from '@material-ui/core';
 
 import {AddItemForm, Header} from './components';
 import {TodoList} from './TodoList';
 import {TodoDataStyle} from './components/TodoStyles';
 import {CategoryTree} from './CategoryTree';
-import {CategoryState, Todos} from '../../store';
+import {
+    CategoryState,
+    Todos,
+} from '../../store';
 
 import style from './TodoListPade.module.css';
 
@@ -24,7 +30,7 @@ type TodoListPageProps = {
     onChangeCategoryTitle: (id: string, title: string) => void;
 }
 
-export const TodoListPage = (
+export const TodoListPage = React.memo((
     {
         onChangeTodoStatus,
         todoData,
@@ -44,38 +50,43 @@ export const TodoListPage = (
     if (categoryId) {
         todos = todoData.filter(td => td.parentID === categoryId);
     }
+
     return (
         <>
             <Header categoryId={categoryId} />
-            {categoryId && (
-                <>
+            <Box display="flex">
+                <div>
                     <AddItemForm
-                        formText="Enter new Todo name"
-                        onAddItem={onAddTodo}
-                        categoryId={categoryId}
+                        formText="Enter new category name"
+                        onAddItem={onAddCategory}
+                        categoryId={v1()}
+                        addStyle={styleData.addItemCategory}
                     />
-                    <TodoList
-                        onChangeTodoStatus={onChangeTodoStatus}
-                        todo={todos}
-                        styleData={styleData}
-                        doneStatus={doneStatus}
-                        searchTodo={searchTodo}
+                    <CategoryTree
+                        onRemoveCategory={onRemoveCategory}
+                        category={category}
+                        onAddSubCategory={onAddSubCategory}
+                        onChangeCategoryTitle={onChangeCategoryTitle}
                     />
-                </>
-            )}
-            <div className={style.addItem}>
-                <AddItemForm
-                    formText="Enter new category name"
-                    onAddItem={onAddCategory}
-                    categoryId={v1()}
-                />
-            </div>
-            <CategoryTree
-                onRemoveCategory={onRemoveCategory}
-                category={category}
-                onAddSubCategory={onAddSubCategory}
-                onChangeCategoryTitle={onChangeCategoryTitle}
-            />
+                </div>
+                {categoryId && (
+                    <div>
+                        <AddItemForm
+                            formText="Enter new Todo name"
+                            onAddItem={onAddTodo}
+                            categoryId={categoryId}
+                            addStyle={styleData.addItemTodo}
+                        />
+                        <TodoList
+                            onChangeTodoStatus={onChangeTodoStatus}
+                            todo={todos}
+                            styleData={styleData}
+                            doneStatus={doneStatus}
+                            searchTodo={searchTodo}
+                        />
+                    </div>
+                )}
+            </Box>
         </>
     );
-};
+});

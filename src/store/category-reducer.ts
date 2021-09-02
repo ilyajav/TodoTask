@@ -85,7 +85,7 @@ const initialState: CategoryState[] = [
 
 type AddSubCategory = ReturnType<typeof addSubCategory>
 type ChangeCategoryTitle = ReturnType<typeof changeCategoryTitle>
-type AddCategory = ReturnType<typeof addCategory>
+export type AddCategory = ReturnType<typeof addCategory>
 export type RemoveCategory = ReturnType<typeof removeCategory>
 type ActionCategory =
     AddCategory

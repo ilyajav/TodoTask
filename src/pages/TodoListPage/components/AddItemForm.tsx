@@ -11,11 +11,13 @@ import {
 } from '@material-ui/core';
 
 import style from './AddItemForm.module.css';
+import {TodoStyles} from './TodoStyles';
 
 type AddItemFormProps = {
     formText: string
     onAddItem: (id: string, title: string) => void;
     categoryId: string,
+    addStyle: TodoStyles;
 }
 
 export const AddItemForm = React.memo((
@@ -23,6 +25,7 @@ export const AddItemForm = React.memo((
         formText,
         onAddItem,
         categoryId,
+        addStyle,
     }: AddItemFormProps
 ) => {
     const [title, setTitle] = useState<string>('');
@@ -44,22 +47,19 @@ export const AddItemForm = React.memo((
     };
 
     return (
-        <div>
-            <Container fixed>
-                <Grid
-                    container
-                    className={style.addForm}
-                >
-                    <TextField
-                        variant="outlined"
-                        value={title}
-                        label={formText}
-                        onChange={onChangeTitle}
-                        onKeyPress={onPressKey}
-                    />
-                    <Button onClick={onAddTodo}>Add</Button>
-                </Grid>
-            </Container>
-        </div>
+        <>
+            <Grid
+                style={addStyle}
+            >
+                <TextField
+                    variant="outlined"
+                    value={title}
+                    label={formText}
+                    onChange={onChangeTitle}
+                    onKeyPress={onPressKey}
+                />
+                <Button onClick={onAddTodo}>Add</Button>
+            </Grid>
+        </>
     );
 });
