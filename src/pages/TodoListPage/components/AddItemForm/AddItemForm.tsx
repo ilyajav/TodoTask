@@ -9,7 +9,7 @@ import {
     TextField,
 } from '@material-ui/core';
 
-import {TodoStyles} from '../TodoStyles';
+import {TodoStyles} from '../../../CommonComponents';
 
 type AddItemFormProps = {
     formText: string

@@ -27,6 +27,7 @@ export type TodosData = {
     todos: Todo
 }
 
+type ChangeTodoParent = ReturnType<typeof changeTodoParent>
 type ChangeTodo = ReturnType<typeof changeTodo>
 type ChangeTodoStatus = ReturnType<typeof changeTodoStatus>
 type AddTodo = ReturnType<typeof addTodo>
@@ -37,6 +38,7 @@ type ActionTodo =
     | ChangeTodo
     | RemoveCategory
     | AddCategory
+    | ChangeTodoParent
 
 const todoId1 = v1();
 const todoId2 = v1();
@@ -131,6 +133,22 @@ export const todoReducer = (state: TodosData = initialState, action: ActionTodo)
 
             return copyState;
         }
+        case ACTIONS_TYPES_TODO.CHANGE_TODO_PARENT: {
+            const {
+                todoId,
+                categoryId,
+            } = action.payload;
+            const copyState = {...state};
+            if (todoId) {
+                const oldTodo = copyState.todos[todoId];
+
+                const newTodo = {...oldTodo};
+                newTodo.parentID = categoryId;
+                copyState.todos = {...copyState.todos, [todoId]: newTodo};
+            }
+
+            return copyState;
+        }
         default:
             return state;
     }
@@ -159,5 +177,13 @@ export const changeTodo = (title: string, todoId: string, description: string, i
         todoId,
         description,
         isDone,
+    },
+} as const);
+
+export const changeTodoParent = (todoId: string | null, categoryId: string) => ({
+    type: ACTIONS_TYPES_TODO.CHANGE_TODO_PARENT,
+    payload: {
+        todoId,
+        categoryId,
     },
 } as const);

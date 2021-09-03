@@ -40,7 +40,7 @@ export const AddChildTodo = ({onAddSubCategory, id}: AddChildTodoProps) => {
             {
                 addMode
                     ? (
-                        <span className={style.addChild}>
+                        <div className={style.addChild}>
                             <TextField
                                 value={newChildTitle}
                                 onChange={onChangeTitle}
@@ -48,7 +48,7 @@ export const AddChildTodo = ({onAddSubCategory, id}: AddChildTodoProps) => {
                             />
                             <Button onClick={onAddCategory}>Add</Button>
                             <Button onClick={onHideAdding}>Cancel</Button>
-                        </span>
+                        </div>
                     )
                     : (
                         <>

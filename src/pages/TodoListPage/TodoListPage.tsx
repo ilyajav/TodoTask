@@ -10,26 +10,23 @@ import {
     Header,
 } from './components';
 import {TodoList} from './TodoList';
-import {TodoDataStyle} from './components/TodoStyles';
-import {CategoryTree} from './CategoryTree';
 import {
-    CategoryState,
-    Todos,
-} from '../../store';
+    CategoryTree,
+    TodoDataStyle,
+} from '../CommonComponents';
+import {Todos} from '../../store';
 
 type TodoListPageProps = {
     onChangeTodoStatus: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
     todoData: Todos[];
     styleData: TodoDataStyle;
-    onRemoveCategory: (categoryId: string) => void;
-    category: CategoryState[]
     doneStatus: string | null,
     searchTodo: string | null,
     categoryId: string | null,
     onAddTodo: (title: string, categoryId: string) => void;
     onAddCategory: (id: string, title: string) => void;
-    onAddSubCategory: (id: string, title: string) => void;
-    onChangeCategoryTitle: (id: string, title: string) => void;
+    mode: string,
+    todoId: string | null,
 }
 
 export const TodoListPage = React.memo((
@@ -37,15 +34,13 @@ export const TodoListPage = React.memo((
         onChangeTodoStatus,
         todoData,
         styleData,
-        onRemoveCategory,
-        category,
         doneStatus,
         searchTodo,
         categoryId,
         onAddTodo,
         onAddCategory,
-        onAddSubCategory,
-        onChangeCategoryTitle,
+        mode,
+        todoId,
     }: TodoListPageProps
 ) => {
     let todos = todoData;
@@ -65,11 +60,8 @@ export const TodoListPage = React.memo((
                         addStyle={styleData.addItemCategory}
                     />
                     <CategoryTree
-                        onRemoveCategory={onRemoveCategory}
-                        category={category}
-                        onAddSubCategory={onAddSubCategory}
-                        onChangeCategoryTitle={onChangeCategoryTitle}
-                        categoryId={categoryId}
+                        mode={mode}
+                        todoId={todoId}
                     />
                 </div>
                 {categoryId && (

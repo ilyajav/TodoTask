@@ -21,6 +21,7 @@ export enum ACTIONS_TYPES_TODO {
     CHANGE_TODO_STATUS = 'CHANGE-TODO-STATUS',
     ADD_TODO = 'ADD-TODO',
     CHANGE_TODO = 'CHANGE-TODO',
+    CHANGE_TODO_PARENT = 'CHANGE-TODO-PARENT',
 }
 
 export enum ACTIONS_TYPES_CATEGORY {
@@ -33,4 +34,9 @@ export enum ACTIONS_TYPES_CATEGORY {
 export enum ERROR_COLORS {
     ON_ERROR = 'secondary',
     OFF_ERROR = 'primary',
+}
+
+export enum MODE {
+    SHOW = 'SHOW',
+    EDIT = 'EDIT',
 }

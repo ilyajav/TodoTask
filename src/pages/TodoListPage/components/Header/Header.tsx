@@ -36,10 +36,10 @@ export const Header = ({categoryId}: HeaderProps) => {
     const category = `${ROUTING_PARAMS.CATEGORY_ID}${categoryId}`;
     const filter = `${ROUTING_PARAMS.TODO_SEARCH}${searchText}`;
 
-    useEffect(() => {
-        history.push(`${category}&${filter}`);
-        setChecked(false);
-    }, [filter, history, category]);
+    // useEffect(() => {
+    //     history.push(`${category}&${filter}`);
+    //     setChecked(false);
+    // }, [filter, history, category]);
 
     const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
         setChecked(!checked);

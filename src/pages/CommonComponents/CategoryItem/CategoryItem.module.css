@@ -5,3 +5,7 @@
 .selectedCategory{
     border: 2px solid #008000FF;
 }
+
+.buttonAddElements{
+    margin-left: 200px;
+}
