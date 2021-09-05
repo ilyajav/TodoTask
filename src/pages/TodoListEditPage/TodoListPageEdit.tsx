@@ -34,7 +34,7 @@ export const TodoListPageEdit = React.memo((
     return (
         <>
             {
-                filteredTodo.map(td => <HeaderEdit title={td.title} />)
+                filteredTodo.map(td => <HeaderEdit title={td.title} key={td.id} />)
             }
             <Box display="flex">
                 <div>
