@@ -48,16 +48,9 @@ export const Header = ({categoryId}: HeaderProps) => {
     useEffect(() => {
         history.push({
             pathname: ROUTING_PATHS.TODO_LIST_PAGE_ROUTE,
-            search: `${category}&${show}&${filter}`,
+            search: `?${category}&${show}&${filter}`,
         });
     }, [history, show, category, filter]);
-
-    useEffect(() => {
-        history.push({
-            pathname: ROUTING_PATHS.TODO_LIST_PAGE_ROUTE,
-            search: `${category}&${filter}&${show}`,
-        });
-    }, [history, filter, category, show]);
 
     return (
         <div className="App">

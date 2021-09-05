@@ -68,7 +68,7 @@ export const EditableSpan = (
                     : (
                         <>
                             <span className={categoryId === id ? style.link : ''}>
-                                <Link to={`/todos${ROUTING_PARAMS.CATEGORY_ID}${id}`}>{itemTitle}</Link>
+                                <Link to={`/todos?${ROUTING_PARAMS.CATEGORY_ID}${id}`}>{itemTitle}</Link>
                             </span>
                             <IconButton color="primary" onClick={onShowEdit}>
                                 <CreateIcon />

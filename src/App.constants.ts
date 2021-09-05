@@ -4,15 +4,15 @@ export enum ROUTING_PATHS {
 }
 
 export enum ROUTING_PARAMS {
-    TODO_SEARCH = '?searchText=',
-    TODO_SHOW_DONE = '?showDone=',
+    TODO_SEARCH = 'searchText=',
+    TODO_SHOW_DONE = 'showDone=',
     TODO_ID = '?todoId=',
-    CATEGORY_ID = '?categoryId=',
+    CATEGORY_ID = 'categoryId=',
 }
 
 export enum ROUTING_DATA {
-    SHOW_DONE = '?showDone',
-    SEARCH_TEXT = '?searchText',
+    SHOW_DONE = 'showDone',
+    SEARCH_TEXT = 'searchText',
     TODO_TEXT_ID = 'todoId',
     CATEGORY_TEXT_ID = 'categoryId',
 }
