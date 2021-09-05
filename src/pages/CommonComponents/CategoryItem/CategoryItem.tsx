@@ -8,6 +8,8 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {CategoryState} from '../../../store';
 import {
@@ -44,6 +46,8 @@ export const CategoryItem = (
         todoId,
     }: CategoryItemProps
 ) => {
+    const notifySuccess = () => toast.success('Todo moved');
+
     const removeCategory = (id: string) => {
         onRemoveCategory(id);
     };
@@ -55,6 +59,7 @@ export const CategoryItem = (
 
     const changeTodoParent = (todoId: string | null, categoryId: string) => {
         onChangeTodoParent(todoId, categoryId);
+        notifySuccess();
     };
 
     return (

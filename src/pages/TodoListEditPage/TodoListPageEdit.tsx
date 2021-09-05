@@ -1,16 +1,19 @@
 import React from 'react';
 import {Box} from '@material-ui/core';
 
-import {CategoryTree} from '../CommonComponents';
+import {CategoryTree, TodoDataStyle} from '../CommonComponents';
 import {HeaderEdit} from './components/HeaderEdit';
 import {Todos} from '../../store';
 import {TodoListEdit} from './TodoListEdit';
+
+import style from './TodoListPageEdit.module.css';
 
 type TodoListPageEditProps = {
     mode: string;
     todoData: Todos[];
     onChangeTodo: (title: string, id: string, description: string, isDone: boolean) => void;
-    todoId: string | null,
+    todoId: string | null;
+    styleData: TodoDataStyle;
 }
 
 export const TodoListPageEdit = React.memo((
@@ -19,6 +22,7 @@ export const TodoListPageEdit = React.memo((
         todoData,
         onChangeTodo,
         todoId,
+        styleData,
     }: TodoListPageEditProps
 ) => {
     let filteredTodo = todoData;
@@ -39,7 +43,7 @@ export const TodoListPageEdit = React.memo((
                         todoId={todoId}
                     />
                 </div>
-                <div>
+                <div className={style.todo}>
                     {
                         filteredTodo.map(td => (
                             <div key={td.id}>
@@ -49,6 +53,7 @@ export const TodoListPageEdit = React.memo((
                                     description={td.description}
                                     isDone={td.isDone}
                                     id={td.id}
+                                    styleData={styleData}
                                 />
                             </div>
                         ))

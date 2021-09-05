@@ -18,6 +18,7 @@ import {
 import 'react-toastify/dist/ReactToastify.css';
 
 import {ERROR_COLORS} from '../../App.constants';
+import {TodoDataStyle} from '../CommonComponents';
 
 import style from './TodoListEdit.module.css';
 
@@ -27,6 +28,7 @@ type TodoListEditProps = {
     description: string,
     isDone: boolean,
     id: string,
+    styleData: TodoDataStyle;
 }
 
 type FormikErrorType = {
@@ -40,17 +42,8 @@ export const TodoListEdit = React.memo(({
     isDone,
     id,
     onChangeTodo,
+    styleData,
 }: TodoListEditProps) => {
-    const styles = {
-        Paper: {
-            padding: 10,
-            height: 350,
-            width: 600,
-            overflowY: 'auto' as 'auto',
-            margin: '10px 350px',
-        },
-    };
-
     const notifySuccess = () => toast.success('New data saved');
 
     const formik = useFormik({
@@ -76,7 +69,7 @@ export const TodoListEdit = React.memo(({
 
     return (
         <Box>
-            <Paper style={styles.Paper}>
+            <Paper style={styleData.todoEdit}>
                 <form onSubmit={formik.handleSubmit}>
                     <FormGroup>
                         <div>
@@ -87,8 +80,12 @@ export const TodoListEdit = React.memo(({
                                 position="bottom-center"
                                 hideProgressBar
                             />
-                            <Button type="submit" disabled={!formik.isValid} onClick={notifySuccess}>Save</Button>
-                            <Link to="/todos"><Button>Cancel</Button></Link>
+                            <div className={style.buttons}>
+                                <Button type="submit" disabled={!formik.isValid} onClick={notifySuccess}>Save</Button>
+                                <span>
+                                    <Link to="/todos"><Button>Cancel</Button></Link>
+                                </span>
+                            </div>
                         </div>
                         <div className={style.item}>
                             <TextField
@@ -104,7 +101,7 @@ export const TodoListEdit = React.memo(({
                                 <div className={style.error}>{formik.errors.title}</div>
                             }
                         </div>
-                        <div>
+                        <div className={style.checkBox}>
                             <FormControlLabel
                                 label="Done"
                                 control={(

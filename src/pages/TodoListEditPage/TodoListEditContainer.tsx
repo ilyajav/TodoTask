@@ -14,6 +14,7 @@ import {
     changeTodo,
 } from '../../store';
 import {TodoListPageEdit} from './TodoListPageEdit';
+import {commonStyle} from '../CommonComponents';
 
 export const TodoListEditContainer = () => {
     const finalTodo = useSelector(todoSelector);
@@ -35,6 +36,7 @@ export const TodoListEditContainer = () => {
             todoData={finalTodo}
             onChangeTodo={onChangeTodo}
             todoId={todoId}
+            styleData={commonStyle}
         />
     );
 };

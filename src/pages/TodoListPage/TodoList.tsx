@@ -59,6 +59,21 @@ export const TodoList = React.memo((
         });
     }
 
+    if (searchTodo && doneStatus === 'true') {
+        filteredTod = todo.filter(td => {
+            let title;
+            let filter;
+            if (td.isDone) {
+                title = td.title.toLowerCase();
+                filter = searchTodo.toLowerCase();
+            }
+            if (title && filter) {
+                title = title.includes(filter);
+            }
+            return title;
+        });
+    }
+
     return (
         <Box>
             <Paper style={styleData.todo}>
@@ -74,12 +89,14 @@ export const TodoList = React.memo((
                                     />
                                     <span className={style.item}>{td.title}</span>
                                 </div>
-                                <div>
+                                <div className={style.link}>
                                     <IconButton color="primary">
                                         <Link
                                             to={`${editRoute}${td.id}`}
                                         >
-                                            <CreateIcon />
+                                            <span className={style.link}>
+                                                <CreateIcon />
+                                            </span>
                                         </Link>
                                     </IconButton>
                                 </div>

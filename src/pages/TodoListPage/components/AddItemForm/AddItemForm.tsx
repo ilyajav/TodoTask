@@ -11,6 +11,8 @@ import {
 
 import {TodoStyles} from '../../../CommonComponents';
 
+import styles from './AddItemForm.module.css';
+
 type AddItemFormProps = {
     formText: string
     addItem: (id: string, title: string) => void;
@@ -56,7 +58,13 @@ export const AddItemForm = React.memo((
                     onChange={onChangeTitle}
                     onKeyPress={onPressKey}
                 />
-                <Button onClick={onAddItem}>Add</Button>
+                <Button
+                    onClick={onAddItem}
+                    color="primary"
+                    size="large"
+                >
+                    <span className={styles.button}> Add </span>
+                </Button>
             </Grid>
         </>
     );

@@ -35,25 +35,29 @@ export const Header = ({categoryId}: HeaderProps) => {
 
     const category = `${ROUTING_PARAMS.CATEGORY_ID}${categoryId}`;
     const filter = `${ROUTING_PARAMS.TODO_SEARCH}${searchText}`;
-
-    // useEffect(() => {
-    //     history.push(`${category}&${filter}`);
-    //     setChecked(false);
-    // }, [filter, history, category]);
+    const show = `${ROUTING_PARAMS.TODO_SHOW_DONE}${checked}`;
 
     const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
         setChecked(!checked);
         setSearchText('');
-        const show = `${ROUTING_PARAMS.TODO_SHOW_DONE}${e.currentTarget.checked}`;
-        history.push({
-            pathname: ROUTING_PATHS.TODO_LIST_PAGE_ROUTE,
-            search: `${category}&${show}`,
-        });
     };
     const onSearchChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        const newText = e.currentTarget.value;
-        setSearchText(newText);
+        setSearchText(e.currentTarget.value);
     };
+
+    useEffect(() => {
+        history.push({
+            pathname: ROUTING_PATHS.TODO_LIST_PAGE_ROUTE,
+            search: `${category}&${show}&${filter}`,
+        });
+    }, [history, show, category, filter]);
+
+    useEffect(() => {
+        history.push({
+            pathname: ROUTING_PATHS.TODO_LIST_PAGE_ROUTE,
+            search: `${category}&${filter}&${show}`,
+        });
+    }, [history, filter, category, show]);
 
     return (
         <div className="App">

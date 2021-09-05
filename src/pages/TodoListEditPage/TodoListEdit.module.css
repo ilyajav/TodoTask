@@ -1,8 +1,20 @@
 .item{
     margin-top: 10px;
+    padding-left: 20px;
+}
+
+.checkBox{
+    padding-left: 20px;
 }
 
 .error{
     color: #FF0000FF;
 }
 
+a{
+    text-decoration: none;
+}
+
+.buttons{
+    padding-left: 60px;
+}

@@ -13,6 +13,7 @@ export type TodoDataStyle = {
     category: TodoStyles,
     addItemTodo: TodoStyles,
     addItemCategory: TodoStyles,
+    todoEdit: TodoStyles,
 }
 
 export const commonStyle: TodoDataStyle = {
@@ -27,6 +28,10 @@ export const commonStyle: TodoDataStyle = {
         width: 500,
         height: 350,
         margin: '10px 50px',
+    },
+    todoEdit: {
+        height: 350,
+        width: 300,
     },
     addItemTodo: {
         padding: '20px 20px 20px 230px',
