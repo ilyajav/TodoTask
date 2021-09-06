@@ -5,112 +5,134 @@ import {ACTIONS_TYPES_CATEGORY} from '../App.constants';
 export type CategoryState = {
     id: string,
     title: string,
-    children: CategoryState[] | []
+    childrenId: string[]
 }
 
-export const category1Id = v1();
-export const category2Id = v1();
-export const category3Id = v1();
-export const categoryChildren1 = v1();
+export type Category = {
+    [key: string]: CategoryState
+}
 
-const recursiveDelete = (category: CategoryState[], id: string): CategoryState[] => category.filter(ct => {
-    let arr = ct.children;
-    if (ct.children) {
-        arr = recursiveDelete(ct.children, id);
-    }
-    ct.children = arr;
-    return ct.id !== id;
-});
-
-const recursiveChangeTitle = (category: CategoryState[], id: string, newTitle: string): CategoryState[] => category
-    .map(ct => {
-        let arr = ct.children;
-        if (ct.children) {
-            arr = recursiveChangeTitle(ct.children, id, newTitle);
-        }
-        ct.children = arr;
-        if (ct.id === id) {
-            ct.title = newTitle;
-        }
-        return ct;
-    });
-
-const recursiveAddCategory = (category: CategoryState[], id: string, title: string): CategoryState[] => category
-    .map(ct => {
-        let arr = ct.children;
-        if (ct.children) {
-            arr = recursiveAddCategory(ct.children, id, title);
-        }
-        ct.children = arr;
-        if (ct.id === id) {
-            const newCategory: CategoryState = {
-                id: v1(),
-                title,
-                children: [],
-            };
-            ct.children = [newCategory, ...ct.children];
-        }
-        return ct;
-    });
-
-const initialState: CategoryState[] = [
-    {
-        id: category1Id,
-        title: 'Category 1',
-        children: [
-            {
-                id: categoryChildren1,
-                title: 'Category 1.2',
-                children: [
-                    {
-                        id: v1(),
-                        title: 'Category 1.3',
-                        children: [],
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        id: category2Id,
-        title: 'Category 2',
-        children: [],
-    },
-    {
-        id: category3Id,
-        title: 'Category 3',
-        children: [],
-    },
-];
-
+export type CategoryData = {
+    categoriesId: string[],
+    categories: Category,
+}
 type AddSubCategory = ReturnType<typeof addSubCategory>
 type ChangeCategoryTitle = ReturnType<typeof changeCategoryTitle>
-export type AddCategory = ReturnType<typeof addCategory>
+type AddCategory = ReturnType<typeof addCategory>
 export type RemoveCategory = ReturnType<typeof removeCategory>
 type ActionCategory =
     AddCategory
     | RemoveCategory
     | ChangeCategoryTitle
     | AddSubCategory
+
+export const category1Id = v1();
+export const category2Id = v1();
+export const category3Id = v1();
+export const categoryChild1 = v1();
+export const categoryChild2 = v1();
+
+const initialState: CategoryData = {
+    categoriesId: [
+        category1Id,
+        category2Id,
+        category3Id,
+        categoryChild1,
+        categoryChild2,
+    ],
+    categories: {
+        [category1Id]: {
+            id: category1Id,
+            title: 'Category 1',
+            childrenId: [categoryChild1, categoryChild2],
+        },
+        [category2Id]: {
+            id: category2Id,
+            title: 'Category 2',
+            childrenId: [],
+        },
+        [category3Id]: {
+            id: category3Id,
+            title: 'Category 3',
+            childrenId: [],
+        },
+        [categoryChild1]: {
+            id: categoryChild1,
+            title: 'Category child 1',
+            childrenId: [],
+        },
+        [categoryChild2]: {
+            id: categoryChild2,
+            title: 'Category child 2',
+            childrenId: [],
+        },
+    },
+};
+
 export const categoryReducer =
-    (state: CategoryState[] = initialState, action: ActionCategory): CategoryState[] => {
+    (state: CategoryData = initialState, action: ActionCategory): CategoryData => {
         switch (action.type) {
             case ACTIONS_TYPES_CATEGORY.ADD_CATEGORY: {
+                const {
+                    title,
+                } = action.payload;
+                const copyState = {...state};
+                const newCategoryId = v1();
                 const newCategory: CategoryState = {
-                    id: v1(),
-                    title: action.payload.title,
-                    children: [],
+                    id: newCategoryId,
+                    title,
+                    childrenId: [],
                 };
-                return [newCategory, ...state];
+                copyState.categoriesId = [newCategoryId, ...copyState.categoriesId];
+                copyState.categories = {[newCategoryId]: newCategory, ...copyState.categories};
+
+                return copyState;
             }
             case ACTIONS_TYPES_CATEGORY.REMOVE_CATEGORY: {
-                return recursiveDelete(state, action.payload.id);
+                const {
+                    id,
+                } = action.payload;
+                const copyState = {...state};
+                copyState.categoriesId = [...copyState.categoriesId.filter(ci => ci !== id)];
+                copyState.categoriesId.map(ci => {
+                    copyState.categories[ci].childrenId =
+                        copyState.categories[ci].childrenId.filter(ci => ci !== id);
+                    return copyState.categories;
+                });
+                delete copyState.categories[id];
+                return copyState;
             }
             case ACTIONS_TYPES_CATEGORY.CHANGE_CATEGORY_TITLE: {
-                return recursiveChangeTitle(state, action.payload.id, action.payload.title);
+                const {
+                    title,
+                    id,
+                } = action.payload;
+                const copyState = {...state};
+                const oldCategory = copyState.categories[id];
+                const newCategory = {...oldCategory};
+
+                newCategory.title = title;
+                copyState.categories = {...copyState.categories, [id]: newCategory};
+
+                return copyState;
             }
             case ACTIONS_TYPES_CATEGORY.ADD_SUB_CATEGORY: {
-                return recursiveAddCategory(state, action.payload.id, action.payload.title);
+                const {
+                    id,
+                    title,
+                } = action.payload;
+                const copyState = {...state};
+                const newSubCategoryId = v1();
+                const newSubCategory: CategoryState = {
+                    id: newSubCategoryId,
+                    title,
+                    childrenId: [],
+                };
+                copyState.categories[id].childrenId = [...copyState.categories[id].childrenId, newSubCategoryId];
+                copyState.categoriesId = [...copyState.categoriesId, newSubCategoryId];
+                copyState.categories = {...copyState.categories, [newSubCategoryId]: newSubCategory};
+
+                return copyState;
             }
             default:
                 return state;

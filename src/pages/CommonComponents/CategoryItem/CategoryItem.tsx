@@ -10,8 +10,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useSelector} from 'react-redux';
 
-import {CategoryState} from '../../../store';
 import {
     EditableSpan,
     AddChildTodo,
@@ -20,9 +20,13 @@ import {TodoStyles} from '../TodoStyles';
 
 import style from './CategoryItem.module.css';
 import {MODE} from '../../../App.constants';
+import {
+    AppRootState,
+    Category,
+} from '../../../store';
 
 type CategoryItemProps = {
-    category: CategoryState[]
+    categoriesId: string[];
     onRemoveCategory: (categoryId: string) => void;
     styleData: TodoStyles;
     onAddSubCategory: (id: string, title: string) => void;
@@ -30,12 +34,12 @@ type CategoryItemProps = {
     categoryId: string | null,
     mode: string;
     onChangeTodoParent: (todoId: string | null, category: string) => void;
-    todoId: string | null
+    todoId: string | null;
 }
 
-export const CategoryItem = (
+export const CategoryItem = React.memo((
     {
-        category,
+        categoriesId,
         onRemoveCategory,
         styleData,
         onAddSubCategory,
@@ -46,6 +50,7 @@ export const CategoryItem = (
         todoId,
     }: CategoryItemProps
 ) => {
+    const categoriesData = useSelector<AppRootState, Category>(state => state.categoryData.categories);
     const notifySuccess = () => toast.success('Todo moved');
 
     const removeCategory = (id: string) => {
@@ -67,8 +72,8 @@ export const CategoryItem = (
             <Box>
                 <Paper style={styleData}>
                     {
-                        category.map(ct => (
-                            <div key={ct.id}>
+                        categoriesId.map(ci => (
+                            <div key={ci}>
                                 {
                                     mode === MODE.SHOW
                                         ? (
@@ -76,24 +81,24 @@ export const CategoryItem = (
                                                 container
                                                 direction="row"
                                                 justifyContent="space-between"
-                                                className={categoryId === ct.id ? style.selectedCategory : ''}
+                                                className={categoryId === ci ? style.selectedCategory : ''}
                                             >
                                                 <div className={style.item}>
                                                     <EditableSpan
-                                                        itemTitle={ct.title}
-                                                        id={ct.id}
+                                                        itemTitle={categoriesData[ci].title}
+                                                        id={ci}
                                                         onChangeCategoryTitle={onChangeCategoryTitle}
                                                         categoryId={categoryId}
                                                     />
                                                     <IconButton
                                                         color="primary"
-                                                        onClick={() => removeCategory(ct.id)}
+                                                        onClick={() => removeCategory(ci)}
                                                     >
                                                         <DeleteIcon />
                                                     </IconButton>
                                                     <span className={style.buttonAddElements}>
                                                         <AddChildTodo
-                                                            id={ct.id}
+                                                            id={ci}
                                                             onAddSubCategory={onAddSubCategory}
                                                         />
                                                     </span>
@@ -107,13 +112,13 @@ export const CategoryItem = (
                                             >
                                                 <div>
                                                     <span className={style.item}>
-                                                        {ct.title}
+                                                        {categoriesData[ci].title}
                                                     </span>
                                                 </div>
                                                 <span className={style.buttonElements}>
                                                     <IconButton
                                                         color="primary"
-                                                        onClick={() => changeTodoParent(todoId, ct.id)}
+                                                        onClick={() => changeTodoParent(todoId, ci)}
                                                     >
                                                         <MenuOpenIcon />
                                                     </IconButton>
@@ -122,21 +127,21 @@ export const CategoryItem = (
                                         )
                                 }
                                 <Divider light />
-                                {ct.children && ct.children.length
-                                    ? (
-                                        <CategoryItem
-                                            category={ct.children}
-                                            onRemoveCategory={onRemoveCategory}
-                                            styleData={childrenStyle}
-                                            onAddSubCategory={onAddSubCategory}
-                                            onChangeCategoryTitle={onChangeCategoryTitle}
-                                            categoryId={categoryId}
-                                            mode={mode}
-                                            onChangeTodoParent={onChangeTodoParent}
-                                            todoId={todoId}
-                                        />
-                                    )
-                                    : null}
+                                {/* {ct.children && ct.children.length */}
+                                {/*    ? ( */}
+                                {/*        <CategoryItem */}
+                                {/*            category={ct.children} */}
+                                {/*            onRemoveCategory={onRemoveCategory} */}
+                                {/*            styleData={childrenStyle} */}
+                                {/*            onAddSubCategory={onAddSubCategory} */}
+                                {/*            onChangeCategoryTitle={onChangeCategoryTitle} */}
+                                {/*            categoryId={categoryId} */}
+                                {/*            mode={mode} */}
+                                {/*            onChangeTodoParent={onChangeTodoParent} */}
+                                {/*            todoId={todoId} */}
+                                {/*        /> */}
+                                {/*    ) */}
+                                {/*    : null} */}
                             </div>
                         ))
                     }
@@ -144,4 +149,4 @@ export const CategoryItem = (
             </Box>
         </div>
     );
-};
+});

@@ -1,12 +1,14 @@
 import {v1} from 'uuid';
 
-import {ACTIONS_TYPES_TODO} from '../App.constants';
 import {
-    AddCategory,
+    ACTIONS_TYPES_CATEGORY,
+    ACTIONS_TYPES_TODO,
+} from '../App.constants';
+import {
     category1Id,
     category2Id,
     category3Id,
-    categoryChildren1,
+    categoryChild1,
     RemoveCategory,
 } from './category-reducer';
 
@@ -37,7 +39,6 @@ type ActionTodo =
     | AddTodo
     | ChangeTodo
     | RemoveCategory
-    | AddCategory
     | ChangeTodoParent
 
 const todoId1 = v1();
@@ -79,7 +80,7 @@ const initialState: TodosData = {
         },
         [todoId5]: {
             id: todoId5,
-            parentID: categoryChildren1,
+            parentID: categoryChild1,
             title: 'Horse',
             isDone: true,
             description: 'about horse',
@@ -119,12 +120,16 @@ export const todoReducer = (state: TodosData = initialState, action: ActionTodo)
             return copyState;
         }
         case ACTIONS_TYPES_TODO.ADD_TODO: {
+            const {
+                title,
+                categoryId,
+            } = action.payload;
             const copyState = {...state};
             const newId = v1();
             const newTodo: Todos = {
                 id: newId,
-                parentID: action.payload.categoryId,
-                title: action.payload.title,
+                parentID: categoryId,
+                title,
                 isDone: false,
                 description: '',
             };
@@ -146,6 +151,22 @@ export const todoReducer = (state: TodosData = initialState, action: ActionTodo)
                 newTodo.parentID = categoryId;
                 copyState.todos = {...copyState.todos, [todoId]: newTodo};
             }
+
+            return copyState;
+        }
+        case ACTIONS_TYPES_CATEGORY.REMOVE_CATEGORY: {
+            const {
+                id,
+            } = action.payload;
+            const copyState = {...state};
+            copyState.todosId.map(ti => {
+                if (copyState.todos[ti].parentID === id) {
+                    delete copyState.todos[ti];
+                    copyState.todosId = copyState.todosId.filter(id => id !== ti);
+                    return copyState.todosId;
+                }
+                return copyState.todos;
+            });
 
             return copyState;
         }

@@ -41,6 +41,8 @@ export const TodoListContainer = () => {
         dispatch(addTodo(title, categoryId));
     };
     const onAddCategory = useCallback((title: string) => {
+        // eslint-disable-next-line no-debugger
+        debugger;
         dispatch(addCategory(title));
     }, [dispatch]);
 

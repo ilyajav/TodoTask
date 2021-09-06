@@ -1,6 +1,7 @@
 import React,
 {
-    useCallback, useEffect,
+    useCallback,
+    useEffect,
 } from 'react';
 import {
     useDispatch,
@@ -11,14 +12,17 @@ import {useHistory} from 'react-router-dom';
 import {useLocation} from 'react-router';
 import {
     addSubCategory,
-    AppRootState,
-    CategoryState,
     changeCategoryTitle,
     removeCategory,
+    categoryIdSelector,
 } from '../../store';
 import {CategoryItem} from './CategoryItem/CategoryItem';
 import {commonStyle} from './TodoStyles';
-import {MODE, ROUTING_DATA, ROUTING_PATHS} from '../../App.constants';
+import {
+    MODE,
+    ROUTING_DATA,
+    ROUTING_PATHS,
+} from '../../App.constants';
 import {changeTodoParent} from '../../store/todo-reducer';
 
 type CategoryTreeProps = {
@@ -27,11 +31,12 @@ type CategoryTreeProps = {
 }
 
 export const CategoryTree = ({mode, todoId}: CategoryTreeProps) => {
-    const categoryData = useSelector<AppRootState, CategoryState[]>(state => state.categoryData);
+    const categoriesId = useSelector(categoryIdSelector);
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
-
+    // массив id
+    // React.memo
     const params = new URLSearchParams(location.search);
     const categoryId = params.get(ROUTING_DATA.CATEGORY_TEXT_ID);
 
@@ -52,12 +57,11 @@ export const CategoryTree = ({mode, todoId}: CategoryTreeProps) => {
         if (mode === MODE.SHOW) {
             history.push(`${ROUTING_PATHS.TODO_LIST_PAGE_ROUTE}`);
         }
-    }, [mode, history, categoryData]);
+    }, [mode, history, categoriesId]);
 
     return (
         <div>
             <CategoryItem
-                category={categoryData}
                 onRemoveCategory={onRemoveCategory}
                 styleData={commonStyle.category}
                 onAddSubCategory={onAddSubCategory}
@@ -66,6 +70,7 @@ export const CategoryTree = ({mode, todoId}: CategoryTreeProps) => {
                 mode={mode}
                 onChangeTodoParent={onChangeTodoParent}
                 todoId={todoId}
+                categoriesId={categoriesId}
             />
         </div>
     );

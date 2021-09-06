@@ -5,7 +5,10 @@ export {
     addTodo,
     changeTodo,
 } from './todo-reducer';
-export type {CategoryState} from './category-reducer';
+export type {
+    CategoryState,
+    Category,
+} from './category-reducer';
 export {
     removeCategory,
     changeCategoryTitle,
@@ -13,3 +16,4 @@ export {
     addSubCategory,
 } from './category-reducer';
 export {todoSelector} from './todo-selector';
+export {categoryIdSelector} from './category-selector';
