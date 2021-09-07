@@ -13,7 +13,7 @@ export type Category = {
 }
 
 export type CategoryData = {
-    categoriesId: string[],
+    rootCategoriesId: string[],
     categories: Category,
 }
 type AddSubCategory = ReturnType<typeof addSubCategory>
@@ -33,18 +33,16 @@ export const categoryChild1 = v1();
 export const categoryChild2 = v1();
 
 const initialState: CategoryData = {
-    categoriesId: [
+    rootCategoriesId: [
         category1Id,
         category2Id,
         category3Id,
-        categoryChild1,
-        categoryChild2,
     ],
     categories: {
         [category1Id]: {
             id: category1Id,
             title: 'Category 1',
-            childrenId: [categoryChild1, categoryChild2],
+            childrenId: [categoryChild1],
         },
         [category2Id]: {
             id: category2Id,
@@ -59,7 +57,7 @@ const initialState: CategoryData = {
         [categoryChild1]: {
             id: categoryChild1,
             title: 'Category child 1',
-            childrenId: [],
+            childrenId: [categoryChild2],
         },
         [categoryChild2]: {
             id: categoryChild2,
@@ -68,6 +66,16 @@ const initialState: CategoryData = {
         },
     },
 };
+
+// const recursionDelete = (categoriesData: CategoryData, id: string): CategoryData => {
+//     categoriesData.rootCategoriesId = [...categoriesData.rootCategoriesId.filter(ci => ci !== id)];
+//     let arr = categoriesData.categories[id].childrenId;
+//     if (categoriesData.categories[id].childrenId && categoriesData.categories[id].childrenId.length) {
+//     }
+//     delete categoriesData.categories[id];
+//
+//     return categoriesData;
+// };
 
 export const categoryReducer =
     (state: CategoryData = initialState, action: ActionCategory): CategoryData => {
@@ -83,7 +91,7 @@ export const categoryReducer =
                     title,
                     childrenId: [],
                 };
-                copyState.categoriesId = [newCategoryId, ...copyState.categoriesId];
+                copyState.rootCategoriesId = [newCategoryId, ...copyState.rootCategoriesId];
                 copyState.categories = {[newCategoryId]: newCategory, ...copyState.categories};
 
                 return copyState;
@@ -93,11 +101,17 @@ export const categoryReducer =
                     id,
                 } = action.payload;
                 const copyState = {...state};
-                copyState.categoriesId = [...copyState.categoriesId.filter(ci => ci !== id)];
-                copyState.categoriesId.map(ci => {
+                copyState.rootCategoriesId = [...copyState.rootCategoriesId.filter(ci => ci !== id)];
+
+                copyState.rootCategoriesId.map(ci => {
                     copyState.categories[ci].childrenId =
                         copyState.categories[ci].childrenId.filter(ci => ci !== id);
                     return copyState.categories;
+                });
+                copyState.categories[id].childrenId.forEach(cId => {
+                    // eslint-disable-next-line no-debugger
+                    debugger;
+                    delete copyState.categories[cId];
                 });
                 delete copyState.categories[id];
                 return copyState;
@@ -128,9 +142,12 @@ export const categoryReducer =
                     title,
                     childrenId: [],
                 };
-                copyState.categories[id].childrenId = [...copyState.categories[id].childrenId, newSubCategoryId];
-                copyState.categoriesId = [...copyState.categoriesId, newSubCategoryId];
-                copyState.categories = {...copyState.categories, [newSubCategoryId]: newSubCategory};
+                const oldCategory = copyState.categories[id];
+                const newCategory = {...oldCategory};
+
+                newCategory.childrenId = [...newCategory.childrenId, newSubCategoryId];
+                copyState.categories =
+                    {...copyState.categories, [id]: newCategory, [newSubCategoryId]: newSubCategory};
 
                 return copyState;
             }

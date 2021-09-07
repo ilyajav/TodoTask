@@ -10,6 +10,7 @@ import {
 import {useHistory} from 'react-router-dom';
 
 import {useLocation} from 'react-router';
+import {Paper} from '@material-ui/core';
 import {
     addSubCategory,
     changeCategoryTitle,
@@ -61,17 +62,22 @@ export const CategoryTree = ({mode, todoId}: CategoryTreeProps) => {
 
     return (
         <div>
-            <CategoryItem
-                onRemoveCategory={onRemoveCategory}
-                styleData={commonStyle.category}
-                onAddSubCategory={onAddSubCategory}
-                onChangeCategoryTitle={onChangeCategoryTitle}
-                categoryId={categoryId}
-                mode={mode}
-                onChangeTodoParent={onChangeTodoParent}
-                todoId={todoId}
-                categoriesId={categoriesId}
-            />
+            <Paper style={commonStyle.category}>
+                {categoriesId.map(ci => (
+                    <div key={ci}>
+                        <CategoryItem
+                            onRemoveCategory={onRemoveCategory}
+                            onAddSubCategory={onAddSubCategory}
+                            onChangeCategoryTitle={onChangeCategoryTitle}
+                            categoryId={categoryId}
+                            mode={mode}
+                            onChangeTodoParent={onChangeTodoParent}
+                            todoId={todoId}
+                            categoryDataId={ci}
+                        />
+                    </div>
+                ))}
+            </Paper>
         </div>
     );
 };

@@ -9,17 +9,16 @@ import {
     TextField,
 } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
+import DeleteIcon from '@material-ui/icons/Delete';
 import {Link} from 'react-router-dom';
 
 import {ROUTING_PARAMS} from '../../../../App.constants';
-
-import style from './EditableSpan.module.css';
 
 type EditableProps = {
     itemTitle: string
     id: string
     onChangeCategoryTitle: (id: string, title: string) => void;
-    categoryId: string | null,
+    onRemoveCategory: (categoryId: string) => void;
 }
 
 export const EditableSpan = (
@@ -27,25 +26,35 @@ export const EditableSpan = (
         itemTitle,
         id,
         onChangeCategoryTitle,
-        categoryId,
+        onRemoveCategory,
     }: EditableProps
 ) => {
     const [title, setTitle] = useState<string>(itemTitle);
     const [editTitle, setEditTitle] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
 
     const onShowEdit = () => {
         setEditTitle(true);
     };
     const onChangeTitle = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setTitle(e.currentTarget.value);
+        setError(false);
     };
     const changeDataTitle = () => {
-        onChangeCategoryTitle(id, title);
-        setEditTitle(false);
+        if (title.trim()) {
+            onChangeCategoryTitle(id, title.trim());
+            setEditTitle(false);
+        } else {
+            setError(true);
+        }
     };
     const cancelChangeTitle = () => {
         setEditTitle(false);
+        setError(false);
         setTitle(itemTitle);
+    };
+    const removeCategory = (id: string) => {
+        onRemoveCategory(id);
     };
     return (
         <>
@@ -58,6 +67,7 @@ export const EditableSpan = (
                                 label="change category name"
                                 value={title}
                                 onChange={onChangeTitle}
+                                error={error}
                             />
                             <div>
                                 <Button onClick={changeDataTitle}>Change</Button>
@@ -67,11 +77,15 @@ export const EditableSpan = (
                     )
                     : (
                         <>
-                            <span className={categoryId === id ? style.link : ''}>
-                                <Link to={`/todos?${ROUTING_PARAMS.CATEGORY_ID}${id}`}>{itemTitle}</Link>
-                            </span>
+                            <Link to={`/todos?${ROUTING_PARAMS.CATEGORY_ID}${id}`}>{itemTitle}</Link>
                             <IconButton color="primary" onClick={onShowEdit}>
                                 <CreateIcon />
+                            </IconButton>
+                            <IconButton
+                                color="primary"
+                                onClick={() => removeCategory(id)}
+                            >
+                                <DeleteIcon />
                             </IconButton>
                         </>
                     )

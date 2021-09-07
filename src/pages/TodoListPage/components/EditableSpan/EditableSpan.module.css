@@ -2,3 +2,7 @@
     pointer-events: none;
     opacity: 0.5;
 }
+
+.createIcon {
+    margin-right: 5px;
+}

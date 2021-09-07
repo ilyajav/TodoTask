@@ -20,20 +20,27 @@ type AddChildTodoProps = {
 export const AddChildTodo = ({onAddSubCategory, id}: AddChildTodoProps) => {
     const [addMode, setAddMode] = useState<boolean>(false);
     const [newChildTitle, setNewChildTitle] = useState<string>('');
+    const [error, setError] = useState<boolean>(false);
 
     const onShowAdding = () => {
         setAddMode(true);
     };
     const onHideAdding = () => {
         setAddMode(false);
+        setError(false);
     };
     const onChangeTitle = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setNewChildTitle(e.currentTarget.value);
+        setError(false);
     };
     const onAddCategory = () => {
-        onAddSubCategory(id, newChildTitle);
-        setNewChildTitle('');
-        setAddMode(false);
+        if (newChildTitle.trim()) {
+            onAddSubCategory(id, newChildTitle.trim());
+            setNewChildTitle('');
+            setAddMode(false);
+        } else {
+            setError(true);
+        }
     };
     return (
         <>
@@ -45,6 +52,7 @@ export const AddChildTodo = ({onAddSubCategory, id}: AddChildTodoProps) => {
                                 value={newChildTitle}
                                 onChange={onChangeTitle}
                                 label="new sub category title"
+                                error={error}
                             />
                             <Button onClick={onAddCategory}>Add</Button>
                             <Button onClick={onHideAdding}>Cancel</Button>
