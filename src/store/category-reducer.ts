@@ -67,15 +67,15 @@ const initialState: CategoryData = {
     },
 };
 
-// const recursionDelete = (categoriesData: CategoryData, id: string): CategoryData => {
-//     categoriesData.rootCategoriesId = [...categoriesData.rootCategoriesId.filter(ci => ci !== id)];
-//     let arr = categoriesData.categories[id].childrenId;
-//     if (categoriesData.categories[id].childrenId && categoriesData.categories[id].childrenId.length) {
-//     }
-//     delete categoriesData.categories[id];
-//
-//     return categoriesData;
-// };
+const arr: string[] = [];
+
+const recursiveDelete = (id: string, category: CategoryData): string[] => {
+    arr.push(category.categories[id].id);
+    if (category.categories[id].childrenId && category.categories[id].childrenId.length) {
+        category.categories[id].childrenId.map(id => recursiveDelete(id, category));
+    }
+    return arr;
+};
 
 export const categoryReducer =
     (state: CategoryData = initialState, action: ActionCategory): CategoryData => {
@@ -101,19 +101,18 @@ export const categoryReducer =
                     id,
                 } = action.payload;
                 const copyState = {...state};
+                const arrIds = Object.keys(copyState.categories);
                 copyState.rootCategoriesId = [...copyState.rootCategoriesId.filter(ci => ci !== id)];
-
-                copyState.rootCategoriesId.map(ci => {
-                    copyState.categories[ci].childrenId =
-                        copyState.categories[ci].childrenId.filter(ci => ci !== id);
+                arrIds.map(cId => {
+                    copyState.categories[cId].childrenId =
+                        copyState.categories[cId].childrenId.filter(ci => ci !== id);
                     return copyState.categories;
                 });
-                copyState.categories[id].childrenId.forEach(cId => {
-                    // eslint-disable-next-line no-debugger
-                    debugger;
-                    delete copyState.categories[cId];
+                const arr = recursiveDelete(id, copyState);
+                arr.map(id => {
+                    delete copyState.categories[id];
+                    return copyState.categories;
                 });
-                delete copyState.categories[id];
                 return copyState;
             }
             case ACTIONS_TYPES_CATEGORY.CHANGE_CATEGORY_TITLE: {
@@ -183,3 +182,12 @@ export const addSubCategory = (id: string, title: string) => ({
         title,
     },
 } as const);
+
+// copyState.categories[id].childrenId.forEach(cId => {
+//     if (copyState.categories[cId].childrenId && copyState.categories[cId].childrenId.length) {
+//         copyState.categories[cId].childrenId.forEach(cId => {
+//             delete copyState.categories[cId];
+//         });
+//     }
+//     delete copyState.categories[cId];
+// });
