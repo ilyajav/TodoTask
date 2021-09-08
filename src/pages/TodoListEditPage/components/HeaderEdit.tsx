@@ -13,7 +13,7 @@ type HeaderProps = {
 
 export const HeaderEdit = ({title}: HeaderProps) => (
     <div className="App">
-        <AppBar position="static">
+        <AppBar position="fixed">
             <Toolbar>
                 <Typography variant="h6">
                     <span className={style.title}>{title}</span>

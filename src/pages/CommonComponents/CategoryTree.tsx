@@ -31,12 +31,11 @@ type CategoryTreeProps = {
     todoId: string | null,
 }
 
-export const CategoryTree = ({mode, todoId}: CategoryTreeProps) => {
+export const CategoryTree = React.memo(({mode, todoId}: CategoryTreeProps) => {
     const categoriesId = useSelector(categoryIdSelector);
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
-    // массив id
     // React.memo
     const params = new URLSearchParams(location.search);
     const categoryId = params.get(ROUTING_DATA.CATEGORY_TEXT_ID);
@@ -80,4 +79,4 @@ export const CategoryTree = ({mode, todoId}: CategoryTreeProps) => {
             </Paper>
         </div>
     );
-};
+});

@@ -6,6 +6,7 @@ export type TodoStyles = {
     padding?: string,
     marginTop?: number,
     minWidth?: number,
+    border?: string,
 }
 
 export type TodoDataStyle = {
@@ -34,9 +35,9 @@ export const commonStyle: TodoDataStyle = {
         width: 300,
     },
     addItemTodo: {
-        padding: '20px 20px 20px 230px',
+        padding: '90px 20px 20px 230px',
     },
     addItemCategory: {
-        padding: '20px 20px 20px 150px',
+        padding: '90px 20px 20px 150px',
     },
 };

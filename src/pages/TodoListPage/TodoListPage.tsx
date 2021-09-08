@@ -3,7 +3,9 @@ import React,
     ChangeEvent,
 } from 'react';
 import {v1} from 'uuid';
-import {Box} from '@material-ui/core';
+import {
+    Box, Container, Grid, Paper, makeStyles,
+} from '@material-ui/core';
 
 import {
     AddItemForm,
@@ -29,6 +31,10 @@ type TodoListPageProps = {
     todoId: string | null,
 }
 
+const userStyles = makeStyles(theme => {
+
+});
+
 export const TodoListPage = React.memo((
     {
         onChangeTodoStatus,
@@ -43,6 +49,8 @@ export const TodoListPage = React.memo((
         todoId,
     }: TodoListPageProps
 ) => {
+    const classes = userStyles();
+
     let todos = todoData;
     if (categoryId) {
         todos = todoData.filter(td => td.parentID === categoryId);
@@ -51,37 +59,43 @@ export const TodoListPage = React.memo((
     return (
         <>
             <Header categoryId={categoryId} />
-            <Box display="flex">
+            <main>
                 <div>
-                    <AddItemForm
-                        formText="Enter new category name"
-                        addItem={onAddCategory}
-                        categoryId={v1()}
-                        addStyle={styleData.addItemCategory}
-                    />
-                    <CategoryTree
-                        mode={mode}
-                        todoId={todoId}
-                    />
+                    <Box display="flex">
+                        <div>
+                            <AddItemForm
+                                formText="Enter new category name"
+                                addItem={onAddCategory}
+                                categoryId={v1()}
+                                addStyle={styleData.addItemCategory}
+                            />
+                            <CategoryTree
+                                mode={mode}
+                                todoId={todoId}
+                            />
+                        </div>
+                        <div>
+                            {categoryId && (
+                                <div>
+                                    <AddItemForm
+                                        formText="Enter new Todo name"
+                                        addItem={onAddTodo}
+                                        categoryId={categoryId}
+                                        addStyle={styleData.addItemTodo}
+                                    />
+                                    <TodoList
+                                        onChangeTodoStatus={onChangeTodoStatus}
+                                        todo={todos}
+                                        styleData={styleData}
+                                        doneStatus={doneStatus}
+                                        searchTodo={searchTodo}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    </Box>
                 </div>
-                {categoryId && (
-                    <div>
-                        <AddItemForm
-                            formText="Enter new Todo name"
-                            addItem={onAddTodo}
-                            categoryId={categoryId}
-                            addStyle={styleData.addItemTodo}
-                        />
-                        <TodoList
-                            onChangeTodoStatus={onChangeTodoStatus}
-                            todo={todos}
-                            styleData={styleData}
-                            doneStatus={doneStatus}
-                            searchTodo={searchTodo}
-                        />
-                    </div>
-                )}
-            </Box>
+            </main>
         </>
     );
 });

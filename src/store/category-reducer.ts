@@ -71,7 +71,7 @@ const arr: string[] = [];
 
 const recursiveDelete = (id: string, category: CategoryData): string[] => {
     arr.push(category.categories[id].id);
-    if (category.categories[id].childrenId && category.categories[id].childrenId.length) {
+    if (category.categories[id].childrenId.length) {
         category.categories[id].childrenId.map(id => recursiveDelete(id, category));
     }
     return arr;

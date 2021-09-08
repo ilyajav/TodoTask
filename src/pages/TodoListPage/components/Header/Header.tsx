@@ -1,6 +1,7 @@
 import {
     AppBar,
     Checkbox,
+    Container,
     Grid,
     TextField,
     Toolbar,
@@ -37,7 +38,7 @@ export const Header = ({categoryId}: HeaderProps) => {
     const filter = `${ROUTING_PARAMS.TODO_SEARCH}${searchText}`;
     const show = `${ROUTING_PARAMS.TODO_SHOW_DONE}${checked}`;
 
-    const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeStatus = () => {
         setChecked(!checked);
         setSearchText('');
     };
@@ -53,45 +54,47 @@ export const Header = ({categoryId}: HeaderProps) => {
     }, [history, show, category, filter]);
 
     return (
-        <div className="App">
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h6">
-                        TodoList
-                    </Typography>
-                    <Grid
-                        container
-                        spacing={3}
-                        justifyContent="flex-end"
-                    >
-                        <Grid item xs={2}>
-                            <div>
-                                <Checkbox
-                                    checked={checked}
-                                    onChange={onChangeStatus}
-                                    disabled={!categoryId}
-                                />
-                                <span className={categoryId ? '' : style.item}>Show done</span>
-                            </div>
-                        </Grid>
-                        <div>
-                            <Grid item xs={10}>
-                                <form>
-                                    <TextField
-                                        id="searchForm"
-                                        label="search"
-                                        color="secondary"
-                                        variant="filled"
-                                        value={searchText}
-                                        onChange={onSearchChange}
+        <>
+            <AppBar position="fixed">
+                <Container fixed>
+                    <Toolbar>
+                        <Typography variant="h6">
+                            TodoList
+                        </Typography>
+                        <Grid
+                            container
+                            spacing={3}
+                            justifyContent="flex-end"
+                        >
+                            <Grid item xs={2}>
+                                <div>
+                                    <Checkbox
+                                        checked={checked}
+                                        onChange={onChangeStatus}
                                         disabled={!categoryId}
                                     />
-                                </form>
+                                    <span className={categoryId ? '' : style.item}>Show done</span>
+                                </div>
                             </Grid>
-                        </div>
-                    </Grid>
-                </Toolbar>
+                            <div>
+                                <Grid item xs={10}>
+                                    <form>
+                                        <TextField
+                                            id="searchForm"
+                                            label="search"
+                                            color="secondary"
+                                            variant="filled"
+                                            value={searchText}
+                                            onChange={onSearchChange}
+                                            disabled={!categoryId}
+                                        />
+                                    </form>
+                                </Grid>
+                            </div>
+                        </Grid>
+                    </Toolbar>
+                </Container>
             </AppBar>
-        </div>
+        </>
     );
 };
