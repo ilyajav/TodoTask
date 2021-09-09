@@ -17,8 +17,8 @@ import {
 } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import {ERROR_COLORS} from '../../App.constants';
-import {TodoDataStyle} from '../CommonComponents';
+import {ERROR_COLORS, ROUTING_PATHS} from '../../../../App.constants';
+import {TodoDataStyle} from '../../../CommonComponents';
 
 import style from './TodoListEdit.module.css';
 
@@ -83,7 +83,7 @@ export const TodoListEdit = React.memo(({
                             <div className={style.buttons}>
                                 <Button type="submit" disabled={!formik.isValid} onClick={notifySuccess}>Save</Button>
                                 <span>
-                                    <Link to="/todos"><Button>Cancel</Button></Link>
+                                    <Link to={`${ROUTING_PATHS.TODO_LIST_PAGE_ROUTE}`}><Button>Cancel</Button></Link>
                                 </span>
                             </div>
                         </div>
@@ -92,7 +92,6 @@ export const TodoListEdit = React.memo(({
                                 label="Title"
                                 margin="normal"
                                 variant="outlined"
-                                className={style.errorBlock}
                                 color={formik.errors.title ? ERROR_COLORS.ON_ERROR : ERROR_COLORS.OFF_ERROR}
                                 {...formik.getFieldProps('title')}
                             />

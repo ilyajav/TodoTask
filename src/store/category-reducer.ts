@@ -101,18 +101,18 @@ export const categoryReducer =
                     id,
                 } = action.payload;
                 const copyState = {...state};
+                const arr = recursiveDelete(id, copyState);
+                arr.map(id => {
+                    delete copyState.categories[id];
+                    return copyState.categories[id];
+                });
                 const arrIds = Object.keys(copyState.categories);
-                copyState.rootCategoriesId = [...copyState.rootCategoriesId.filter(ci => ci !== id)];
                 arrIds.map(cId => {
                     copyState.categories[cId].childrenId =
                         copyState.categories[cId].childrenId.filter(ci => ci !== id);
                     return copyState.categories;
                 });
-                const arr = recursiveDelete(id, copyState);
-                arr.map(id => {
-                    delete copyState.categories[id];
-                    return copyState.categories;
-                });
+                copyState.rootCategoriesId = [...copyState.rootCategoriesId.filter(ci => ci !== id)];
                 return copyState;
             }
             case ACTIONS_TYPES_CATEGORY.CHANGE_CATEGORY_TITLE: {
@@ -182,12 +182,3 @@ export const addSubCategory = (id: string, title: string) => ({
         title,
     },
 } as const);
-
-// copyState.categories[id].childrenId.forEach(cId => {
-//     if (copyState.categories[cId].childrenId && copyState.categories[cId].childrenId.length) {
-//         copyState.categories[cId].childrenId.forEach(cId => {
-//             delete copyState.categories[cId];
-//         });
-//     }
-//     delete copyState.categories[cId];
-// });

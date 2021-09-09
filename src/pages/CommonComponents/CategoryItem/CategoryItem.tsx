@@ -48,6 +48,7 @@ export const CategoryItem = React.memo((
 ) => {
     const categoryData =
         useSelector<AppRootState, CategoryState>(state => state.categoryData.categories[categoryDataId]);
+
     const notifySuccess = () => toast.success('Todo moved');
 
     const changeTodoParent = (todoId: string | null, categoryId: string) => {

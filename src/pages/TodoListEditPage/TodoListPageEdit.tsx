@@ -2,9 +2,11 @@ import React from 'react';
 import {Box} from '@material-ui/core';
 
 import {CategoryTree, TodoDataStyle} from '../CommonComponents';
-import {HeaderEdit} from './components/HeaderEdit';
+import {
+    HeaderEdit,
+    TodoListEdit,
+} from './components';
 import {Todos} from '../../store';
-import {TodoListEdit} from './TodoListEdit';
 
 import style from './TodoListPageEdit.module.css';
 

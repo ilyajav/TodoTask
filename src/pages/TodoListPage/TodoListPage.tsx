@@ -3,15 +3,13 @@ import React,
     ChangeEvent,
 } from 'react';
 import {v1} from 'uuid';
-import {
-    Box, Container, Grid, Paper, makeStyles,
-} from '@material-ui/core';
+import {Box} from '@material-ui/core';
 
 import {
     AddItemForm,
     Header,
+    TodoList,
 } from './components';
-import {TodoList} from './TodoList';
 import {
     CategoryTree,
     TodoDataStyle,
@@ -31,10 +29,6 @@ type TodoListPageProps = {
     todoId: string | null,
 }
 
-const userStyles = makeStyles(theme => {
-
-});
-
 export const TodoListPage = React.memo((
     {
         onChangeTodoStatus,
@@ -49,8 +43,6 @@ export const TodoListPage = React.memo((
         todoId,
     }: TodoListPageProps
 ) => {
-    const classes = userStyles();
-
     let todos = todoData;
     if (categoryId) {
         todos = todoData.filter(td => td.parentID === categoryId);

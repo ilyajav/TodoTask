@@ -28,11 +28,7 @@ type HeaderProps = {
 export const Header = ({categoryId}: HeaderProps) => {
     const history = useHistory();
     const [searchText, setSearchText] = useState<string>('');
-    const [checked, setChecked] = useState<boolean>(false);
-
-    useEffect(() => {
-        setChecked(false);
-    }, [categoryId]);
+    const [checked, setChecked] = useState(false);
 
     const category = `${ROUTING_PARAMS.CATEGORY_ID}${categoryId}`;
     const filter = `${ROUTING_PARAMS.TODO_SEARCH}${searchText}`;
@@ -40,7 +36,6 @@ export const Header = ({categoryId}: HeaderProps) => {
 
     const onChangeStatus = () => {
         setChecked(!checked);
-        setSearchText('');
     };
     const onSearchChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setSearchText(e.currentTarget.value);
@@ -52,6 +47,14 @@ export const Header = ({categoryId}: HeaderProps) => {
             search: `?${category}&${show}&${filter}`,
         });
     }, [history, show, category, filter]);
+
+    useEffect(() => {
+        if (categoryId === 'null') {
+            history.push(`${ROUTING_PATHS.TODO_LIST_PAGE_ROUTE}`);
+        }
+        setChecked(false);
+        setSearchText('');
+    }, [categoryId, history]);
 
     return (
         <>

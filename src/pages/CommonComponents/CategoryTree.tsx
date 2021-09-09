@@ -36,7 +36,7 @@ export const CategoryTree = React.memo(({mode, todoId}: CategoryTreeProps) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
-    // React.memo
+
     const params = new URLSearchParams(location.search);
     const categoryId = params.get(ROUTING_DATA.CATEGORY_TEXT_ID);
 

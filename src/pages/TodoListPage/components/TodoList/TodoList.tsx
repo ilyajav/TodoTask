@@ -13,14 +13,14 @@ import {
 import CreateIcon from '@material-ui/icons/Create';
 import {Link} from 'react-router-dom';
 
-import {Todos} from '../../store';
+import {Todos} from '../../../../store';
 import {
     ROUTING_PATHS,
     ROUTING_PARAMS,
-} from '../../App.constants';
+} from '../../../../App.constants';
+import {TodoDataStyle} from '../../../CommonComponents';
 
 import style from './TodoList.module.css';
-import {TodoDataStyle} from '../CommonComponents';
 
 type TodoListProps = {
     onChangeTodoStatus: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
