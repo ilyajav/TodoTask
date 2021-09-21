@@ -41,9 +41,9 @@ type ActionTodo =
     | RemoveCategory
     | ChangeTodoParent
 
-const todoId1 = v1();
-const todoId2 = v1();
-const todoId3 = v1();
+export const todoId1 = v1();
+export const todoId2 = v1();
+export const todoId3 = v1();
 const todoId4 = v1();
 const todoId5 = v1();
 

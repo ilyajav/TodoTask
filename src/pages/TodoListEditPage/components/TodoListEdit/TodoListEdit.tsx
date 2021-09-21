@@ -57,8 +57,7 @@ export const TodoListEdit = React.memo(({
         validate: values => {
             const errors: FormikErrorType = {};
             if (!values.title) {
-                errors.title = 'Field is required';
-                formik.isValid = false;
+                errors.title = ' ';
             }
             return errors;
         },
@@ -95,10 +94,6 @@ export const TodoListEdit = React.memo(({
                                 color={formik.errors.title ? ERROR_COLORS.ON_ERROR : ERROR_COLORS.OFF_ERROR}
                                 {...formik.getFieldProps('title')}
                             />
-                            {
-                                formik.errors.title &&
-                                <div className={style.error}>{formik.errors.title}</div>
-                            }
                         </div>
                         <div className={style.checkBox}>
                             <FormControlLabel
