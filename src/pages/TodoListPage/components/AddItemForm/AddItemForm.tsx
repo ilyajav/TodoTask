@@ -57,11 +57,13 @@ export const AddItemForm = React.memo((
                     label={formText}
                     onChange={onChangeTitle}
                     onKeyPress={onPressKey}
+                    inputProps={{'data-testid': 'change-title'}}
                 />
                 <Button
                     onClick={onAddItem}
                     color="primary"
                     size="large"
+                    data-testid="title-delete-submit"
                 >
                     <span className={styles.button}> Add </span>
                 </Button>
