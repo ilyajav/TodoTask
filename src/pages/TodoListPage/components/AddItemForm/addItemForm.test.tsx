@@ -67,12 +67,11 @@ describe('AddItemForm component', () => {
         />);
 
         const title = getByTestId('change-title') as HTMLInputElement;
-
-        fireEvent.change(title, {target: {value: 'React'}});
+        userEvent.type(title, 'React');
 
         expect(title.value).toBe('React');
 
-        fireEvent.keyPress(title, {key: 'Enter', code: 13, charCode: 13});
+        fireEvent.keyPress(title, {charCode: 13});
 
         expect(title.value).toBe('');
     });
