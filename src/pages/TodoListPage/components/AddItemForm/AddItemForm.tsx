@@ -35,14 +35,13 @@ export const AddItemForm = React.memo((
     };
     const onAddItem = () => {
         if (title.trim()) {
-            addItem(title.trim(), categoryId);
+            addItem(title, categoryId);
             setTitle('');
         }
     };
     const onPressKey = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             onAddItem();
-            setTitle('');
         }
     };
 
@@ -63,7 +62,7 @@ export const AddItemForm = React.memo((
                     onClick={onAddItem}
                     color="primary"
                     size="large"
-                    data-testid="title-delete-submit"
+                    data-testid="title-submit"
                 >
                     <span className={styles.button}> Add </span>
                 </Button>

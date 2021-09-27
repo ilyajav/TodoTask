@@ -48,7 +48,7 @@ describe('AddItemForm component', () => {
             addStyle={styles.addItemCategory}
         />);
         const title = getByTestId('change-title') as HTMLInputElement;
-        const button = getByTestId('title-delete-submit');
+        const button = getByTestId('title-submit');
         userEvent.type(screen.getByTestId('change-title'), 'React');
 
         expect(title.value).toBe('React');
