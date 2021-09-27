@@ -15,7 +15,8 @@ import {
 import {
     todoSelector,
     changeTodoStatus,
-    addTodo, addCategory,
+    addTodo,
+    addCategory,
 } from '../../store';
 import {TodoListPage} from './TodoListPage';
 import {commonStyle} from '../CommonComponents';
@@ -24,6 +25,7 @@ export const TodoListContainer = () => {
     const finalTodo = useSelector(todoSelector);
     const dispatch = useDispatch();
     const location = useLocation();
+    console.log(location);
 
     const params = new URLSearchParams(location.search);
     const doneStatus = params.get(ROUTING_DATA.SHOW_DONE);

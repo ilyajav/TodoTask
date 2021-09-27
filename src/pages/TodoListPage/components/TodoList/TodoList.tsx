@@ -86,6 +86,7 @@ export const TodoList = React.memo((
                                         checked={td.isDone}
                                         color="primary"
                                         onChange={e => changeTodoStatus(e, td.id)}
+                                        data-testid="change-todo-status"
                                     />
                                     <span className={style.item}>{td.title}</span>
                                 </div>

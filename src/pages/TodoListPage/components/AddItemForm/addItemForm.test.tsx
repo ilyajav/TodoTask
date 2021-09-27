@@ -14,7 +14,7 @@ const styles = {
 };
 
 describe('AddItemForm component', () => {
-    it('renders AddItemFormComponent', () => {
+    it('renders AddItemForm Component', () => {
         const {getByTestId} = render(<AddItemForm
             formText="add new todo"
             addItem={onAddCategory}
